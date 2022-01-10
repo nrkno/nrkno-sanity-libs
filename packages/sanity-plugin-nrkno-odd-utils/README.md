@@ -1,7 +1,7 @@
 # @nrk/sanity-plugin-nrkno-odd-utils
 
 nrkno-odd-utils (odd = option driven design) contains a handful of utility functions and classes for working with
-Sanity custom components.
+[Sanity custom components](https://www.sanity.io/docs/custom-input-widgets).
 
 See docs about [option driven design](docs/option-driven-design.md) for more.
 
@@ -16,7 +16,8 @@ This will run yarn install & add the plugin to sanity.json plugin array.
 
 Easily decorate and reuse built-in Sanity inputs by delegating to NestedFormBuilder.
 It is imperative that we unset the inputComponent in the type (or unset the option used by input-resolver.ts).
-Utility functions are available as:
+
+Functions available as module imports:
 
 ```ts
 import {
@@ -94,8 +95,8 @@ export const CustomComponent = forwardRef(function CustomComponent(props, ref) {
 
 ### Unit testing components using NestedFormBuilder
 
-NestedFormBuilder extends FormBuilderInput, which is a bit tricky to get 
-to work with jest.
+NestedFormBuilder extends FormBuilderInput. FormBuilderInput is a Sanity component that uses
+ non-standard import syntax that does not play well with Jest (`import x from 'part:xyz'`).
 
 See [NestedFormBuilder.test.ts](src/lib/NestedFormBuilder.tsx) for examples on how to mock FormBuilderInput,
 and check which props passed to FormBuilderInput during render. 
