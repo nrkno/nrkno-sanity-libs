@@ -1,9 +1,13 @@
 # NRK.no Sanity libraries
 
 NRK.no Sanity libraries contains an assortment of plugins and libraries used by NRK.no to extend
-Sanity Studio and apps using Sanity as a datasource. 
+Sanity Studio and apps using Sanity as a datasource.
 
-Many of the libraries are based around the idea of [option driven design](packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md).
+[Principles of nrkno-sanity](docs/nrkno-sanity-principles.md) outlines a bit about how NRK.no has configured Sanity Studio
+to optimize for a multi-team environment, all shipping content to distributed frontend.
+
+Many of the libraries are based around the idea of [option driven design](packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md),
+and everything relies on [typesafe-schemas](packages/nrkno-sanity-typesafe-schemas/README.md).
 
 Please note that NRK is not looking for [contributions](./CONTRIBUTING.md) for this particular repo.
 
