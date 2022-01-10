@@ -1,0 +1,14 @@
+{
+  "packages": ["packages/*"],
+  "version": "independent",
+
+  "command": {
+    "publish": {
+      "ignoreChanges": ["*.test.js", ".*", ".npmrc"]
+    },
+    "version": {
+      "message": "chore(release): update release notes and package versions",
+      "conventionalCommits": true
+    }
+  }
+}

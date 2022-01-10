@@ -1,0 +1,12 @@
+.idea
+node_modules
+*.log
+*.DS_Store
+build
+.env
+*.iml
+plugin-types
+/coverage/
+/out/
+lerna-debug.log
+*.tsbuildinfo

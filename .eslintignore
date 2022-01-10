@@ -1,0 +1,9 @@
+node_modules
+build
+plugin-types
+coverage
+data
+
+!.eslintrc.js
+!.prettierrc.js
+!.stylelintrc.js

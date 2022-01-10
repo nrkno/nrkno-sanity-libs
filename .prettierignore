@@ -1,0 +1,8 @@
+node_modules
+build
+plugin-types
+**/*.yaml
+**/*.css.d.ts
+coverage
+*.md
+package-lock.json

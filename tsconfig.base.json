@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "lib": ["es5", "es6", "dom"]
+  }
+}
