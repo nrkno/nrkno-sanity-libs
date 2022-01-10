@@ -98,7 +98,7 @@ export const CustomComponent = forwardRef(function CustomComponent(props, ref) {
 NestedFormBuilder extends FormBuilderInput. FormBuilderInput is a Sanity component that uses
  non-standard import syntax that does not play well with Jest (`import x from 'part:xyz'`).
 
-See [NestedFormBuilder.test.ts](src/lib/NestedFormBuilder.tsx) for examples on how to mock FormBuilderInput,
+See [NestedFormBuilder.test.ts](src/lib/NestedFormBuilder.test.tsx) for examples on how to mock FormBuilderInput,
 and check which props passed to FormBuilderInput during render. 
 
 This is useful when unit-testing that props.type was modified correctly for instance. 
