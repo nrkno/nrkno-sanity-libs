@@ -8,8 +8,8 @@ Utility functions to ease Sanity schema development:
 - `field(typeName, fieldDefinition)`: used to define fields for `document`, `object`, `file` and `image` schemas.
 - `arrayOf(typeName, arrayMemberDefinition)`: used to define of-entries in `array` schemas.
 - `typed<T>(anything)`: passthrough function to provide inline types in json objects.
-- `checkSchema<T>(anything)`: passthrough function to provide inline types in json objects.
-- `forType<T>(anything)`: passthrough function to provide inline types in json objects.
+- `checkSchema<T>(anything)`: safeguard function that ensures an interface contains all field-names used in a schema 
+- `forType<T>(anything)`: utility function meant to be used with `checkSchema` 
 
 ## API design goals
 
