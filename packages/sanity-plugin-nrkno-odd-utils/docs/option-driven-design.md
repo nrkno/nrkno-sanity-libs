@@ -271,8 +271,8 @@ import React, { forwardRef, Ref } from 'react';
 import { useUnsetOption, NestedFormBuilder } from '@nrk/sanity-plugin-nrkno-odd-utils';
 
 export const CustomComponent = forwardRef(function CustomComponent(props,  ref) {
-  // if you need the option value in the component,
-  // you should retrieve it from props.type.option first
+  // if we need the option value in the component,
+  // we should retrieve it from props.type.option first
   const type = useUnsetOption(props.type, 'custom');
   return <NestedFormBuilder {...props} ref={ref} type={type} />;
 });

@@ -15,7 +15,7 @@ This will run yarn install & add the plugin to sanity.json plugin array.
 # Usage
 
 Easily decorate and reuse built-in Sanity inputs by delegating to NestedFormBuilder.
-It is imperative that you unset the inputComponent in the type (or unset the option used by input-resolver.ts).
+It is imperative that we unset the inputComponent in the type (or unset the option used by input-resolver.ts).
 Utility functions are available as:
 
 ```ts
