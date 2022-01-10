@@ -1,0 +1,25 @@
+{
+  "name": "@nrk/nrkno-sanity-typesafe-schemas",
+  "version": "1.0.0",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrkno/nrkno-sanity-libs.git",
+    "directory": "packages/nrkno-sanity-typesafe-schemas"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "build:examples": "tsc --build tsconfig.json",
+    "clean": "cross-env rimraf build *.tsbuildinfo",
+    "test": "npm run build:examples && cross-env NODE_ENV=test jest"
+  },
+  "devDependencies": {
+    "@sanity/types": "^2.22.0",
+    "@types/react": "^17.0.36"
+  }
+}
