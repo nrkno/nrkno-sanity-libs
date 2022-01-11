@@ -10,6 +10,7 @@ This will:
 * prompt for package name
 * create a new package unded /packages based on _templates/package/sanity-plugin template
 * update `tsconfig.project.json` to include the new package
+* append dependabot-config for the package to `.github/dependabot.yaml`
 * invoke `npm install` which will build an link everything
 
 The references array in `tsconfig.project.json`  must list subprojects in the required build order.

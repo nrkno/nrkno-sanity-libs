@@ -6,7 +6,7 @@ build
 .env
 *.iml
 plugin-types
-/coverage/
+coverage
 /out/
 lerna-debug.log
 *.tsbuildinfo
