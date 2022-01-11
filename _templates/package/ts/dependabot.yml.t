@@ -9,4 +9,3 @@ append: true
       interval: "daily"
     allow:
       - dependency-type: "production"
-    open-pull-requests-limit: 30
