@@ -2,6 +2,7 @@ node_modules
 build
 plugin-types
 **/*.yaml
+**/*.yml
 **/*.css.d.ts
 coverage
 *.md
