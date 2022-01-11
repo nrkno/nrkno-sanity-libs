@@ -22,10 +22,17 @@ Eg. if package2 depends on package1, package1 must be first in the array.
 
 Will do the same as sanity plugin, but uses _templates/package/ts
 
-### Dev dependencies
+## About devDependencies
 
-Lerna makes devDependencies listed in the top-level package.json available to all packages.
-However, packages must still list their own devDependencies in the local package.json.
+Put all devDependencies in root package.json. They will still be found by npm through
+recursive resolution, and will force all packages to use the same versions.
+In other words: do not put devDependencies in package.json of each package.
+
+Only packages with dependencies or devDependencies will generate package-lock.json in the package.
+peerDependencies alone will not.
+
+This is an alternative approach to [lerna bootstrap --hoist](https://github.com/lerna/lerna/blob/main/doc/hoist.md#lerna-hoisting),
+and gives faster build times for packages with mostly peerDependencies (the case for sanity-plugins).
 
 #### Things to keep in mind
 

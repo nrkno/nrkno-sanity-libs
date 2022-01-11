@@ -17,9 +17,5 @@
     "build:examples": "tsc --build tsconfig.json",
     "clean": "cross-env rimraf build *.tsbuildinfo",
     "test": "npm run build:examples && cross-env NODE_ENV=test jest"
-  },
-  "devDependencies": {
-    "@sanity/types": "^2.22.0",
-    "@types/react": "^17.0.36"
   }
 }

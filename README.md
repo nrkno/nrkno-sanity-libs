@@ -21,10 +21,24 @@ Run `npm install && npm run init`.
 
 This will:
 * install all dependencies needed for Lerna.
-* install and hoist all package dependencies, then build everything.
+* install all package dependencies, then build everything.
 * prepare husky commit hooks required for development.
 
-Rerun `npm run init` after package dependencies have change, to hoist & link everything correctly.
+Rerun `npm run init` after package dependencies have change, to install & build everything.
+
+## About devDependencies
+
+Put all devDependencies in root package.json. They will still be found by npm through 
+recursive resolution, and will force all packages to use the same versions.
+In other words: do not put devDependencies in package.json of each package.
+
+Only packages with dependencies or devDependencies will generate package-lock.json in the package.
+peerDependencies alone will not.  
+
+This is an alternative approach to [lerna bootstrap --hoist](https://github.com/lerna/lerna/blob/main/doc/hoist.md#lerna-hoisting),
+and gives faster build times for packages with mostly peerDependencies (the case for sanity-plugins).
+
+This also gives us the added benefit of not having to maintain devDependencies in _templates.
 
 ## Tests
 
