@@ -1,5 +1,5 @@
 ---
-to: .github/dependabot.yaml
+to: .github/dependabot.yml
 inject: true
 append: true
 ---
