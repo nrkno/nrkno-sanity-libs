@@ -7,8 +7,8 @@ to: packages/<%= package %>/tsconfig.json
     "outDir": "./build",
     "rootDir": "./src",
     "baseUrl": "./",
-    "module": "<%= module %>",
-    "target": "<%= target %>",
+    "module": "commonjs",
+    "target": "es6",
     "composite": true
   },
   "references": [],

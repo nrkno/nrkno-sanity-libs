@@ -4,8 +4,8 @@
     "outDir": "./build",
     "rootDir": "./src",
     "baseUrl": "./",
-    "module": "esnext",
-    "target": "esnext",
+    "module": "commonjs",
+    "target": "es6",
     "composite": true
   },
   "references": [],

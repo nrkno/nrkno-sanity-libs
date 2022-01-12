@@ -17,8 +17,6 @@ module.exports = {
       return {
         packageType,
         package: `${packageTypePrefix}${suffixAnswer.packageSuffix}`,
-        module: 'esnext',
-        target: 'esnext',
       };
     },
 };
