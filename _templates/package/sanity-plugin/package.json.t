@@ -16,7 +16,8 @@ sh:  cd <%= cwd %> && node scripts/add-new-package.js <%= package %>
   "files": [
     "sanity.json",
     "build",
-    "plugin-types"
+    "plugin-types",
+    "src"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json && sanipack build",

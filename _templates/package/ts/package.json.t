@@ -14,7 +14,8 @@ sh:  cd <%= cwd %> && node scripts/add-new-package.js <%= package %>
     "directory": "packages/<%= package %>"
   },
   "files": [
-    "build"
+    "build",
+    "src"
   ],
   "scripts": {
     "build": "tsc --build tsconfig.build.json",

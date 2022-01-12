@@ -10,7 +10,8 @@
     "directory": "packages/nrkno-sanity-typesafe-schemas"
   },
   "files": [
-    "build"
+    "build",
+    "src"
   ],
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
