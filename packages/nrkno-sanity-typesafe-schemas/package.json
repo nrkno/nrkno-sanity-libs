@@ -4,6 +4,9 @@
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nrkno/nrkno-sanity-libs.git",

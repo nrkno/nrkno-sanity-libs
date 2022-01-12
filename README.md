@@ -81,3 +81,11 @@ Publishing is triggered by nrk.no team using CI infrastructure (nrkno-sanity-lib
 
 See [packages documentation](docs/packages.md).
 
+**Note:** Packages are _private_ on npm by default. 
+Add 
+```json
+  "publishConfig": {
+    "access": "public"
+  }
+```
+to package.json to make it public on npm.
