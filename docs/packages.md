@@ -3,6 +3,16 @@
 
 This repo uses [Hygen templates](http://www.hygen.io/docs/templates) to simplify package creation. 
 
+**Note:** Packages are _private_ on npm by default.
+Add
+```json
+  "publishConfig": {
+    "access": "public"
+  }
+```
+to package.json to make it public on npm.
+
+
 ### Sanity plugin
 > npm run package:sanity-plugin
 
