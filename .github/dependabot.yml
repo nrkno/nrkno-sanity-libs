@@ -9,7 +9,7 @@ updates:
       - dependency-type: "production"
 
   - package-ecosystem: "npm"
-    directory: "/packages/nrkno-sanity-react-utils"
+    directory: "/packages/sanity-plugin-nrkno-odd-utils"
     schedule:
       interval: "daily"
     allow:
