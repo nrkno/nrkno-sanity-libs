@@ -1,5 +1,24 @@
 {
   "extends": "../tsconfig.base.json",
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./nrkno-sanity-react-utils/tsconfig.build.json"
+    },
+    {
+      "path": "./sanity-plugin-nrkno-odd-utils/tsconfig.build.json"
+    },
+    {
+      "path": "./nrkno-sanity-typesafe-schemas/tsconfig.build.json"
+    },
+    {
+      "path": "./sanity-plugin-nrkno-iframe-preview/tsconfig.build.json"
+    },
+    {
+      "path": "./sanity-plugin-nrkno-iframe-preview/tsconfig.build.json"
+    },
+    {
+      "path": "./nrkno-iframe-preview-api/tsconfig.build.json"
+    }
+  ]
 }

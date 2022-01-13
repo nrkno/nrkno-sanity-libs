@@ -1,0 +1,43 @@
+{
+  "name": "@nrk/sanity-plugin-nrkno-iframe-preview",
+  "version": "1.0.0",
+  "main": "./build/index.js",
+  "types": "./plugin-types/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrkno/nrkno-sanity-libs.git",
+    "directory": "packages/sanity-plugin-nrkno-iframe-preview"
+  },
+  "files": [
+    "sanity.json",
+    "build",
+    "plugin-types"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && sanipack build",
+    "watch": "sanipack build --watch",
+    "clean": "cross-env rimraf build *.tsbuildinfo",
+    "test": "cross-env NODE_ENV=test jest",
+    "prepublishOnly": "npm run clean && npm run build && sanipack verify"
+  },
+  "dependencies": {
+    "@nrk/nrkno-sanity-react-utils": "1.0.0",
+    "@sanity/ui": "^0.37.0",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@sanity/base": "^2.22.0",
+    "@sanity/icons": "^1.2.3",
+    "@testing-library/react": "^12.1.2",
+    "@types/react-dom": "^17.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "peerDependencies": {
+    "@sanity/base": "^2.22.0",
+    "@sanity/icons": "^1.2.3",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  }
+}

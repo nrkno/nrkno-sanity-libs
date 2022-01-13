@@ -20,4 +20,4 @@ A bit about how to use the plugin.
 
 # Develop
 
-This plugin is built with [https://www.npmjs.com/package/sanipack](sanipack).
+This plugin is built with [sanipack](https://www.npmjs.com/package/sanipack).
