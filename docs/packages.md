@@ -5,7 +5,7 @@ This repo uses [Hygen templates](http://www.hygen.io/docs/templates) to simplify
 
 **Note:** Packages are _private_ on npm by default.
 Add
-```json
+```
   "publishConfig": {
     "access": "public"
   }
@@ -46,6 +46,7 @@ However, packages must still list their own devDependencies in the local package
     "references": [{ "path": "../nrkno-sanity-odd-utils/tsconfig.build.json" }]
     }
     ```
+  - when package B depends on package A, A must be listed first in tsconfig.project.json references   
 - `tsconfig.json` is used by IDE & jest, `tsconfig.build.json` is used for compiling to /build
 
 ## Bumping from 0.x.x to 1.0.0

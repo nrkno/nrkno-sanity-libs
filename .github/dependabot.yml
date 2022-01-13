@@ -14,3 +14,90 @@ updates:
       interval: "daily"
     allow:
       - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-sanity-typesafe-schemas"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/sanity-plugin-nrkno-iframe-preview"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-iframe-preview-api"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-sanity-react-utils"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-sanity-typesafe-schemas"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/sanity-plugin-nrkno-iframe-preview"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-iframe-preview-api"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-sanity-react-utils"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-sanity-typesafe-schemas"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/sanity-plugin-nrkno-iframe-preview"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-iframe-preview-api"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/nrkno-sanity-react-utils"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+

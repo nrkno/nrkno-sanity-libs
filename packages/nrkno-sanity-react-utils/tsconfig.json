@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "module": "commonjs",
+    "target": "es6",
+    "composite": true,
+    "jsx": "react"
+  },
+  "references": [],
+  "include": ["src"],
+  "exclude": ["build", "node_modules"]
+}

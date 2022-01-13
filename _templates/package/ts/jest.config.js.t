@@ -8,4 +8,5 @@ module.exports = {
   ...base,
   name: pkg.name,
   displayName: pkg.name,
+  testEnvironment: 'jsdom',
 };

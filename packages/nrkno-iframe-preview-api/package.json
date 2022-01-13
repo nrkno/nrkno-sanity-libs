@@ -1,0 +1,20 @@
+{
+  "name": "@nrk/nrkno-iframe-preview-api",
+  "version": "1.0.0",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrkno/nrkno-sanity-libs.git",
+    "directory": "packages/nrkno-iframe-preview-api"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "cross-env rimraf build *.tsbuildinfo",
+    "test": "cross-env NODE_ENV=test jest"
+  }
+}

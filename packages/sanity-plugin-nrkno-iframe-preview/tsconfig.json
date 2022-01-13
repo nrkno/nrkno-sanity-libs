@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "module": "esnext",
+    "target": "esnext",
+    "composite": true,
+    "jsx": "react",
+  },
+  "references": [{ "path": "../nrkno-sanity-react-utils/tsconfig.build.json" }],
+  "include": ["./src"],
+  "exclude": ["build", "plugin-types", "node_modules"]
+}
