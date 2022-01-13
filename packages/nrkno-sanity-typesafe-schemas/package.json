@@ -24,6 +24,6 @@
   },
   "devDependencies": {
     "@sanity/types": "^2.22.0",
-    "@types/react": "^17.0.36"
+    "@types/react": "^17.0.0"
   }
 }
