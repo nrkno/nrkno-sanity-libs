@@ -7,7 +7,7 @@
     "module": "esnext",
     "target": "esnext",
     "composite": true,
-    "jsx": "react",
+    "jsx": "react"
   },
   "references": [{ "path": "../nrkno-sanity-react-utils/tsconfig.build.json" }],
   "include": ["./src"],
