@@ -22,8 +22,8 @@
     "build": "tsc --project tsconfig.build.json && sanipack build",
     "watch": "sanipack build --watch",
     "clean": "cross-env rimraf build *.tsbuildinfo",
-    "test": "cross-env NODE_ENV=test jest",
-    "prepublishOnly": "npm run clean && npm run build && sanipack verify"
+    "test": "cross-env NODE_ENV=test jest && sanipack verify",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "peerDependencies": {
     "@sanity/form-builder": "^2.22.0",
