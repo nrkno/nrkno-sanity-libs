@@ -46,7 +46,7 @@
   },
   "scripts": {
     "version:dry-run": "git fetch --tags && lerna version --no-git-tag-version --no-push",
-    "version:ci": "npm run lint && npm run test && npm run version:dry-run -- --yes",
+    "version:ci": "npm run lint && npm run build && npm run test && npm run version:dry-run -- --yes",
     "prepare": "husky install",
     "init": "npm run bootstrap && npm run build",
     "bootstrap": "lerna bootstrap --hoist --strict",
