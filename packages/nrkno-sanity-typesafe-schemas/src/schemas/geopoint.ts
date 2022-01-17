@@ -17,7 +17,12 @@ export interface GeopointSchema extends SanitySchemaBase {
     lng: number;
     alt: number;
   }>;
+  options?: GeopointOptions;
 }
+
+// allow for declaration merging
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface GeopointOptions {}
 
 // must be interface and not type to allow for declaration merging
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

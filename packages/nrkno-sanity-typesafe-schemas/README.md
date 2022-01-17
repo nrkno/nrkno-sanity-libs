@@ -85,11 +85,9 @@ to extend the types under `@nrk/nrkno-sanity-typesafe-schemas`:
 ```ts
 // document-extension.ts
 declare module '@nrk/nrkno-sanity-typesafe-schemas' {
-  // adds options to 'document' schemas (Sanity does not use options on document by default)
+  // adds field 'document' schemas
   interface DocumentSchema {
-    options?: {
-      custom?: boolean;
-    };
+    custom?: boolean;
   }
 }
 
@@ -105,9 +103,7 @@ declare module '@nrk/nrkno-sanity-typesafe-schemas' {
 // somewhere using typesafe helpers
 export const typesafeDocumentSchema = schema('document', {
     /* omitted */
-    options: {
-        custom: true, // custom is now a valid option for all document schemas
-    },
+   custom: true, // custom is now a valid option for all document schemas
 });
 
 export const typesafeNumberSchema = schema('document', {

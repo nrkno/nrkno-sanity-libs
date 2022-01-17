@@ -13,7 +13,12 @@ export interface UrlSchema extends SanitySchemaBase {
 
   /** [Initial value docs](https://www.sanity.io/docs/initial-value-templates) */
   initialValue?: InitialValueProperty<string>;
+  options?: UrlOptions;
 }
+
+// allow for declaration merging
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface UrlOptions {}
 
 /** [URL validation docs](https://www.sanity.io/docs/url-type#uri(options)-d6cd6abe25d1) */
 export interface UrlRule extends Rule<UrlRule> {

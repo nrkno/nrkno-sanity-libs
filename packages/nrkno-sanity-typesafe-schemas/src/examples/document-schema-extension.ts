@@ -4,9 +4,10 @@ import { arrayOf, field, schema } from '../typesafe-schemas';
 declare module '../schemas/document' {
   interface DocumentSchema {
     previewComponent?: ReactNode;
-    options?: {
-      custom?: boolean;
-    };
+  }
+
+  interface DocumentOptions {
+    custom?: boolean;
   }
 }
 

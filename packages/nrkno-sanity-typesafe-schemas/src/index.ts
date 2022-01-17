@@ -19,6 +19,7 @@ export {
 } from './schemas/array';
 export {
   BlockSchema,
+  BlockOptions,
   BlockRule,
   BlockList,
   BlockStyle,
@@ -29,9 +30,14 @@ export {
 export { BooleanSchema, BooleanOptions, BooleanRule } from './schemas/boolean';
 export { DateSchema, DateOptions, DateRule } from './schemas/date';
 export { DatetimeSchema, DatetimeOptions, DatetimeRule } from './schemas/datetime';
-export { DocumentSchema, DocumentRule, DocumentOrdering } from './schemas/document';
+export {
+  DocumentSchema,
+  DocumentOptions,
+  DocumentRule,
+  DocumentOrdering,
+} from './schemas/document';
 export { FileSchema, FileOptions, FileRule } from './schemas/file';
-export { GeopointSchema, GeopointRule } from './schemas/geopoint';
+export { GeopointSchema, GeopointOptions, GeopointRule } from './schemas/geopoint';
 export { ImageSchema, ImageOptions, ImageRule } from './schemas/image';
 export { NumberSchema, NumberOptions, NumberRule } from './schemas/number';
 export { ObjectSchema, ObjectOptions, ObjectRule } from './schemas/object';
@@ -53,7 +59,7 @@ export {
 } from './schemas/slug';
 export { StringSchema, StringOptions, StringRule } from './schemas/string';
 export { TextSchema, TextOptions, TextRule } from './schemas/text';
-export { UrlSchema, UrlRule } from './schemas/url';
+export { UrlSchema, UrlOptions, UrlRule } from './schemas/url';
 
 /* Support types exported to allow for advanced customization via declaration merging */
 export {
