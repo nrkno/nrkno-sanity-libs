@@ -156,6 +156,9 @@ cd /path/to/my-studio
 npm link @nrk/sanity-plugin-nrkno-iframe-preview
 ```
 
+Note: after running npm link, tests will start failing because of the way
+React versions are handles during symlinking. Run `npm run init` from root directory to fix.
+
 # Develop
 
 This plugin is built with [sanipack](https://www.npmjs.com/package/sanipack).

@@ -50,6 +50,14 @@ export type PreviewAction =
   | FrameUpdatedAction
   | PreviewDocUpdatedAction;
 
+export function initialState(sanityClient: SanityClient) {
+  return {
+    iframeReady: false,
+    loading: true,
+    sanityClient,
+  };
+}
+
 export function usePreviewReducer(sanityClient: SanityClient) {
   function previewReducer(state: PreviewState, action: PreviewAction): PreviewState {
     switch (action.type) {
@@ -87,9 +95,5 @@ export function usePreviewReducer(sanityClient: SanityClient) {
     }
   }
 
-  return useReducer(previewReducer, {
-    iframeReady: false,
-    loading: true,
-    sanityClient,
-  });
+  return useReducer(previewReducer, initialState(sanityClient));
 }
