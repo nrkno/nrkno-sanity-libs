@@ -16,7 +16,6 @@ import sanityClient from 'part:@sanity/base/client';
 import {
   PreviewAction,
   PreviewDocument,
-  PreviewQuery,
   PreviewState,
   usePreviewReducer,
 } from '../hooks/preview-reducer-hook';
@@ -25,6 +24,12 @@ import styles from './IFramePreviewBasic.css';
 import { PreviewLoading } from './PreviewLoading';
 import { BasicPreviewProps } from '../../sanity-types';
 import { DisplayTextsContext } from '../DisplayTextsContext';
+import {
+  ensureRevision,
+  registerIFramePreviewListener,
+  resolveUrl,
+  UrlResolver,
+} from './preview-utils';
 
 export interface IFramePreviewBasicOpts {
   /**
@@ -35,11 +40,7 @@ export interface IFramePreviewBasicOpts {
    *  * `` (doc) => `https://some-page.example/${doc._id}` ``
    *  * `` (doc) => Promise.resolve(`https://some-page.example/${doc.slug.current}/preview`) ``
    * */
-  url:
-    | string
-    | Promise<string>
-    | ((previewDocument: SanityDocument) => string)
-    | ((previewDocument: SanityDocument) => Promise<string>);
+  url: UrlResolver;
 
   /** Transform the SanityDocument available to the previewComponent prior to sending it to the iframe.
    * After the iframe responds with a groq-event, this method will no longer be invoked.*/
@@ -142,47 +143,31 @@ const IFramePreviewInternal = forwardRef(function IFramePreview(
   );
 });
 
-function useUrl(propsUrl: IFramePreviewBasicProps['options']['url'], document?: SanityDocument) {
+function useUrl(urlResolveer: UrlResolver, document?: SanityDocument) {
   const [url, setUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (!document) {
-      return;
-    }
-    const resolveUrl = typeof propsUrl === 'function' ? propsUrl(document) : propsUrl;
-    Promise.resolve(resolveUrl).then((newUrl) => {
+    let canUpdate = true;
+    resolveUrl(urlResolveer, document).then((newUrl) => {
+      if (!canUpdate) {
+        return;
+      }
       if (newUrl !== url) {
         setUrl(newUrl);
       }
     });
-  }, [url, propsUrl, document]);
+
+    return () => {
+      canUpdate = false;
+    };
+  }, [url, urlResolveer, document]);
 
   return url;
 }
 
 function useIframeMessageListener(dispatch: (action: PreviewAction) => void) {
   useEffect(() => {
-    const listener = (e: { data?: { type: string } | string }) => {
-      const eventType = typeof e.data === 'string' ? e.data : e.data?.type;
-      if (eventType === 'ready') {
-        dispatch({ type: 'READY' });
-      } else if (eventType === 'groq') {
-        let queryData = e.data as PreviewQuery;
-        if (!queryData.query.includes('_rev')) {
-          // We need the _rev field, so do a cheeky insert and hope for the best.
-          // this is needed to fix legacy queries without _rev
-          queryData = {
-            ...queryData,
-            query: queryData.query.replace('{', '{_rev,'),
-          };
-        }
-        dispatch({ type: 'GROQ', groq: queryData });
-      } else if (eventType === 'updated') {
-        dispatch({ type: 'IFRAME_UPDATED' });
-      }
-    };
-    window.addEventListener('message', listener, false);
-    return () => window.removeEventListener('message', listener);
+    return registerIFramePreviewListener(dispatch, window);
   });
 }
 
@@ -211,29 +196,16 @@ function useUpdatedPreviewDoc(
       if (!groq || !iframeReady || !displayedDoc) {
         return;
       }
-      let canUpdate = true;
-      const ensureRevision = (tries = 0) => {
-        sanityClient.fetch(groq.query, groq.params).then((previewDocument) => {
-          if (!canUpdate) {
-            return;
-          }
 
-          const rev = previewDocument._rev;
-          const isUpdated = !revision || !rev || revision === rev;
-          const giveUp = tries >= maxRevisionRetries;
-          if (isUpdated || giveUp) {
-            dispatch({ type: 'PREVIEW_DOC_UPDATED', previewDocument });
-          } else {
-            tries++;
-            setTimeout(() => ensureRevision(tries), updateDelay);
-          }
-        });
-      };
-      ensureRevision();
-
-      return () => {
-        canUpdate = false;
-      };
+      const { cancel } = ensureRevision(
+        sanityClient,
+        dispatch,
+        groq,
+        revision,
+        maxRevisionRetries,
+        updateDelay
+      );
+      return cancel;
     },
     [displayedDoc, sanityClient, groq, iframeReady, revision, maxRevisionRetries],
     updateDelay * 2
