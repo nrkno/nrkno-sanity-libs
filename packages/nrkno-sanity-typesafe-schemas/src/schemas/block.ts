@@ -46,7 +46,13 @@ export interface BlockSchema extends SanitySchemaBase {
    * [Customize block type]{@link https://www.sanity.io/docs/customization}.
    */
   marks?: Marks;
+
+  options?: BlockOptions;
 }
+
+// allow for declaration merging
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface BlockOptions {}
 
 export interface BlockStyle {
   title: string;

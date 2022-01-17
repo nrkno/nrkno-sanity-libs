@@ -34,7 +34,13 @@ export interface DocumentSchema extends SanitySchemaBase {
   liveEdit?: boolean;
 
   fields: GenericField[];
+
+  options?: DocumentOptions;
 }
+
+// allow for declaration merging
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface DocumentOptions {}
 
 /**
  * [Document validation]{@link https://www.sanity.io/docs/validation#document-level-validation-053289e55848 }.
