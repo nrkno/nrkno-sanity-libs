@@ -17,7 +17,7 @@ revision matches the studio revision (ie. whenever the data changes).
 This means that the render app does not need to listen for changes itself, as
 data flows directly from the Studio via iframe.postMessage.
 
-![preview.png](./docs/images/preview.png | width=400)
+![preview.png](./docs/images/preview.png)
 _Figure 1: NRK image editor in the left pane, IFramePreview with desktopMinWidth configured in the right pane._
 
 # Installation
