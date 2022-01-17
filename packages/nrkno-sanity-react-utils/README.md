@@ -42,7 +42,8 @@ function SomeComponent() {
 
 ## useDebouncedEffect
 
-Takes an effect callback and dependency array like {@link useEffect}.
+Takes an effect callback and dependency array (same arguments as React.useEffect),
+and a debounce delay.
 
 When dependencies change (including component mount, ala useEffect),
 the effect will be invoked after <delay> milliseconds.

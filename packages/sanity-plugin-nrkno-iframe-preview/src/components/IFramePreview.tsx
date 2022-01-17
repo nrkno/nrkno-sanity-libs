@@ -4,23 +4,17 @@ import {
   IFramePreviewBasicOpts,
   IFramePreviewBasicProps,
 } from './basic/IFramePreviewBasic';
-import { IFrameOrientationControls } from './responsive/IFrameOrientationControls';
+import {
+  IFrameOrientationControls,
+  IOrientationConfig,
+} from './responsive/IFrameOrientationControls';
 import { useSetRefs } from '@nrk/nrkno-sanity-react-utils';
 import styles from './IFramePreview.css';
 
-export interface IFramePreviewOpts extends IFramePreviewBasicOpts {
-  /**
-   * When set, buttons for forcing iframe width using width & scale transform will be shown
-   * This is useful if the target app has two breakpoints for media queries that vastly different results
-   * */
-  desktopMinWidth?: number;
-}
+export type IFramePreviewOptions = IFramePreviewBasicOpts & IOrientationConfig;
 
 export type IFramePreviewProps = IFramePreviewBasicProps & {
-  options: {
-    /** */
-    desktopMinWidth?: number;
-  };
+  options: IFramePreviewOptions;
 };
 
 export const IFramePreview = forwardRef(function IFramePreview(

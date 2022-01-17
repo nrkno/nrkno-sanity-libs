@@ -1,15 +1,14 @@
 # @nrk/sanity-plugin-nrkno-iframe-preview
 
-Liveupdated iframe preview component for Sanity Studio, compatible with any framework.
+_This document assumes familiarity with [custom documents views in Sanity](https://www.sanity.io/docs/create-custom-document-views-with-structure-builder)._
+
+**nrkno-iframe-preview** provides a live-updated iframe preview component for Sanity Studio.
 
 Queries are executed by Sanity Studio and passed to the iframe. 
-This has the beneficial in that the render-app in the iframe
-does not need to listen for sanity client updates itself.
+The render-app in the iframe does _not_ need to listen for sanity client updates itself,
+but rather to messages from parent window.
 
-![preview.png](./docs/images/preview.png)
-_Figure 1: IFramePreview with desktopMinWidth configured_
-
-The app running in the iframe should use `@nrk/nrkno-iframe-preview-api`, 
+The app running in the iframe should use [`@nrk/nrkno-iframe-preview-api`](../nrkno-iframe-preview-api/README.md),
 which allows it to specify a GROQ-query for the Studio to execute.
 
 The result of the query will be sent to the iframe whenever the query
@@ -17,6 +16,9 @@ revision matches the studio revision (ie. whenever the data changes).
 
 This means that the render app does not need to listen for changes itself, as
 data flows directly from the Studio via iframe.postMessage.
+
+![preview.png](./docs/images/preview.png | width=400)
+_Figure 1: NRK image editor in the left pane, IFramePreview with desktopMinWidth configured in the right pane._
 
 # Installation
 In Sanity studio project run:
@@ -35,23 +37,64 @@ This will install & add the plugin to sanity.json plugin array.
 * Enjoy live-updated preview in Studio, with queries executed by the Studio on behalf of the render app.
 
 ## Usage
-Should be used as part of Sanity Studio StructureBuilder code:
-```ts
-import { IFramePreview } from '@nrk/sanity-plugin-nrkno-iframe-preview'
 
-S.view
-  .component(IFramePreview)
-  .options({
-      url: (doc: SanityDocument) => 'iframe-url', // (doc) => (string | Promise<string>)
-      mapDocument: (doc: SanityDocument) => ({ _id: doc._id }),
-      desktopMinWidth: 900,
-   })   
-  .icon(EyeIcon)
-  .id("preview")
-  .title("Preview")
-```
+
+## Basic
 
 Read [IFramePreviewBasicProps](src/components/basic/IFramePreviewBasic.tsx) jsdocs for config details.
+
+At the most basic level, IFramePreview component can used as part of Sanity Studio StructureBuilder code when [adding a second view](https://www.sanity.io/docs/create-custom-document-views-with-structure-builder#1c1f58025b3a):
+```ts
+//deskStructure.ts
+import React from 'react'
+import S from '@sanity/desk-tool/structure-builder'
+import { IFramePreview } from '@nrk/sanity-plugin-nrkno-iframe-preview'
+
+export const getDefaultDocumentNode = ({schemaType}: any) => {
+  if(schemaName === 'schema-should-have-iframe-preivew') {
+    return S.document().views([
+      S.view.form(),
+      S.view.component(IFramePreview)
+            .options({
+              url: (doc: SanityDocument) => 'http://iframe-url.example', // (doc) => (string |Promise<string>)
+            })
+            .icon(EyeIcon)
+            .id("preview")
+            .title("Preview")
+    ])
+  }
+}
+```
+
+## Responsive controls
+
+When `desktopMinWidth` option is set, buttons for forcing iframe width using width & scale transform will be shown. This is useful if the target app has breakpoints for media queries that have vastly different layouts.
+
+The value is the pixel breakpoint or desktop width.
+
+```ts
+S.view.component(IFramePreview)
+      .options({
+        url: (doc: SanityDocument) => 'http://iframe-url.example', 
+        desktopMinWidth: 900
+      })
+```
+
+## Controlling what gets sendt to the iframe
+
+If we dont want the full document to be passed to the iframe during 'doc' events, 
+we can provide a `mapDocument` option to transform the document before it gets sendt.
+
+_Note:_ IFramePreview sends data to the iframe, _id & _eventType will always be appended.
+These fields are used to implement the iframe-protocol and therefor cannot be changed (will be overwritten).
+
+```ts
+S.view.component(IFramePreview)
+      .options({
+        url: (doc: SanityDocument) => 'http://iframe-url.example',
+        mapDocument: (document: SanityDocument) => ({id: document._id})
+      })
+```
 
 ### Customize display texts
 
@@ -82,7 +125,13 @@ export function TranslatedIFramePreview(props: IFramePreviewProps) {
 ```
 
 ### Define preview component from schema
-To enable iframe preview directly in the schema definition, we can do something along the lines of this:
+
+The above approach to document previews, where each schema gets a separate if-branch in getDefaultDocumentNode, goes counter to the [principles of nrkno-sanity](../../docs/nrkno-sanity-principles.md). It does not scale in a codebase with a large amount of schemas,
+and does not optimzie for deletion (schema one in one file, preview config in another).
+
+We can enable iframe preview directly in the schema definition, more along the lines of [option driven design](../sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md) though.
+
+Alternativly, take a look at @nrkno/sanity-plugin-nrkno-schema-structure.
 
 Assume sanity.json with parts structure implemented like so
 ```json
@@ -120,6 +169,7 @@ export const getDefaultDocumentNode = ({ schemaType }: any) => {
     .map((listItem: any) => {
       const previewComponent = listItem.spec.schemaType.livePreviewComponent;
       if (previewComponent) {
+        // add iframe preview using schema-provided component
         return S.document().views(editAndPreviewViews(previewComponent));
       }
       return S.document();
@@ -129,8 +179,6 @@ export const getDefaultDocumentNode = ({ schemaType }: any) => {
 
 export default () => S.list().items(/* your structure */)
 ```
-
-*Caveat*: uses access to protected `listItem.spec` field; this might break in future Sanity releases.
 
 ## Sequence diagram for dataflow
 

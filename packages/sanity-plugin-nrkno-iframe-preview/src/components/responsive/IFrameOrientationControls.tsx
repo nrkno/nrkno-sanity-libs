@@ -5,8 +5,17 @@ import { Button, Inline } from '@sanity/ui';
 import { DesktopIcon, MobileDeviceIcon } from '@sanity/icons';
 import { DisplayTextsContext } from '../DisplayTextsContext';
 
-export interface IFrameOrientationControlProps {
+export interface IOrientationConfig {
+  /**
+   * When set, buttons for forcing iframe width using width & scale transform will be shown
+   * This is useful if the target app has two breakpoints for media queries that vastly different results.
+   *
+   * The value is the pixel breakpoint or desktop width.
+   * */
   desktopMinWidth?: number;
+}
+
+export interface IFrameOrientationControlProps extends IOrientationConfig {
   containerRef: RefObject<HTMLDivElement>;
   iframeRef: RefObject<HTMLIFrameElement>;
 }
