@@ -46,5 +46,9 @@
   "keywords": [
     "sanity",
     "sanity-plugin"
-  ]
+  ],
+  "volta": {
+    "node": "14.17.5",
+    "npm": "6.14.14"
+  }
 }
