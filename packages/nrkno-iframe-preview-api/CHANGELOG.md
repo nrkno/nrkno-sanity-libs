@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-iframe-preview-api@1.0.3...@nrk/nrkno-iframe-preview-api@1.1.0) (2022-01-18)
+
+
+### Features
+
+* setData can be async ([73642c0](https://github.com/nrkno/nrkno-sanity-libs/commit/73642c0c55724d45c566bacb0cc3a1a3ff8e14cb))
+
+
+
+
+
 ## [1.0.3](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-iframe-preview-api@1.0.2...@nrk/nrkno-iframe-preview-api@1.0.3) (2022-01-18)
 
 
