@@ -15,20 +15,19 @@
     "plugin-types"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json && sanipack build",
+    "build": "tsc --project tsconfig.build.json && sanipack build && sanipack verify",
     "watch": "sanipack build --watch",
     "clean": "cross-env rimraf build *.tsbuildinfo",
-    "test": "cross-env NODE_ENV=test jest",
-    "prepublishOnly": "npm run clean && npm run build && sanipack verify"
+    "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
     "@nrk/nrkno-sanity-react-utils": "1.0.0",
+    "@sanity/icons": "^1.2.3",
     "@sanity/ui": "^0.37.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@sanity/base": "^2.22.0",
-    "@sanity/icons": "^1.2.3",
     "@testing-library/react": "^12.1.2",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.0",
@@ -36,7 +35,6 @@
   },
   "peerDependencies": {
     "@sanity/base": "^2.22.0",
-    "@sanity/icons": "^1.2.3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },

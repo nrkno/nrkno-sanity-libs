@@ -20,11 +20,10 @@ sh:  cd <%= cwd %> && node scripts/add-new-package.js <%= package %>
     "src"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json && sanipack build",
+    "build": "tsc --project tsconfig.build.json && sanipack build && sanipack verify",
     "watch": "sanipack build --watch",
     "clean": "cross-env rimraf build *.tsbuildinfo",
-    "test": "cross-env NODE_ENV=test jest",
-    "prepublishOnly": "npm run clean && npm run build && sanipack verify"
+    "test": "cross-env NODE_ENV=test jest"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
