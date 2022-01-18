@@ -1,6 +1,6 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-iframe-preview",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
-    "@nrk/nrkno-sanity-react-utils": "^1.0.1",
+    "@nrk/nrkno-sanity-react-utils": "^1.0.2",
     "@sanity/icons": "^1.2.3",
     "@sanity/ui": "^0.37.0",
     "styled-components": "^5.3.3"
