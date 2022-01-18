@@ -145,13 +145,16 @@ All Sanity documents contains a _rev field. It changes everytime the document ch
 For Sanity Studio to know when the groq-query returns up-to-date data, IFramePreview will
 compare the _rev field in the current studio document, with the _rev field in the query.
 
-Therefore the `groqQuery` SHOULD contain the _rev-field projected at the top level,
+Therefore the `groqQuery` MUST contain the _rev-field projected at the top level,
 and it should correspond to the _rev field of the document edited in the studio.
 
-If _rev is not part of the query, IFramePreview in Sanity Studio will try to modify the query to include it, by replacing the first { in the query with {_rev,.
+It has to be explicitly projected, so it can be validated without running the query.
+Queries without projections can be easily rewritten like this:
 
-If the query contains no _rev AND no {, an error will be thrown.
+* Query without projection and _rev field: `*[_id == $id][0]`
+* Query WITH projection and _rev field: `*[_id == $id][0]{_rev, ...}`
 
+If the query contains no _rev an error will be thrown.
 
 ## Sequence diagram for dataflow
 

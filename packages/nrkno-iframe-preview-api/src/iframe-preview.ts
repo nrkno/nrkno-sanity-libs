@@ -96,6 +96,12 @@ function sendGROQ(
 ) {
   const resolveQuery = typeof groqQuery === 'function' ? groqQuery() : groqQuery;
   Promise.resolve(resolveQuery).then((query) => {
+    if (!query || !query.includes('_rev')) {
+      throw new Error(
+        `Invalid groq-message. Query MUST contain _rev as a projected field ala {_rev, ...}. Please refer to the docs. Query was: ${query}`
+      );
+    }
+
     window.parent?.postMessage(
       {
         type: 'groq',

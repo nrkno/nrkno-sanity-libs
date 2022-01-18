@@ -39,11 +39,6 @@ export function registerIFramePreviewListener(
       if (!queryData.query.includes('_rev')) {
         // We need the _rev field, so do a cheeky insert and hope for the best.
         // this is needed to fix legacy queries without _rev
-        if (!queryData.query.includes('{')) {
-          throw new Error(
-            `Invalid groq-message. Query MUST contain { and SHOULD contain _rev. Please refer to the docs. Query was: ${queryData.query}`
-          );
-        }
         queryData = {
           ...queryData,
           query: queryData.query.replace('{', '{_rev,'),

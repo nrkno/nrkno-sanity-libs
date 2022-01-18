@@ -125,21 +125,6 @@ describe('preview-utils', () => {
       messageListener(iframeEvent);
       expect(dispatch).toHaveBeenCalledWith(action);
     });
-
-    it('should throw Error when query does not have rev nor {', async () => {
-      const iframeEvent: { data: PreviewQuery } = {
-        data: {
-          type: 'groq',
-          query: '* [_id == $id][0]',
-          params: { id: 'id' },
-          apiVersion: 'X',
-        },
-      };
-
-      expect(() => messageListener(iframeEvent)).toThrow(
-        `Invalid groq-message. Query MUST contain { and SHOULD contain _rev. Please refer to the docs. Query was: ${iframeEvent.data.query}`
-      );
-    });
   });
 
   describe('ensureRevision', () => {
