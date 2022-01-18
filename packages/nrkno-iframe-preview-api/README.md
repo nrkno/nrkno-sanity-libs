@@ -131,7 +131,7 @@ export function MyApp(props: {initialData: QueryResult, enabledPreview: boolean}
         setAppState(data)
       }
     );
-  }, [] /* only un effect on mount */)
+  }, [] /* only run effect on mount */)
   
   // updates whenever we get data from Sanity studio
   return <div>{JSON.stringify(appState)}</div>
