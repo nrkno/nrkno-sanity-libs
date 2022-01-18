@@ -50,7 +50,7 @@
     "prepare": "husky install",
     "init": "npm run bootstrap && npm run build",
     "bootstrap": "lerna bootstrap --hoist --strict",
-    "publish:ci": "lerna publish --conventional-commits --yes",
+    "publish:ci": "npm run build && lerna publish --conventional-commits --yes",
     "prepublishOnly": "npm run build",
     "build": "npm run clean && tsc --build packages/tsconfig.project.json && lerna run build",
     "clean": "lerna run clean --stream",
