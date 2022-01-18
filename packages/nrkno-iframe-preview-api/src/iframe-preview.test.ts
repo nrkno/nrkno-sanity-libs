@@ -72,7 +72,7 @@ describe('iframe-preview', () => {
     expect(secondMessage).toEqual({ type: 'updated' });
   });
 
-  it('should post updated when listener receives data, and no groq-query is provided', () => {
+  it('should post updated when listener receives data, and no groq-query is provided', async () => {
     const parentPostMessage = jest.fn();
     const addListener = jest.fn();
     windowSpy.mockImplementation(() => ({
@@ -98,6 +98,7 @@ describe('iframe-preview', () => {
     messageCallback(messageFromStudio);
 
     // invoked first once with initial data
+    await Promise.resolve();
     expect(setData).toBeCalledTimes(2);
 
     const secondSetData = setData.mock.calls[1][0];
@@ -186,6 +187,7 @@ describe('iframe-preview', () => {
     const messageCallback = addListener.mock.calls[0][1];
     messageCallback(messageFromStudio);
 
+    await Promise.resolve();
     // invoked first once with initial data, then with result from groq-doc
     expect(setData).toBeCalledTimes(2);
 

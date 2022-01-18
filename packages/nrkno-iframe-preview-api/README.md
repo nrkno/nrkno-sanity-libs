@@ -43,6 +43,8 @@ const unloadPreview = initPreview<QueryResult | undefined>(
       // When this page is loaded by IFramePreview in Sanity Studio,
       // this callback will receive updated query-data whenever the Studio makes edits.
       // Use it to update your page in whatever way makes sense.
+      
+      // setData can be async
     }
 )
 

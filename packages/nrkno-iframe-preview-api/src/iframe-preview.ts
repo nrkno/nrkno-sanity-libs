@@ -42,7 +42,7 @@ export function initPreview<T>(
     queryParams = (d) => ({ id: d._id }),
     initialData,
   }: PreviewConfig<T>,
-  setData: (data: T | undefined) => void
+  setData: (data: T | undefined) => void | Promise<void>
 ) {
   function createMessageListener() {
     return async (event: MessageEvent) => {
@@ -56,7 +56,7 @@ export function initPreview<T>(
         if (!groqQuery) {
           // When no groqQuery is configured, just use the document provided by
           // Sanity Studio directly.
-          setData(event.data as unknown as T);
+          await setData(event.data as unknown as T);
           return postMessage('updated', origin);
         }
 
@@ -64,7 +64,7 @@ export function initPreview<T>(
       }
 
       if (eventType === 'groq-doc') {
-        setData(event.data as unknown as T);
+        await setData(event.data as unknown as T);
         return postMessage('updated', origin);
       }
     };
