@@ -11,10 +11,10 @@ import {
 import { useSetRefs } from '@nrk/nrkno-sanity-react-utils';
 import styles from './IFramePreview.css';
 
-export type IFramePreviewOptions = IFramePreviewBasicOpts & IOrientationConfig;
+export type IFramePreviewOpts = IFramePreviewBasicOpts & IOrientationConfig;
 
 export type IFramePreviewProps = IFramePreviewBasicProps & {
-  options: IFramePreviewOptions;
+  options: IFramePreviewOpts;
 };
 
 export const IFramePreview = forwardRef(function IFramePreview(
