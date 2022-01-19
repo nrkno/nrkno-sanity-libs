@@ -45,3 +45,10 @@ updates:
       - dependency-type: "production"
 
 
+  - package-ecosystem: "npm"
+    directory: "/packages/sanity-plugin-nrkno-schema-structure"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+
