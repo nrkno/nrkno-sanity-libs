@@ -495,7 +495,7 @@ describe('group-registry', () => {
   });
 });
 
-function createDoc(overrides: Partial<DocumentSchema> & { name: string }): DocumentSchema {
+export function createDoc(overrides: Partial<DocumentSchema> & { name: string }): DocumentSchema {
   return {
     type: 'document',
     fields: [],
