@@ -35,7 +35,7 @@ At the time of writing, NRK organize 60+ document schemas using this approach.
 The basic idea is to have schemas declare _what_ should be placed _where_ in a directory-like structure, without knowing _how_ it is done. 
 
 **nrkno-schema-structure** finds all schemas with `customStructure` and creates a structure-registry. Groups can be obtained by name, and
-contain everything that where decoratively added to them. Groups can then be composed into any
+contain everything that where declaratively added to them. Groups can then be composed into any
 [Sanity StructureBuilder](https://www.sanity.io/docs/structure-builder-introduction)
 hierarchy.
 
@@ -51,7 +51,7 @@ All custom structures support the `enabledForRoles` option out-of-the-box, which
 The declarative nature of this approach aligns well with [principles of nrkn-sanity](../../docs/nrkno-sanity-principles.md) and
 [option driven design](../sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)
 
-**nrkno-schema-structure** also supports defining views (split panes) in a declarative manner, using
+**nrkno-schema-structure** also supports views (split panes) in a declarative manner, using
 `customStructure.view`.
 
 The final structure is still fully customizable by each Studio, and the
