@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/sanity-plugin-nrkno-iframe-preview@1.0.3...@nrk/sanity-plugin-nrkno-iframe-preview@1.0.4) (2022-01-19)
+
+
+### Bug Fixes
+
+* respect clientVersion from api ([117167d](https://github.com/nrkno/nrkno-sanity-libs/commit/117167d821ecb4f23a133decb34cf15132f7d541))
+
+
+
+
+
 ## [1.0.3](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/sanity-plugin-nrkno-iframe-preview@1.0.2...@nrk/sanity-plugin-nrkno-iframe-preview@1.0.3) (2022-01-18)
 
 **Note:** Version bump only for package @nrk/sanity-plugin-nrkno-iframe-preview
