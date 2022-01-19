@@ -139,23 +139,25 @@ export const getDefaultDocumentNode = ({ schemaType }: { schemaType: string }) =
   return structureRegistry.getSchemaViews({ schemaType }) ?? S.document();
 };
 
+// Sanity supports async structure
 export default async () => {
-  // compose the Sanity Structure.
+  // Compose the Sanity Structure.
   // Can be combind with any amount of manual S.itemList nodes.
-  const itemPromises = [
-    // schemas with customStructure.group: 'group1' are contained in this group. Spread becuase the group might define divider over/under/both
-    ...structureRegistry.getGroup('group1'),
-    S.divider(),
-
+  const items = [
+    // schemas with customStructure.group: 'group1' are contained in this group. 
+    structureRegistry.getGroup('group1'),
+          
    // schemas without group is part of the ungrouped list, one listItem per schema (hence the spread)      
-    ...getUngrouped(),
    S.divider(),
+   structureRegistry.getUngrouped(),
+   S.divider(),
+          
    // schemas with customStructure.group: 'group2' are contained in this group
-   // notice the use of getGroupItems (as opposed to getGroup). This inlines the direct children of the group.
-   ...structureRegistry.getGroupItems('group2')
-  ].map((item) => Promise.resolve(item));
+   // notice the use of getGroupItems (as opposed to getGroup). 
+   // This inlines the direct children of the group.
+   structureRegistry.getGroupItems('group2')
+  ].flatMap(i => i); // flatmap to flatten everyting 
 
-  const items = (await Promise.all(itemPromises)).filter(isDefined);
   return S.list().title('Content').items(items);
 };
 ```
