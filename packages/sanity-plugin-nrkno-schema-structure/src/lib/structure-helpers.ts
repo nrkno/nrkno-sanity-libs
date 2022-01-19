@@ -17,10 +17,10 @@ export function createFromTopMenu(
   }
 
   const group = groups.find((g) => g.urlId === customStructure.group);
-  const isSingleton = customStructure.type === 'document-singleton';
   if (!group) {
     return true;
   }
+  const isSingleton = customStructure.type === 'document-singleton';
   const canAdd = group.addToCreateMenu || customStructure.addToCreateMenu === true;
   return canAdd && !isSingleton;
 }
