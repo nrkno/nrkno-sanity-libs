@@ -253,7 +253,7 @@ export function initStructureRegistry(config: StructureGroupConfig): StructureRe
       return [];
     }
     return [
-      spec.divider === 'under' || spec.divider === 'over-under' ? S.divider() : undefined,
+      spec.divider === 'over' || spec.divider === 'over-under' ? S.divider() : undefined,
       builder,
       spec.divider === 'under' || spec.divider === 'over-under' ? S.divider() : undefined,
     ].filter(isDefined);
