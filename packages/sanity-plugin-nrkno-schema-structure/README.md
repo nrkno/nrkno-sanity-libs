@@ -32,29 +32,31 @@ At the time of writing, NRK organize 60+ document schemas using this approach.
 
 ## Overview
 
-The basic idea is to have schemas declare _how_ they would like to be structured. The structure is organized in groups with subgroups, eg "named trees". This aligns with [principles of nrkn-sanity](../../docs/nrkno-sanity-principles.md) and
-[option driven design](../sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)
+The basic idea is to have schemas declare _what_ should be placed _where_ in a directory-like structure, without knowing _how_ it is done. 
 
-**nrkno-schema-structure** finds all schemas with `customStructure` defined and creates a structure-registry. Groups can be obtained by name as S.listItem, which will
-contain everything that where added to the group. The listItem can then be composed into any
+**nrkno-schema-structure** finds all schemas with `customStructure` and creates a structure-registry. Groups can be obtained by name, and
+contain everything that where decoratively added to them. Groups can then be composed into any
 [Sanity StructureBuilder](https://www.sanity.io/docs/structure-builder-introduction)
 hierarchy.
 
-Groups can contain subgroups (S.listItem) alongside document-lists (S.documentTypeList), document-singletons (S.document) and custom-builders (ad-hoc S.listItem builders).
+Groups can contain subgroups (S.listItem), document-lists (S.documentTypeList), document-singletons (S.document), custom-builders (ad-hoc S.listItem builders) and dividers (S.divider).
 
-All of these will be sorted by title (or sortKey), making it possible to
+All of these will be sorted by a sort-key (sortKey ?? title), making it possible to
 compose complex structure hierarchies locally from each schema.
 
 The library provides support for managing the "Create new document" menu, by filtering out schemas that should not appear there.
 
 All custom structures support the `enabledForRoles` option out-of-the-box, which makes it simple to hide schemas form users without access.
 
-**nrkno-schema-structure** also supports defining views in a declarative manner, using
+The declarative nature of this approach aligns well with [principles of nrkn-sanity](../../docs/nrkno-sanity-principles.md) and
+[option driven design](../sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)
+
+**nrkno-schema-structure** also supports defining views (split panes) in a declarative manner, using
 `customStructure.view`.
 
 The final structure is still fully customizable by each Studio, and the
 library can easily be composted with existing structure code. The API provides a list
-of all schemas that are considered ungrouped, so that they can be placed wherever it makes sense.
+of all ungrouped schemas, so that they can be placed wherever it makes sense.
 
 # Installation
 In Sanity studio project run:
