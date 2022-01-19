@@ -383,53 +383,56 @@ describe('group-registry', () => {
       },
     });
 
-    const entries = getSubgroupEntries({
-      groups: [
-        createSubgroup({ urlId: 'group1', title: 'group1' }),
-        createSubgroup({ urlId: 'group2', title: 'group2' }),
-        createSubgroup({ urlId: 'group3', title: 'group3 - sortKey x', sortKey: 'x' }),
-      ],
-      schemas: [
-        { schema, spec: { group: 'testGroup', type: 'document-list', title: 'list1' } },
-        { schema, spec: { group: 'otherGroup', type: 'document-list', title: 'list2' } },
-        {
-          schema,
-          spec: {
-            group: 'testGroup',
-            type: 'document-list',
-            title: 'list3 - sortKey aaa',
-            sortKey: 'aaa',
+    const entries = getSubgroupEntries(
+      {
+        groups: [
+          createSubgroup({ urlId: 'group1', title: 'group1' }),
+          createSubgroup({ urlId: 'group2', title: 'group2' }),
+          createSubgroup({ urlId: 'group3', title: 'group3 - sortKey å', sortKey: 'å' }),
+        ],
+        schemas: [
+          { schema, spec: { group: 'testGroup', type: 'document-list', title: 'list1' } },
+          { schema, spec: { group: 'otherGroup', type: 'document-list', title: 'list2' } },
+          {
+            schema,
+            spec: {
+              group: 'testGroup',
+              type: 'document-list',
+              title: 'list3 - sortKey abb',
+              sortKey: 'abb',
+            },
           },
-        },
-      ],
-      customItems: [
-        customWithTitle('custom1'),
-        customWithTitle('custom2'),
-        {
-          ...customWithTitle('custom3 - sortKey aa'),
-          spec: {
-            ...customWithTitle('custom3 - sortKey aa').spec,
-            sortKey: 'aa',
+        ],
+        customItems: [
+          customWithTitle('custom1'),
+          customWithTitle('custom2'),
+          {
+            ...customWithTitle('custom3 - sortKey ab'),
+            spec: {
+              ...customWithTitle('custom3 - sortKey ab').spec,
+              sortKey: 'ab',
+            },
           },
-        },
-      ],
-      documents: [
-        docWithTitle('doc1'),
-        docWithTitle('doc2'),
-        {
-          ...docWithTitle('doc3 - sortKey a'),
-          spec: {
-            ...docWithTitle('doc3 - sortKey a').spec,
-            sortKey: 'a',
+        ],
+        documents: [
+          docWithTitle('doc1'),
+          docWithTitle('doc2'),
+          {
+            ...docWithTitle('doc3 - sortKey a'),
+            spec: {
+              ...docWithTitle('doc3 - sortKey a').spec,
+              sortKey: 'a',
+            },
           },
-        },
-      ],
-      spec: { urlId: 'test', title: 'test', type: 'subgroup' },
-    });
+        ],
+        spec: { urlId: 'test', title: 'test', type: 'subgroup' },
+      },
+      'nb-NO'
+    );
     expect(entries.map((e) => e.spec.title)).toEqual([
       'doc3 - sortKey a',
-      'custom3 - sortKey aa',
-      'list3 - sortKey aaa',
+      'custom3 - sortKey ab',
+      'list3 - sortKey abb',
       'custom1',
       'custom2',
       'doc1',
@@ -438,7 +441,7 @@ describe('group-registry', () => {
       'group2',
       'list1',
       'list2',
-      'group3 - sortKey x',
+      'group3 - sortKey å',
     ]);
   });
 

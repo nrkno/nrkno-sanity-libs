@@ -4,7 +4,9 @@ import {
   CustomItem,
   CustomStructureSpec,
   CustomSubgroup,
+  DocumentList,
   GroupableSpec,
+  SingletonDocument,
   StructureBase,
   Subgroup,
   SubgroupSpec,
@@ -55,6 +57,9 @@ export interface GroupRegistryApi {
   ungroupedSchemas: DocumentSchema[];
   disabledSchemas: DocumentSchema[];
   enabledSchemas: DocumentSchema[];
+  getSubgroupEntries: (
+    subgroup: Subgroup
+  ) => (Subgroup | DocumentList | SingletonDocument | CustomItem)[];
   locale: string;
 }
 
@@ -115,6 +120,7 @@ export function initRegistry({
     manualSchemas,
     enabledSchemas,
     locale,
+    getSubgroupEntries: (subgroup: Subgroup) => getSubgroupEntries(subgroup, locale),
   };
 }
 
@@ -276,8 +282,8 @@ function removeEmptyGroups(groups: DocumentGroups) {
 
 export function getSubgroupEntries(
   { groups, schemas, documents, customItems }: Subgroup,
-  locale = DEFAULT_LOCALE
-) {
+  locale: string
+): (Subgroup | DocumentList | SingletonDocument | CustomItem)[] {
   return [...groups, ...schemas, ...documents, ...customItems].sort((a, b) =>
     sortSortable(a.spec, b.spec, locale)
   );

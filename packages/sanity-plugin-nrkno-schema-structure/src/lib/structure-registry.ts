@@ -1,11 +1,5 @@
 import { StructureBuilder as DefaultStructureBuilder } from '@sanity/structure';
-import {
-  CustomGroupId,
-  getSubgroupEntries,
-  GetUser,
-  initRegistry,
-  GroupRegistryApi,
-} from './group-registry';
+import { CustomGroupId, GetUser, initRegistry, GroupRegistryApi } from './group-registry';
 import { ListItemBuilder } from '@sanity/structure/lib/ListItem';
 import {
   CustomGroup,
@@ -180,7 +174,8 @@ export function initStructureRegistry(config: StructureGroupConfig): StructureRe
     if (!group) {
       return [];
     }
-    return getSubgroupEntries(group)
+    return getGroupRegistry()
+      .getSubgroupEntries(group)
       .map(specToBuilder)
       .reduce((x, y) => x.concat(y), typed<StructureItem[]>([]));
   }
@@ -227,7 +222,7 @@ export function initStructureRegistry(config: StructureGroupConfig): StructureRe
   }
 
   function subgroupList(subgroup: Subgroup): StructureItem[] {
-    const entries = getSubgroupEntries(subgroup);
+    const entries = getGroupRegistry().getSubgroupEntries(subgroup);
     const items = entries.map((structure) => {
       return hasAccess(structure.spec.enabledForRoles, specToBuilder(structure));
     });
