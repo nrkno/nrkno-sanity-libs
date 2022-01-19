@@ -19,6 +19,9 @@
     },
     {
       "path": "./nrkno-iframe-preview-api/tsconfig.build.json"
+    },
+    {
+      "path": "./sanity-plugin-nrkno-schema-structure/tsconfig.build.json"
     }
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "module": "esnext",
+    "target": "esnext",
+    "composite": true,
+    "jsx": "react",
+    "paths": {
+      "@sanity/structure/lib/*": [
+        "../../node_modules/@sanity/structure/dist/dts/*"
+      ]
+    }
+  },
+  "references": [],
+  "include": ["./src"],
+  "exclude": ["build", "plugin-types", "node_modules"]
+}

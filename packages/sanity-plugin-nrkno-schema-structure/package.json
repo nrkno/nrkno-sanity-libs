@@ -1,0 +1,47 @@
+{
+  "name": "@nrk/sanity-plugin-nrkno-schema-structure",
+  "version": "0.0.1",
+  "main": "./build/index.js",
+  "types": "./plugin-types/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrkno/nrkno-sanity-libs.git",
+    "directory": "packages/sanity-plugin-nrkno-schema-structure"
+  },
+  "files": [
+    "sanity.json",
+    "build",
+    "plugin-types",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && sanipack build && sanipack verify",
+    "watch": "sanipack build --watch",
+    "clean": "cross-env rimraf build *.tsbuildinfo",
+    "test": "cross-env NODE_ENV=test jest"
+  },
+  "dependencies": {
+    "@nrk/nrkno-sanity-typesafe-schemas": "^1.0.4"
+  },
+  "peerDependencies": {
+    "@sanity/base": "^2.22.0",
+    "@sanity/initial-value-templates": "^2.22.0",
+    "@sanity/structure": "^2.22.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "rimraf": "^3.0.2",
+    "sanipack": "^2.1.0",
+    "typescript": "^4.5.4",
+    "@sanity/base": "^2.22.0",
+    "@sanity/initial-value-templates": "^2.22.0",
+    "@sanity/structure": "^2.22.0",
+    "@sanity/types": "^2.22.0",
+    "@types/react": "^17.0.0"
+  },
+  "volta": {
+    "node": "14.17.5",
+    "npm": "6.14.14"
+  }
+}
