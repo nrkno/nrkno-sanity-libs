@@ -7,10 +7,10 @@
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "@sanity/base": "^2.22.0",
+    "@sanity/base": "^2.25.0",
     "@sanity/icons": "^1.2.3",
-    "@sanity/form-builder": "^2.22.0",
-    "@sanity/types": "^2.22.0",
+    "@sanity/form-builder": "^2.25.0",
+    "@sanity/types": "^2.24.0",
     "@testing-library/dom": "^8.11.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
