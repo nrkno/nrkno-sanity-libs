@@ -26,18 +26,18 @@
   "dependencies": {
     "@nrk/nrkno-sanity-react-utils": "^1.0.2",
     "@sanity/icons": "^1.2.3",
-    "@sanity/ui": "^0.37.0",
+    "@sanity/ui": "^0.37.2",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@sanity/base": "^2.22.0",
+    "@sanity/base": "^2.25.0",
     "@testing-library/react": "^12.1.2",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
   "peerDependencies": {
-    "@sanity/base": "^2.22.0",
+    "@sanity/base": "^2.25.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
