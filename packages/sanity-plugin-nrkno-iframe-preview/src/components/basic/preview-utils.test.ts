@@ -91,7 +91,7 @@ describe('preview-utils', () => {
           type: 'groq',
           query: '* [_id == $id][0] {_rev, ...}',
           params: { id: 'id' },
-          apiVersion: 'X',
+          clientVersion: 'X',
         },
       };
 
@@ -110,7 +110,7 @@ describe('preview-utils', () => {
           type: 'groq',
           query: '* [_id == $id][0] {...}',
           params: { id: 'id' },
-          apiVersion: 'X',
+          clientVersion: 'X',
         },
       };
 

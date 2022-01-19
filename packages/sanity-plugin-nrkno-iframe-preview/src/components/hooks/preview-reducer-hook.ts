@@ -27,7 +27,8 @@ export interface PreviewQuery {
   type: 'groq';
   query: string;
   params: Record<string, unknown>;
-  apiVersion?: string;
+  clientVersion?: string; // used by iframe-api
+  apiVersion?: string; // legacy
 }
 
 interface WaitAction {
@@ -72,7 +73,7 @@ export function usePreviewReducer(sanityClient: SanityClient) {
           previewDocument: undefined,
           groq: action.groq,
           sanityClient: sanityClient.withConfig({
-            apiVersion: action.groq.apiVersion ?? '2021-11-01',
+            apiVersion: action.groq.clientVersion ?? action.groq.apiVersion ?? '2021-11-01',
           }),
         };
       case 'WAIT_FOR_UPDATE':
