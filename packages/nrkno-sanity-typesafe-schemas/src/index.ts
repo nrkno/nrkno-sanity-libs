@@ -77,3 +77,4 @@ export {
   ValidationContext,
   ChildValidation,
 } from './schemas/util-types/validation';
+export { FieldGroup } from './schemas/field-group';

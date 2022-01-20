@@ -8,4 +8,7 @@ export interface FieldBase {
 
   /** https://www.sanity.io/docs/schema-types#readOnly-da6ffd43feed */
   readOnly?: boolean;
+
+  /** https://www.sanity.io/docs/field-groups */
+  group?: string | string[];
 }

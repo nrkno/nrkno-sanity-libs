@@ -3,6 +3,7 @@ import { Rule, Validation } from './util-types/validation';
 import { InitialValueProperty } from '@sanity/types';
 import { Fieldset } from './util-types/fieldset';
 import { GenericField } from './generic';
+import { FieldGroup } from './field-group';
 
 export interface DocumentOrdering {
   title: string;
@@ -36,6 +37,9 @@ export interface DocumentSchema extends SanitySchemaBase {
   fields: GenericField[];
 
   options?: DocumentOptions;
+
+  /** [Field Group docs]{@link https://www.sanity.io/docs/field-groups } */
+  groups?: FieldGroup[];
 }
 
 // allow for declaration merging

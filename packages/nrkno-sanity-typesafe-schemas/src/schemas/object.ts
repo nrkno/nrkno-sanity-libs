@@ -4,6 +4,7 @@ import { Fieldset } from './util-types/fieldset';
 import { ReactNode } from 'react';
 import { InitialValueProperty } from '@sanity/types';
 import { GenericField } from './generic';
+import { FieldGroup } from './field-group';
 
 /**
  * [Object docs](https://www.sanity.io/docs/object-type).
@@ -30,6 +31,9 @@ export interface ObjectSchema extends SanitySchemaBase {
   };
 
   fields: GenericField[];
+
+  /** [Field Group docs]{@link https://www.sanity.io/docs/field-groups } */
+  groups?: FieldGroup[];
 }
 
 /** [Object validation](https://www.sanity.io/docs/object-type#required()-418dc1fef733) */
