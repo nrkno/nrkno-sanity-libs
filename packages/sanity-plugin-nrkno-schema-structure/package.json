@@ -1,9 +1,12 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-schema-structure",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nrkno/nrkno-sanity-libs.git",
