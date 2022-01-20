@@ -1,11 +1,12 @@
 # @nrk/nrkno-iframe-preview-api
 
-Framework-agnostic library for interacting with [IFramePreview](../sanity-plugin-nrkno-iframe-preview/README.md)
+Framework-agnostic library for interacting with [IFramePreview](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/sanity-plugin-nrkno-iframe-preview#nrksanity-plugin-nrkno-iframe-preview)
 in Sanity Studio.
 
 `initPreview` should be used by the app rendered inside the iframe. 
 
-See docs in [@nrk/sanity-plugin-nrkno-iframe-preview](../sanity-plugin-nrkno-iframe-preview/README.md) for a detailed description of how this library works.
+See docs in [@nrk/sanity-plugin-nrkno-iframe-preview](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/sanity-plugin-nrkno-iframe-preview#nrksanity-plugin-nrkno-iframe-preview) 
+for a detailed description of how this library works.
 
 ![preview.png](./docs/images/preview.png)
 _Figure 1: Sanity form editor in the left pane, IFramePreview showing iframe content in the right pane._

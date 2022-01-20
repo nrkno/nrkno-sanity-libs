@@ -1,6 +1,8 @@
 # @nrk/sanity-plugin-nrkno-iframe-preview
 
 _This document assumes familiarity with [custom documents views in Sanity](https://www.sanity.io/docs/create-custom-document-views-with-structure-builder)._
+_It builds on the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sanity-libs/blob/master/docs/nrkno-sanity-principles.md) and
+[option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)._
 
 **nrkno-iframe-preview** provides a live-updated iframe preview component for Sanity Studio.
 
@@ -8,7 +10,7 @@ Queries are executed by Sanity Studio and passed to the iframe.
 The render-app in the iframe does _not_ need to listen for sanity client updates itself,
 but rather to messages from parent window.
 
-The app running in the iframe should use [`@nrk/nrkno-iframe-preview-api`](../nrkno-iframe-preview-api/README.md),
+The app running in the iframe should use [`@nrk/nrkno-iframe-preview-api`](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-iframe-preview-api#nrknrkno-iframe-preview-api),
 which allows it to specify a GROQ-query for the Studio to execute.
 
 The result of the query will be sent to the iframe whenever the query
@@ -32,7 +34,7 @@ This will install & add the plugin to sanity.json plugin array.
 * Use IFramePreview component in studio structure view.
     * Configure with render-app preview-url.
     * Optionally configure desktopMinWidth.
-* Use [nrkno-sanity-iframe-preview-api](../nrkno-iframe-preview-api/README.md) in the render-app.
+* Use [nrkno-sanity-iframe-preview-api](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-iframe-preview-api#nrknrkno-iframe-preview-api) in the render-app.
     * Configure a groq-query (or just use document directly from Sanity Studio as is).
 * Enjoy live-updated preview in Studio, with queries executed by the Studio on behalf of the render app.
 
@@ -126,10 +128,10 @@ export function TranslatedIFramePreview(props: IFramePreviewProps) {
 
 ### Define preview component from schema
 
-The above approach to document previews, where each schema gets a separate if-branch in getDefaultDocumentNode, goes counter to the [principles of nrkno-sanity](../../docs/nrkno-sanity-principles.md). It does not scale in a codebase with a large amount of schemas,
+The above approach to document previews, where each schema gets a separate if-branch in getDefaultDocumentNode, goes counter to the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sanity-libs/blob/master/docs/nrkno-sanity-principles.md). It does not scale in a codebase with a large amount of schemas,
 and does not optimzie for deletion (schema one in one file, preview config in another).
 
-We can enable iframe preview directly in the schema definition, more along the lines of [option driven design](../sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md) though.
+We can enable iframe preview directly in the schema definition, more along the lines of [option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md) though.
 
 Alternativly, take a look at @nrkno/sanity-plugin-nrkno-schema-structure.
 

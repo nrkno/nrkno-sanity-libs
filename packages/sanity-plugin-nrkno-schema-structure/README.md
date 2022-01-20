@@ -1,11 +1,14 @@
 # @nrk/sanity-plugin-nrkno-schema-structure
 
 _This document assumes familiarity with [Sanity StructureBuilder](https://www.sanity.io/docs/structure-builder-introduction)._
+_It builds on the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sanity-libs/blob/master/docs/nrkno-sanity-principles.md) and
+[option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)._
 
 **nrkno-schema-structure**
  allows schemas to use a declarative approach to Sanity Studio structure, by configuring a `customStructure` field in `document` schemas.
 
-This lib uses and extends DocumentSchema from [nrkno-sanity-typesafe-schemas](../nrkno-sanity-typesafe-schemas/README.md). It is recommended to use @nrk/nrkno-sanity-typesafe-schemas when creating schemas,
+This lib uses and extends DocumentSchema from [nrkno-sanity-typesafe-schemas](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-sanity-typesafe-schemas#nrknrkno-sanity-typesafe-schemas). 
+It is recommended to use @nrk/nrkno-sanity-typesafe-schemas when creating schemas,
 so this lib can be used in a typesafe manner.
 
 ## At-a-glance
@@ -48,8 +51,8 @@ The library provides support for managing the "Create new document" menu, by fil
 
 All custom structures support the `enabledForRoles` option out-of-the-box, which makes it simple to hide schemas form users without access.
 
-The declarative nature of this approach aligns well with [principles of nrkn-sanity](../../docs/nrkno-sanity-principles.md) and
-[option driven design](../sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)
+The declarative nature of this approach aligns well with the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sanity-libs/blob/master/docs/nrkno-sanity-principles.md) and
+[option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)
 
 **nrkno-schema-structure** also supports views (split panes) in a declarative manner, using
 `customStructure.view`.

@@ -59,7 +59,7 @@ Most features in the studio should be:
 * Optimize for deletion
 * Avoid merge-conflicts between unrelated features
 
-These can all be solved by [option driven design](../packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md).
+These can all be solved by [option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md).
 
 ## Implementing Option Driven Design
 
@@ -83,12 +83,12 @@ in this repo and additional unpublished code.
 
 NRK has implemented these libs and patterns to tackle the above:
 
-* [Typesafe schemas](../packages/nrkno-sanity-typesafe-schemas/README.md) - 
+* [Typesafe schemas](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-sanity-typesafe-schemas#nrknrkno-sanity-typesafe-schemas) - 
 underpins everything: typesafety and autocompletion brings feature discovery and through it option driven design. 
 All other features are integrated into the schema helpers using declaration merging. 
-* [Option driven design utils](../packages/sanity-plugin-nrkno-odd-utils) -
+* [Option driven design utils](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/sanity-plugin-nrkno-odd-utils#nrksanity-plugin-nrkno-odd-utils) -
 primarily a guiding principle for create custom components in the Studio that reuses built-in Studio features as much as possible. 
-* [Structure via options](../packages/sanity-plugin-nrkno-schema-structure) - Abstraction over StructureBuilder to allow schemas to define structure-configuration via options in an isolated manner.
+* [Structure via options](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/sanity-plugin-nrkno-schema-structure#nrksanity-plugin-nrkno-schema-structure) - Abstraction over StructureBuilder to allow schemas to define structure-configuration via options in an isolated manner.
 * **all-schemas.ts** - a code-organization-pattern to reduce merge-conflicts in createSchema. Described below.
 * **Schema instrumentation** - preprossess schema-definitions before passing them to createSchema. This way schemas can be augmented with
 additional fields ect based on options. Described below.
@@ -213,13 +213,13 @@ export default function resolveInput<
 }
 ```
 
-All options are added to [typesafe schemas](../packages/nrkno-sanity-typesafe-schemas/README.md) via declaration merging.
+All options are added to [typesafe schemas](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-sanity-typesafe-schemas#nrknrkno-sanity-typesafe-schemas) via declaration merging.
 Nrkno-sanity also maintains a IAllExtensionOptions union type that contains ALL options for all schema types, 
 specifically to have typesafety in input-resolver.ts.
 
 ### Structure
 
-nrkno-sanity uses [nrkno-schema-structure](../packages/sanity-plugin-nrkno-schema-structure) which makes building the Sanity structure easier.
+nrkno-sanity uses [nrkno-schema-structure](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/sanity-plugin-nrkno-schema-structure#nrksanity-plugin-nrkno-schema-structure) which makes composing the Sanity structure easier.
 
 All documents with `customStructure` are put in a directory-like data-structure,
 which can be mapped to StructureBuilder code.

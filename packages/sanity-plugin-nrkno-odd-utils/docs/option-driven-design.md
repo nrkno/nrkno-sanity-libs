@@ -236,7 +236,9 @@ function CustomComponent(props) {
 ## Making it all discoverable
 In a standard Sanity Studio, options are just as difficulty to discover as React-components.
 
-However, nrkno-sanity has [typesafe schema helper functions](../nrkno-sanity-typesafe-schemas/README.md) to levitate this.
+However, nrkno-sanity has 
+[typesafe schema helper functions](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-sanity-typesafe-schemas#nrknrkno-sanity-typesafe-schemas) 
+to levitate this.
 These allow us to add options to our typescript types, which will appear as autocomplete suggestions when creating schemas.
 
 ![feature-discovery.png](images/feature-discover.png)

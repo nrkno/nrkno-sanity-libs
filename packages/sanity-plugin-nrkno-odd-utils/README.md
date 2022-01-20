@@ -1,5 +1,7 @@
 # @nrk/sanity-plugin-nrkno-odd-utils
 
+_This lib expands on the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sanity-libs/blob/master/docs/nrkno-sanity-principles.md)._
+
 nrkno-odd-utils (odd = option driven design) contains a handful of utility functions and classes for working with
 [Sanity custom components](https://www.sanity.io/docs/custom-input-widgets).
 

@@ -1,5 +1,8 @@
 # @nrk/nrkno-sanity-typesafe-schemas
 
+_This library underpins the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sanity-libs/blob/master/docs/nrkno-sanity-principles.md) and
+[option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)._
+
 # Sanity Typesafe Schemas
 
 Utility functions to ease Sanity schema development:
