@@ -7,3 +7,4 @@ plugin-types
 coverage
 *.md
 package-lock.json
+*.json
