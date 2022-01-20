@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-sanity-typesafe-schemas@1.2.0...@nrk/nrkno-sanity-typesafe-schemas@1.2.1) (2022-01-20)
+
+**Note:** Version bump only for package @nrk/nrkno-sanity-typesafe-schemas
+
+
+
+
+
 # [1.2.0](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-sanity-typesafe-schemas@1.1.0...@nrk/nrkno-sanity-typesafe-schemas@1.2.0) (2022-01-20)
 
 
