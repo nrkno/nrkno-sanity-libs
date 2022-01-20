@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-sanity-typesafe-schemas@1.0.4...@nrk/nrkno-sanity-typesafe-schemas@1.1.0) (2022-01-20)
+
+
+### Features
+
+* added empty options to all schemas for consistency ([e378115](https://github.com/nrkno/nrkno-sanity-libs/commit/e378115cee45e8587aea083d4f745392524dcb77))
+
+
+
+
+
 ## [1.0.4](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-sanity-typesafe-schemas@1.0.3...@nrk/nrkno-sanity-typesafe-schemas@1.0.4) (2022-01-18)
 
 **Note:** Version bump only for package @nrk/nrkno-sanity-typesafe-schemas
