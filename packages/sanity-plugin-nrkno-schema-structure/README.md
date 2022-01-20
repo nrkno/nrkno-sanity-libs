@@ -28,7 +28,7 @@ schema('document', {
 })
 ```
 
-At the time of writing, NRK organize 60+ document schemas using this approach.
+At the time of writing, NRK organizes 60+ document schemas using this approach.
 
 ## Overview
 
