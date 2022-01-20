@@ -29,8 +29,8 @@
   },
   "peerDependencies": {
     "@sanity/base": "^2.25.0",
-    "@sanity/initial-value-templates": "^2.25.0",
-    "@sanity/structure": "^2.25.0"
+    "@sanity/initial-value-templates": "^2.24.0",
+    "@sanity/structure": "^2.24.0"
   },
   "devDependencies": {
     "@sanity/base": "^2.25.0",
