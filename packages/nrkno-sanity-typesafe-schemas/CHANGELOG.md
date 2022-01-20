@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-sanity-typesafe-schemas@1.1.0...@nrk/nrkno-sanity-typesafe-schemas@1.2.0) (2022-01-20)
+
+
+### Features
+
+* field groups ([48b42a4](https://github.com/nrkno/nrkno-sanity-libs/commit/48b42a479e1cb0e9cd2ed0ada5866b118134b8fd))
+* field groups ([9673950](https://github.com/nrkno/nrkno-sanity-libs/commit/96739504bc1638c6fee3e8aed6372ddcbc04b47c))
+
+
+
+
+
 # [1.1.0](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/nrkno-sanity-typesafe-schemas@1.0.4...@nrk/nrkno-sanity-typesafe-schemas@1.1.0) (2022-01-20)
 
 

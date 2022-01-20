@@ -1,6 +1,6 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-schema-structure",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",
@@ -25,7 +25,7 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
-    "@nrk/nrkno-sanity-typesafe-schemas": "^1.1.0"
+    "@nrk/nrkno-sanity-typesafe-schemas": "^1.2.0"
   },
   "peerDependencies": {
     "@sanity/base": "^2.25.0",
