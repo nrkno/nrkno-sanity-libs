@@ -108,10 +108,26 @@ declare module '@nrk/sanity-plugin-nrkno-schema-structure' {
   interface GroupRegistry extends CustomGroups {}
 }
 
-export const structureRegistry = initStructureRegistry({
+// part:@sanity/base/new-document-structure does not support promises.
+// Until it does, this verbose setup is required so we can lazyload the registry.
+// Unfortunatly, user cannot be resolved in time to support enabledForRoles
+// in "Create new" menu, so we must expose createStructureRegistry() as well     
+
+let structureRegistry: StructureRegistryApi;
+export const getStructureRegistry = () => {
+ if (!structureRegistry) {
+  structureRegistry = createStructureRegistry();
+ }
+ return structureRegistry;
+};
+
+export function createStructureRegistry() {
+ return initStructureRegistry({
   groups: Object.values(customGroups),
   locale: 'no-no' // locale used for sorting
-});
+ });
+}
+
 ```
 
 ## Configure "Create new" menu
@@ -119,9 +135,16 @@ export const structureRegistry = initStructureRegistry({
 Then configure the [create new document menu](https://www.sanity.io/docs/initial-value-templates#56b4073ca73a) :
 ```ts
 import { createInitialValueTemplates } from '@nrk/sanity-plugin-nrkno-schema-structure';
-import { structureRegistry } from './structure-registry';
+import { createStructureRegistry } from './structure-registry';
 
-const templates = createInitialValueTemplates(structureRegistry.getGroupRegistry());
+// part:@sanity/base/new-document-structure does not support promises.
+// Until it does, we have to init structureRegistry twice, once
+// before user is resolved (like here), and lazily with user resolved in structure.ts
+
+// Unfortunatly, user cannot be resolved in time to support enabledForRoles
+// in "Create new" menu, so we must use createStructureRegistry() here.
+
+const templates = createInitialValueTemplates(createStructureRegistry().getGroupRegistry());
 
 export default [...templates];
 ```
@@ -133,17 +156,17 @@ Then configure the Studio structure:
 import { StructureBuilder as S } from '@sanity/structure';
 import { isDefined } from '../types/type-util';
 import { authorStructure } from '../features/author/author';
-import { structureRegistry } from './structure-registry';
-
-const { getGroupItems, getGroup, getUngrouped } = structureRegistry;
+import { getStructureRegistry } from './structure-registry';
 
 export const getDefaultDocumentNode = ({ schemaType }: { schemaType: string }) => {
   // adds support for customStructure.views in schemas
-  return structureRegistry.getSchemaViews({ schemaType }) ?? S.document();
+  return getStructureRegistry().getSchemaViews({ schemaType }) ?? S.document();
 };
 
 // Sanity supports async structure
 export default async () => {
+  const { getGroupItems, getGroup, getUngrouped } = getStructureRegistry();
+  
   // Compose the Sanity Structure.
   // Can be combind with any amount of manual S.itemList nodes.
   const items = [

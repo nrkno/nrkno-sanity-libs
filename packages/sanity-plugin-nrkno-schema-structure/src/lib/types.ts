@@ -19,6 +19,14 @@ export interface StructureBase {
    *
    * Visit Sanity management console to find the role-ids.
    *
+   * Note if you use enabledForRoles, the document will not appear in
+   * the "create new" menu, because user cannot be resolved when the menu is populated.
+   *
+   * Documents not in the Create new menu cannot be created in place
+   * for references.
+   *
+   * This might change when part:@sanity/base/new-document-structure supports promises.
+   *
    * @example enabledForRoles: ['developer', 'administrator']
    * */
   enabledForRoles?: string[];
