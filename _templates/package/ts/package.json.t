@@ -21,5 +21,9 @@ sh:  cd <%= cwd %> && node scripts/add-new-package.js <%= package %>
     "build": "tsc --build tsconfig.build.json",
     "clean": "cross-env rimraf build *.tsbuildinfo",
     "test": "cross-env NODE_ENV=test jest"
+  },
+  "volta": {
+    "node": "14.17.5",
+    "npm": "6.14.14"
   }
 }

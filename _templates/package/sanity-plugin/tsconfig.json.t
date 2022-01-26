@@ -15,8 +15,4 @@ to: packages/<%= package %>/tsconfig.json
   "references": [],
   "include": ["./src"],
   "exclude": ["build", "plugin-types", "node_modules"],
-  "volta": {
-    "node": "14.17.5",
-    "npm": "6.14.14"
-  }
 }

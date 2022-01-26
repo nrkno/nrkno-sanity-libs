@@ -1,6 +1,5 @@
-import { useDebouncedEffect } from './hooks/debouce-hooks';
-import { useResizeObserver } from './hooks/resize-observer';
-import { useSetRefs } from './hooks/set-refs-hook';
-
 //Public API for the library
-export { useSetRefs, useDebouncedEffect, useResizeObserver };
+export { useDebouncedEffect } from './hooks/debouce-hooks';
+export { useResizeObserver } from './hooks/resize-observer';
+export { useSetRefs } from './hooks/set-refs-hook';
+export { useCurrentPrevious } from './hooks/current-previous';

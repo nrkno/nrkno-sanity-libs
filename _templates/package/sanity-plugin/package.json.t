@@ -25,10 +25,8 @@ sh:  cd <%= cwd %> && node scripts/add-new-package.js <%= package %>
     "clean": "cross-env rimraf build *.tsbuildinfo",
     "test": "cross-env NODE_ENV=test jest"
   },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "rimraf": "^3.0.2",
-    "sanipack": "^2.1.0",
-    "typescript": "^4.5.4"
+  "volta": {
+    "node": "14.17.5",
+    "npm": "6.14.14"
   }
 }
