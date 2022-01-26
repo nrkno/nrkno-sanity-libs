@@ -1,0 +1,22 @@
+/* force :focus to act like :focus-visible */
+.misspelledWord.misspelledWord input:focus:focus:focus {
+  box-shadow: inset 0 0 0 1px #2276fc, inset 0 0 0 1px #2276fc, 0 0 0 1px #2276fc;
+}
+
+.misspelledWordSelected.misspelledWordSelected.misspelledWordSelected {
+  background-color: #d2e3feff;
+  box-sizing: border-box;
+}
+
+.checkbox {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.misspelledWord:not(:first-child) {
+  background-color: aliceblue;
+}
+
+.checkboxTooltip {
+  max-width: 250px;
+}

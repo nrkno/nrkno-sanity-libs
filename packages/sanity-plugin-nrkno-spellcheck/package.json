@@ -1,0 +1,53 @@
+{
+  "name": "@nrk/sanity-plugin-nrkno-spellcheck",
+  "version": "0.0.1",
+  "main": "./build/index.js",
+  "types": "./plugin-types/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrkno/nrkno-sanity-libs.git",
+    "directory": "packages/sanity-plugin-nrkno-spellcheck"
+  },
+  "files": [
+    "sanity.json",
+    "build",
+    "plugin-types",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && sanipack build && sanipack verify",
+    "watch": "sanipack build --watch",
+    "clean": "cross-env rimraf build *.tsbuildinfo",
+    "test": "cross-env NODE_ENV=test jest"
+  },
+  "dependencies": {
+    "@nrk/core-suggest": "^1.2.0",
+    "@nrk/nrkno-sanity-react-utils": "^1.0.2",
+    "@sanity/icons": "^1.2.3",
+    "@sanity/ui": "^0.37.2",
+    "@sanity/field": "^2.25.0",
+    "@sanity/react-hooks": "^2.25.0",
+    "@sanity/types": "^2.24.0",
+    "@sanity/util": "^2.24.0",
+    "lodash": "^4.17.21",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@sanity/base": "^2.25.0",
+    "@testing-library/react": "^12.1.2",
+    "@types/react-dom": "^17.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "peerDependencies": {
+    "@sanity/base": "^2.25.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "volta": {
+    "node": "14.17.5",
+    "npm": "6.14.14",
+    "yarn": "1.22.17"
+  }
+}
