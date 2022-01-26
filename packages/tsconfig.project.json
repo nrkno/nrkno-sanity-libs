@@ -22,6 +22,9 @@
     },
     {
       "path": "./sanity-plugin-nrkno-schema-structure/tsconfig.build.json"
+    },
+    {
+      "path": "./sanity-plugin-nrkno-spellcheck/tsconfig.build.json"
     }
   ]
 }

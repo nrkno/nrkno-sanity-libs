@@ -52,3 +52,10 @@ updates:
     allow:
       - dependency-type: "production"
 
+  - package-ecosystem: "npm"
+    directory: "/packages/sanity-plugin-nrkno-spellcheck"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+

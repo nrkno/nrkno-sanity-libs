@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "module": "esnext",
+    "target": "esnext",
+    "composite": true,
+    "jsx": "react",
+    "lib": ["es5", "es6", "es2019", "dom"],
+    "paths": {
+      "@sanity/field/lib/*": ["../../node_modules/@sanity/field/dist/dts/*"],
+      "@sanity/util/lib/*": ["../../node_modules/@sanity/util/dist/dts/*"]
+    }
+  },
+  "references": [],
+  "include": ["./src"],
+  "exclude": ["build", "plugin-types", "node_modules"],
+  "volta": {
+    "node": "14.17.5",
+    "npm": "6.14.14"
+  }
+}
