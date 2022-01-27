@@ -8,11 +8,15 @@ nrkno-odd-utils (odd = option driven design) contains a handful of utility funct
 See docs about [option driven design](docs/option-driven-design.md) for more.
 
 # Installation
-In Sanity studio project run:
 
-`npx sanity install @nrk/sanity-plugin-nrkno-odd-utils`
+## Yarn
 
-This will run yarn install & add the plugin to sanity.json plugin array.
+`yarn add @nrk/sanity-plugin-nrkno-odd-utils`
+
+## npm
+
+`npm install --save @nrk/sanity-plugin-nrkno-odd-utils`
+
 
 # Usage
 
@@ -107,7 +111,7 @@ This is useful when unit-testing that props.type was modified correctly for inst
 
 # Develop
 
-This plugin is built with [https://www.npmjs.com/package/sanipack](sanipack).
+This plugin is built with [sanipack](https://www.npmjs.com/package/sanipack).
 
 
 ## Test the build

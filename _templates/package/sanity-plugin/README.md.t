@@ -8,11 +8,20 @@ Sanity plugin for Sanity Content Studio
 Type: <%= packageType %>
 
 # Installation
+
+## Yarn
+
 In Sanity studio project run:
 
 `npx sanity install @nrk/<%= package %>`
 
 This will run yarn install & add the plugin to sanity.json plugin array.
+
+## npm
+
+`npm install --save @nrk/<%= package %>`
+
+Add "@nrk/<%= package %>" to "plugins" in `sanity.json` manually.
 
 # Usage
 
