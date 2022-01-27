@@ -291,6 +291,43 @@ const spellchecker = new CachedSpellchecker({
 });
 ```
 
+## Configure a schema to support multiple languages
+
+To support multiple languages in the same document, fields in a document schema should be configured with 
+`options.spellcheck: Language | Language[]` or `options.spellcheck: false`.
+
+This is relevant, when providing Language[] array to ConfigureSpellcheckButton, or when
+multiple spellcheck button are used.
+
+Consider the following:
+
+### Fields
+
+All fields with a string _value_ are spellchecked.
+This includes string, text, portable-text spans as well as user-defined types that are stored
+as strings (json "string").
+
+The following field-types that are stored as string will NOT be spellchecked however:
+
+- A field with `options.spellcheck: false`
+- A field with `options.spellcheck: <languageCode>`, where language code differs from the language being spellchecked
+- Any field under root-type `slug`
+- Any field under root-type `reference`
+- `url`, `datetime` or `date` fields
+- Any field under `block`-type `marks`, `markDefs`, `style` or `list`
+- `string` or `text` fields with `options.list: []` defined
+- span.text in blocks
+- `text`-fields (when options.list is undefined)
+- `string`-fields (when options.list undefined)
+
+This might seem like a complicated list, but in general, this should "work as expected".
+
+### About multi-language documents
+When a document defines multiple languages, special care should be taken to add
+`options.spellcheck: <languageCode>` or `options.spellcheck: false`to all string, text or portable-text fields. If a spellcheck options is NOT provided, the field will be spellchecked
+in ALL languages.
+
+
 ## Opting out of the UI
 
 Some spellchecker have their own UI. This library can still come in handy as a way to
