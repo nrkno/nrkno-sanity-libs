@@ -1,8 +1,10 @@
 # @nrk/sanity-plugin-nrkno-spellcheck
 
 **nrkno-spellcheck** is a full document spellchecker for Sanity Studio.
-It handles the finding and correcting text based on the document schema.
-It does NOT come with functionality to do _actual_, word-by-word checking, so you must bring your own spellcheck service.
+
+It _finds_ and _replaces_ words based on the document schema configuration.
+
+It does _not_ perform _actual_, word-by-word checking; you must bring your own spellcheck service.
 
 ![spellcheck-dialog.png](docs/images/spellcheck-dialog.png)
 
@@ -75,11 +77,19 @@ _Figure 7: Popover showing that some spellcheck service batches failed._
 
 # Installation
 
+## Yarn
+
 In Sanity studio project run:
 
 `npx sanity install @nrk/sanity-plugin-nrkno-spellcheck`
 
 This will run yarn install & add the plugin to sanity.json plugin array.
+
+## npm
+
+`npm install --save @nrk/sanity-plugin-nrkno-spellcheck`
+
+Add "@nrk/sanity-plugin-nrkno-spellcheck" to "plugins" in `sanity.json` manually.
 
 # Usage
 
@@ -101,7 +111,13 @@ import {
   SpellcheckService,
 } from '@nrk/sanity-plugin-nrkno-spellcheck';
 
-const knownWords = ['slim', 'pickings'];
+export const dummyLanguage = {
+  code: 'dummy',
+  title: 'Dummy language',
+}
+
+const suggestions = ['slim', 'pickings'];
+
 export const spellcheckService: SpellcheckService = async function dummy(
   words: string[],
   language: Language
@@ -126,7 +142,7 @@ import {
   DisplayTexts,
   DisplayTextsContext,
 } from '@nrk/sanity-plugin-nrkno-spellcheck';
-import { languages, spellcheckService } from './dummy-spellcheck-service';
+import { dummyLanguage, spellcheckService } from './dummy-spellcheck-service';
 
 // running spellcheck twice for the same language will use cached suggestions
 // this instance can be reused between components
@@ -134,11 +150,6 @@ const spellchecker = new CachedSpellchecker({ spellcheckService });
 
 // default: words less than 3 letters, in all caps or with numbers are skipped
 const wordParser = createWordParser(/*{ config is optional }*/);
-
-const dummyLanguage = {
-  code: 'dummy',
-  title: 'Dummy language',
-}
 
 export const DocumentWithSpellcheck = forwardRef(function Language(
   // taking some liberties with typing for the example
@@ -158,6 +169,7 @@ export const DocumentWithSpellcheck = forwardRef(function Language(
       <ConfiguredSpellcheckButton
         type={type}
         document={props.value}
+        {/*Make sure language is memoized. Ie, DONT do this, as it will adversly trigger hooks in the spellchecker: language={{code: 'lang', title: 'Lang',}}*/}
         language={dummyLanguage}
         wordChecker={spellchecker.spellcheck}
         wordParser={wordParser}
@@ -298,23 +310,23 @@ import { getSpellcheckedValues } from '@nrk/sanity-plugin-nrkno-spellcheck';
 const spellcheckValues: OffsetPathValue[][] = getSpellcheckedValues(doc, type, language);
 ```
 
-### ReplaceOperation and useCommitSpellcheckChanges 
+### ReplaceOperation and useCommitReplaceOperations 
 
 Replacing text in a document can be done by providing a ReplaceOperations[] array to
-useCommitSpellcheckChanges-hook.
+useCommitReplaceOperations-hook.
 
 ```ts
 import {
   ReplaceOperation,
-  useCommitSpellcheckChanges
+  useCommitReplaceOperations
 } from '@nrk/sanity-plugin-nrkno-spellcheck';
 
 const [replaceOps, setReplaceOps] = useState<ReplaceOperation[]>([]);
 
 // whenever replaceOps changes, ie when setReplaceOps is invoked
-// useCommitSpellcheckChanges will immideatly apply the replace operations to the document
+// useCommitReplaceOperations will immideatly apply the replace operations to the document
 // and call setReplaceOps([]).
-useCommitSpellcheckChanges(doc, type, replaceOps, setReplaceOps);
+useCommitReplaceOperations(doc, type, replaceOps, setReplaceOps);
 
 
 // somewhere else, to trigger document replacements 
@@ -329,7 +341,7 @@ When ConfiguredSpellcheckButton is clicked the following happens:
 3. All unique words are passed to `SpellcheckService`. When `CachedSpellchecker.spellcheck` is used, words are batched and sent to the spellcheck function. Words returned from `SpellcheckService` with suggestions are considered misspelled.
 4. Misspelled words are grouped and the spellcheck dialog is opened.
 5. After the user has made corrections and hits accept, all corrections are mapped to `ReplaceOperation`. 
-6. `ReplaceOperation[]` is then consumed by `useCommitSpellcheckChanges`:
+6. `ReplaceOperation[]` is then consumed by `useCommitReplaceOperations`:
 7. Now, the document is checked for changes. If a ReplaceOperation addresses a string that has changed since spellcheck started, it is discarded.
 8. Any remaining ReplaceOperations are mapped to sanity patches. ReplaceOperations addressing the same string are merged into a single set-patch.
 9. Finally, the patches are applied to the document and the
@@ -339,14 +351,14 @@ user is notified about the result in a toast.
 
 NRK uses this library to integrate with Divvun and Tansa spellchecker-apis.
 
-The Divvun integration uses `ConfiguredSpellcheckButton` and simply provide a spellcheckService function that fetches suggestions from a divvun-server api.
+The Divvun integration uses `ConfiguredSpellcheckButton` and simply provide a spellcheck service function that fetches suggestions from a divvun-server api.
 
 The Tansa 4 integration:
 * uses `getSpellcheckedValues` to find spellchecked text
-* merge it all into one big, addressable string
-* send the string to the Tansa js-spellchecker UI/api 
-* create `ReplaceOperation[]` based on Tansa callbacks
-* `useCommitSpellcheckChanges` to patch the document.
+* merges it all into one big, addressable string
+* sends the string to the Tansa js-spellchecker UI/api 
+* creates `ReplaceOperation[]` based on Tansa callbacks
+* `useCommitReplaceOperations` to patch the document.
 
 
 # Develop

@@ -24,9 +24,10 @@
 
 .expandIcon {
   font-size: 20px;
+  margin-top: -0.25em;
 }
 
 .expandedIcon {
   font-size: 20px;
-  margin-top: -3px;
+  margin-top: -0.25em;
 }

@@ -11,7 +11,7 @@ import { SpellcheckResult } from './SpellcheckResult';
 import { NoSpellcheckErrors } from './NoSpellcheckErrors';
 import { ReplaceOperation } from '../../../core/types';
 import { CorrectedWords } from '../../reducer/spellcheck-reducer';
-import { useCommitSpellcheckChanges } from '../../../core/document/commit-hook';
+import { useCommitReplaceOperations } from '../../../core/document/commit-hook';
 import { useDisplayText } from '../display-texts/DisplayTexts';
 
 interface IProps {
@@ -37,7 +37,7 @@ export function SpellcheckDialog({ document, type }: IProps) {
   const progress = useContext(ProgressContext);
   const activeCorrection = useContext(ActiveCorrection);
 
-  useCommitSpellcheckChanges(document, type, replaceOps, setReplaceOps);
+  useCommitReplaceOperations(document, type, replaceOps, setReplaceOps);
 
   const onClose = useCallback(() => dispatch({ type: 'SPELLCHECK_RESET_STATE' }), [dispatch]);
   const onAccept = useAcceptCorrections(words, setReplaceOps, onClose);
