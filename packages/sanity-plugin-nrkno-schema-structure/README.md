@@ -62,11 +62,20 @@ library can easily be composted with existing structure code. The API provides a
 of all ungrouped schemas, so that they can be placed wherever it makes sense.
 
 # Installation
+
+## Yarn
+
 In Sanity studio project run:
 
 `npx sanity install @nrk/sanity-plugin-nrkno-schema-structure`
 
 This will run yarn install & add the plugin to sanity.json plugin array.
+
+## npm
+
+`npm install --save @nrk/sanity-plugin-nrkno-schema-structure`
+
+Add "@nrk/sanity-plugin-nrkno-schema-structure" to "plugins" in `sanity.json` manually.
 
 # Usage
 
