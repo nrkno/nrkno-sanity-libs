@@ -86,27 +86,5 @@ describe('spellcheck-patch', () => {
         },
       ]);
     });
-
-    ['.', '*', '+', '?', '^', '$', '{', '}', '(', ')', '|'].forEach((symbol) => {
-      it(`it should replace string with regex-symbol ${symbol}`, () => {
-        const replacement = symbol + 'b';
-        const patches = createPathPatches([
-          {
-            textToReplace: symbol,
-            replacement: replacement,
-            pathValue: {
-              value: symbol,
-              path: ['field1'],
-              type: stringType,
-              spellcheck: true,
-              parentFieldTypes: [],
-            },
-            startPos: 0,
-          },
-        ]);
-
-        expect(patches).toEqual([{ set: { field1: replacement } }]);
-      });
-    });
   });
 });

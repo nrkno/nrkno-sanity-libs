@@ -14,7 +14,7 @@ interface CreateToastArgs {
   displayTexts: DisplayTexts;
 }
 
-export function useCommitSpellcheckChanges(
+export function useCommitReplaceOperations(
   doc: SanityDocument,
   type: ObjectSchemaType,
   replaceOps: ReplaceOperation[],

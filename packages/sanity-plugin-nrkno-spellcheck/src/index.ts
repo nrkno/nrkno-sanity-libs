@@ -7,7 +7,7 @@ export { getMisspelledWords } from './lib/core/words/misspelled-words';
 
 export { createWordParser, defaultWordParserOptions } from './lib/core/words/word-parser';
 
-export { useCommitSpellcheckChanges } from './lib/core/document/commit-hook';
+export { useCommitReplaceOperations } from './lib/core/document/commit-hook';
 export { createPathPatches, createPathPatch } from './lib/core/document/document-patch';
 
 export {
