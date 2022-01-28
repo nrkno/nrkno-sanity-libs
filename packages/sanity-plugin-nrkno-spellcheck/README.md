@@ -400,4 +400,17 @@ The Tansa 4 integration:
 
 # Develop
 
+In this directory
+
+```bash
+npm run build
+npm link
+```
+
+```bash
+cd /path/to/my-studio
+npm link @nrk/sanity-plugin-nrkno-schema-structure
+```
+
+
 This plugin is built with [sanipack](https://www.npmjs.com/package/sanipack).
