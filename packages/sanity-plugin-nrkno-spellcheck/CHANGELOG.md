@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/sanity-plugin-nrkno-spellcheck@0.0.2...@nrk/sanity-plugin-nrkno-spellcheck@0.1.0) (2022-01-28)
+
+
+### Features
+
+* initial public release of nrkno-spellcheck ([ca36f78](https://github.com/nrkno/nrkno-sanity-libs/commit/ca36f788b74fcc0283fa7ac8739468c57a132de4))
+
+
+
+
+
 ## 0.0.2 (2022-01-28)
 
 
