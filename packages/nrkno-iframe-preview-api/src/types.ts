@@ -53,6 +53,21 @@ export interface PreviewConfig<T> {
    * {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#syntax passed to postMessage targetOrigin}
    */
   origin?: string;
+
+  /**
+   * When true, the iframe-api-code will log debug-messages in console.log.
+   *
+   * This is useful to determine why the preview is not working correctly (spinner not disappearing ect),
+   * or to get insight into the message-flow between the Studio and iframe.
+   *
+   * Since the iframe is embedded in Sanity Studio, these messages will appear in the
+   * browser console of the Studio. IFramePreview can be configured to emit debug-logs separately.
+   *
+   * debug can also be a function conforming to console.log signature.
+   * The function will be used in place of console.log.
+   *
+   */
+  debug?: boolean | typeof console.log;
 }
 
 export interface StudioDocument {
