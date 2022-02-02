@@ -1,9 +1,9 @@
 import { PreviewConfig, MessageEvent } from './types';
 
+type Logger = typeof console.log;
 export const DEFAULT_SANITY_CLIENT_VERSION = '2021-06-01';
 
 /**
- *
  * ## Usage
  * ```ts
  * import { initPreview } from '@nrk/sanity-plugin-nrkno-iframe-preview'
@@ -41,15 +41,64 @@ export function initPreview<T>(
     sanityClientVersion,
     queryParams = (d) => ({ id: d._id }),
     initialData,
+    debug = false,
   }: PreviewConfig<T>,
   setData: (data: T | undefined) => void | Promise<void>
 ) {
+  const logger = createDebugLogger(debug);
+  const setDataInner = setData;
+  setData = (data: T | undefined) => {
+    logger('Invoking setData with:', data);
+    return setDataInner(data);
+  };
+
+  logger('Initializing iframe preview using config:', {
+    origin,
+    groqQuery,
+    sanityClientVersion,
+    queryParams,
+    initialData,
+    debug,
+  });
+
+  function postMessage(messageType: 'ready' | 'updated', origin: string) {
+    const message = { type: messageType };
+    logger('Send message', message);
+    window.parent?.postMessage(message, origin);
+  }
+
+  function sendGROQ(
+    groqQuery: PreviewConfig<unknown>['groqQuery'],
+    params: Record<string, unknown>,
+    sanityClientVersion = DEFAULT_SANITY_CLIENT_VERSION,
+    origin: string
+  ) {
+    const resolveQuery = typeof groqQuery === 'function' ? groqQuery() : groqQuery;
+    Promise.resolve(resolveQuery)
+      .then((query) => {
+        if (!query || !query.includes('_rev')) {
+          throw new Error(
+            `Invalid groq-message. Query MUST contain _rev as a projected field ala {_rev, ...}. Please refer to the docs.\n
+            Query was:\n${query}`
+          );
+        }
+        const message = { type: 'groq', query: query, params, clientVersion: sanityClientVersion };
+        logger('Send groq message', message);
+        window.parent?.postMessage(message, origin);
+      })
+      .catch((e) => {
+        logger('Failed to resolve groqQuery', e);
+        throw e;
+      });
+  }
+
   function createMessageListener() {
     return async (event: MessageEvent) => {
-      const id = event.data._id;
       const eventType = event.data._eventType;
+      logger('Receive message', event.data);
 
-      if (!id || !eventType) {
+      if (!eventType) {
+        logger('Warning: received message without eventType. This is unexpected.');
         return;
       }
       if (eventType === 'doc') {
@@ -81,35 +130,18 @@ export function initPreview<T>(
   // removes spinner in Sanity Studio
   postMessage('updated', origin);
 
-  return () => window.removeEventListener('message', eventListener);
+  return () => {
+    logger('Removing iframe-preview window message listener.');
+    window.removeEventListener('message', eventListener);
+  };
 }
 
-function postMessage(messageType: 'ready' | 'updated', origin: string) {
-  window.parent?.postMessage({ type: messageType }, origin);
+function createDebugLogger(debug: PreviewConfig<unknown>['debug']): Logger {
+  return debug ? (typeof debug === 'function' ? debug : createDefaultLogger()) : () => {};
 }
 
-function sendGROQ(
-  groqQuery: PreviewConfig<unknown>['groqQuery'],
-  params: Record<string, unknown>,
-  sanityClientVersion = DEFAULT_SANITY_CLIENT_VERSION,
-  origin: string
-) {
-  const resolveQuery = typeof groqQuery === 'function' ? groqQuery() : groqQuery;
-  Promise.resolve(resolveQuery).then((query) => {
-    if (!query || !query.includes('_rev')) {
-      throw new Error(
-        `Invalid groq-message. Query MUST contain _rev as a projected field ala {_rev, ...}. Please refer to the docs. Query was: ${query}`
-      );
-    }
-
-    window.parent?.postMessage(
-      {
-        type: 'groq',
-        query: query,
-        params,
-        clientVersion: sanityClientVersion,
-      },
-      origin
-    );
-  });
+function createDefaultLogger() {
+  return (message?: any, ...optionalParams: any[]) =>
+    // eslint-disable-next-line no-console
+    console.log('%c iframe-preview-api', 'color: blue', message, ...optionalParams);
 }

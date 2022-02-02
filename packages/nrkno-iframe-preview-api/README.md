@@ -19,6 +19,8 @@ _Figure 1: Sanity form editor in the left pane, IFramePreview showing iframe con
 
 Refer to [jsdocs for each config-param](src/types.ts) for details.
 
+For any issues, see "Usage checklist" and "Debugging issues" below.
+
 ## Basic usage
 
 ```ts
@@ -54,6 +56,20 @@ const unloadPreview = initPreview<QueryResult | undefined>(
 unloadPreview()
 ```
 
+## Usage Checklist
+
+Ensure that:
+* your query explicitly contains _rev as a projected field. For details, see "About the _rev field".
+* queryParams function is invoked, and that you are returning an object with all query parameters used by your query.
+  * Example query: `* [slug=$slug]{_rev, _id, slug, title, body }[0]`
+  * Example queryParams: `doc => {slug: doc.slug}`
+  * Note: the doc passed to queryParams is active document in Sanity Studio, not the one returned by the groqQuery
+* the setData function handles `undefined` values.
+* the setData function is receiving data, is updating your view and not is throwing an error.
+
+Use `debug: true` for diagnostics (see below). Use it to find the query and params used for each update by the Studio to debug parameterized queries (for instance, by running
+them in Vision).
+
 ## Advanced usage
 
 ```ts
@@ -82,6 +98,22 @@ const unloadPreview = initPreview<QueryResult | undefined>(
 
 // whenever the component that uses the preview is unmounted, ensure to call
 unloadPreview()
+```
+
+### Debugging issues
+Provide `debug: true` as a config parameter.
+The log messages in console.log should provide a trace of any issues.
+
+```ts
+initPreview<QueryResult | undefined>(
+    {
+      // This flag will make the lib log messages being passed between Sanity Studio and the iframe 
+      debug: true,
+      // debug: process.env.NODE_ENV !== production
+      groqQuery: "* [_type='my-page' && _id == $id]{_rev, ...}[0]",
+    },
+    (data) => {/* omitted */ }
+)
 ```
 
 ## Use Studio document as is
@@ -179,5 +211,8 @@ npm link
 cd /path/to/your/render/app
 npm link  @nrk/sanity-plugin-nrkno-iframe-preview
 ```
+
+If you use volta, you must ensure that your render app also uses volta, otherwise
+npm link will not work correctly.
 
 Remember to use localhost url in the Studio to test the IFramePreview component with the app using the linked lib.
