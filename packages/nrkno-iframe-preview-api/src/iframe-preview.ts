@@ -78,7 +78,7 @@ export function initPreview<T>(
       .then((query) => {
         if (!query || !query.includes('_rev')) {
           throw new Error(
-            `Invalid groq-message. Query MUST contain _rev as a projected field ala {_rev, ...}. Please refer to the docs.\n
+            `Invalid groq-message. Query MUST contain _rev as a projected field ala {_rev, ...}. Please refer to the docs at https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-iframe-preview-api#about-the-_rev-field\n
             Query was:\n${query}`
           );
         }
