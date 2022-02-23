@@ -28,6 +28,7 @@ export interface ObjectSchema extends SanitySchemaBase {
   /** [Customize block editor](https://www.sanity.io/docs/customization) */
   blockEditor?: {
     icon?: (props: unknown) => ReactNode;
+    render?: (props: unknown) => ReactNode;
   };
 
   fields: GenericField[];
