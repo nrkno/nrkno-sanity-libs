@@ -251,6 +251,7 @@ describe('spellcheck-values', () => {
               },
             },
           ],
+          __experimental_search: [],
         },
       },
     ]);
@@ -280,6 +281,7 @@ describe('spellcheck-values', () => {
           type: stringType,
         },
       ],
+      __experimental_search: [],
     };
     const schema = docSchema([
       {
@@ -350,6 +352,7 @@ function docSchema(fields: ObjectField[]): ObjectSchemaType {
     jsonType: 'object',
     name: 'some-doc',
     fields,
+    __experimental_search: [],
   };
 }
 
@@ -369,6 +372,7 @@ const spanType = typed<ObjectSchemaType>({
   jsonType: 'object',
   fields: [{ name: 'text', type: { name: 'string', jsonType: 'string' } }],
   type: { name: 'span', jsonType: 'object', type: null } as any,
+  __experimental_search: [],
 });
 
 const childrenType = typed<ArraySchemaType>({
@@ -383,4 +387,5 @@ const blockType = typed<ObjectSchemaType>({
   jsonType: 'object',
   fields: [{ name: 'children', type: childrenType }],
   type: { name: 'block', jsonType: 'object', type: null } as any,
+  __experimental_search: [],
 });

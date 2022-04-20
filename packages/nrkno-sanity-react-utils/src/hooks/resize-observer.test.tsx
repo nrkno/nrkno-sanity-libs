@@ -10,6 +10,7 @@ describe('resize-observer', () => {
     const MockObserver: typeof window.ResizeObserver = class MockResizeObserver {
       constructor(callback: ResizeObserverCallback) {
         currentCallback = callback;
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         currentObserver = this;
       }
       public disconnect = jest.fn();
@@ -55,6 +56,7 @@ describe('resize-observer', () => {
           contentRect: mockRect,
           contentBoxSize: [], // unused in tests
           borderBoxSize: [], // unused in tests
+          devicePixelContentBoxSize: [], // unused in tests
         },
       ],
       undefined as unknown as ResizeObserver
