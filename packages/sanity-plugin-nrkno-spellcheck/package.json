@@ -1,6 +1,6 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-spellcheck",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nrk/core-suggest": "^1.2.0",
-    "@nrk/nrkno-sanity-react-utils": "^1.1.0",
+    "@nrk/nrkno-sanity-react-utils": "^1.1.1",
     "@sanity/field": "^2.29.5",
     "@sanity/icons": "^1.2.8",
     "@sanity/react-hooks": "^2.29.5",
