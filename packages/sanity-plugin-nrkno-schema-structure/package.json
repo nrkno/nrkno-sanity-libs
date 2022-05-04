@@ -1,6 +1,6 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-schema-structure",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-iframe-preview",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",
