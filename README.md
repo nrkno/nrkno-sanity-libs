@@ -32,6 +32,12 @@ Rerun `npm run init` after package dependencies have change, to hoist & link eve
 
 To test a package in another project, use npm link/yarn link.
 
+## Upgrading minor Sanity dependencies
+
+`npm run upgrade:sanity`
+
+Script will upgrade (minor) Sanity dependencies in the root and all packages, install, hoist and link everything. 
+
 ## Commits & Versioning
 
 All commits on master should follow
