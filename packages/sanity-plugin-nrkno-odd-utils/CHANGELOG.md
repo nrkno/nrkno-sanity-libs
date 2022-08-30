@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.12](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/sanity-plugin-nrkno-odd-utils@1.0.11...@nrk/sanity-plugin-nrkno-odd-utils@1.0.12) (2022-08-30)
+
+**Note:** Version bump only for package @nrk/sanity-plugin-nrkno-odd-utils
+
+
+
+
+
 ## [1.0.11](https://github.com/nrkno/nrkno-sanity-libs/compare/@nrk/sanity-plugin-nrkno-odd-utils@1.0.10...@nrk/sanity-plugin-nrkno-odd-utils@1.0.11) (2022-06-14)
 
 **Note:** Version bump only for package @nrk/sanity-plugin-nrkno-odd-utils
