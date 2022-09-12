@@ -1,8 +1,9 @@
 import React, { PropsWithChildren, useCallback, useContext } from 'react';
-import { Box, Button, Card, Flex, Label, Popover, Stack, Tooltip, TooltipProps } from '@sanity/ui';
+import { Box, Button, Card, Flex, Label, Popover, Stack, Tooltip } from '@sanity/ui';
 import { SpellcheckDispatch } from './SpellcheckContext';
 import { SpellcheckProgressbar } from './SpellcheckProgressbar';
-import { SpellcheckProgress } from '../../core/types';
+import type { SpellcheckProgress } from '../../core/types';
+import type { TooltipProps } from '@sanity/ui';
 import { useDisplayText } from './display-texts/DisplayTexts';
 
 interface ITooltipProps {
