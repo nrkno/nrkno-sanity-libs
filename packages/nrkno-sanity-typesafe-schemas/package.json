@@ -1,6 +1,6 @@
 {
   "name": "@nrk/nrkno-sanity-typesafe-schemas",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "license": "MIT",
