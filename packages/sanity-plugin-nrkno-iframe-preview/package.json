@@ -30,14 +30,14 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@sanity/base": "^2.33.3",
+    "@sanity/base": "^2.34.0",
     "@testing-library/react": "^12.1.2",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
   "peerDependencies": {
-    "@sanity/base": "^2.33.3",
+    "@sanity/base": "^2.34.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
