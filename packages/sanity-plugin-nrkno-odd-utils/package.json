@@ -1,6 +1,6 @@
 {
   "name": "@nrk/sanity-plugin-nrkno-odd-utils",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "main": "./build/index.js",
   "types": "./plugin-types/index.d.ts",
   "license": "MIT",
