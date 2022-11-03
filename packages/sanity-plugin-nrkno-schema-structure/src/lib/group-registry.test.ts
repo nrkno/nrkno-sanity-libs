@@ -4,7 +4,7 @@ import {
   getSubgroupEntries,
   initRegistry,
 } from './group-registry';
-import { DocumentSchema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { DocumentDefinition } from 'sanity';
 import {
   CustomItem,
   CustomStructureSpec,
@@ -53,11 +53,11 @@ declare module './group-registry' {
 
 describe('group-registry', () => {
   test('should init registry with groups', async () => {
-    const inTestGroup: DocumentSchema = createDoc({
+    const inTestGroup: DocumentDefinition = createDoc({
       name: 'inTestGroup',
       customStructure: { type: 'document-list', group: 'testGroup' },
     });
-    const ungrouped: DocumentSchema = createDoc({ name: 'ungrouped' });
+    const ungrouped: DocumentDefinition = createDoc({ name: 'ungrouped' });
 
     const registry = initRegistry({
       schemas: [inTestGroup, ungrouped],
@@ -80,7 +80,7 @@ describe('group-registry', () => {
   });
 
   test('should put schema in manual list', async () => {
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'schema',
       customStructure: { type: 'manual' },
     });
@@ -121,7 +121,7 @@ describe('group-registry', () => {
   });
 
   test('should remove disabled schema', async () => {
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'animation1',
       type: 'document',
       fields: [],
@@ -141,7 +141,7 @@ describe('group-registry', () => {
   });
 
   test('should remove disabled group', async () => {
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'animation1',
       type: 'document',
       fields: [],
@@ -161,7 +161,7 @@ describe('group-registry', () => {
   });
 
   test('should remove schema when user is missing role for group', async () => {
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'animation1',
       type: 'document',
       fields: [],
@@ -187,7 +187,7 @@ describe('group-registry', () => {
   });
 
   test('should remove schema when user is missing role for schema', async () => {
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'animation1',
       type: 'document',
       fields: [],
@@ -217,8 +217,8 @@ describe('group-registry', () => {
       group: 'testGroup',
       subgroup: { urlId: 'test', title: 'Test' },
     };
-    const schema1: DocumentSchema = createDoc({ name: 'schema1', customStructure: spec });
-    const schema2: DocumentSchema = createDoc({ name: 'schema2', customStructure: spec });
+    const schema1: DocumentDefinition = createDoc({ name: 'schema1', customStructure: spec });
+    const schema2: DocumentDefinition = createDoc({ name: 'schema2', customStructure: spec });
 
     const registry = initRegistry({
       schemas: [schema1, schema2],
@@ -247,7 +247,7 @@ describe('group-registry', () => {
       subgroup: [outerSubgroup, innerSubgroup],
     };
 
-    const doc: DocumentSchema = createDoc({ name: 'doc', customStructure: docList });
+    const doc: DocumentDefinition = createDoc({ name: 'doc', customStructure: docList });
 
     const registry = initRegistry({
       schemas: [doc],
@@ -306,7 +306,7 @@ describe('group-registry', () => {
     const customBuilder = () => {
       throw new Error('not implemented');
     };
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'schema',
       customStructure: {
         type: 'custom-builder',
@@ -342,7 +342,7 @@ describe('group-registry', () => {
     const customBuilder = () => {
       throw new Error('not implemented');
     };
-    const schema: DocumentSchema = createDoc({
+    const schema: DocumentDefinition = createDoc({
       name: 'schema',
       customStructure: {
         type: 'custom-builder',
@@ -359,7 +359,7 @@ describe('group-registry', () => {
   });
 
   test('should sort by sortKey ?? title lexically', () => {
-    const schema: DocumentSchema = { type: 'document', name: 'schema', fields: [] };
+    const schema: DocumentDefinition = { type: 'document', name: 'schema', fields: [] };
 
     const customWithTitle = (title: string): CustomItem => ({
       schema,
@@ -446,15 +446,15 @@ describe('group-registry', () => {
   });
 
   test('should use no locale for sorting', () => {
-    const sortA: DocumentSchema = createDoc({
+    const sortA: DocumentDefinition = createDoc({
       name: 'A',
       customStructure: { type: 'document-list', sortKey: 'A' },
     });
-    const sortAb: DocumentSchema = createDoc({
+    const sortAb: DocumentDefinition = createDoc({
       name: 'Ab',
       customStructure: { type: 'document-list', sortKey: 'Ab' },
     });
-    const sortNorwegianAA: DocumentSchema = createDoc({
+    const sortNorwegianAA: DocumentDefinition = createDoc({
       name: 'norAA',
       customStructure: { type: 'document-list', sortKey: 'Å' },
     });
@@ -472,15 +472,15 @@ describe('group-registry', () => {
   });
 
   test('should use default locale for sorting', () => {
-    const sortA: DocumentSchema = createDoc({
+    const sortA: DocumentDefinition = createDoc({
       name: 'A',
       customStructure: { type: 'document-list', sortKey: 'A' },
     });
-    const sortAb: DocumentSchema = createDoc({
+    const sortAb: DocumentDefinition = createDoc({
       name: 'Ab',
       customStructure: { type: 'document-list', sortKey: 'Ab' },
     });
-    const sortNorwegianAA: DocumentSchema = createDoc({
+    const sortNorwegianAA: DocumentDefinition = createDoc({
       name: 'norAA',
       customStructure: { type: 'document-list', sortKey: 'Å' },
     });
@@ -498,7 +498,9 @@ describe('group-registry', () => {
   });
 });
 
-export function createDoc(overrides: Partial<DocumentSchema> & { name: string }): DocumentSchema {
+export function createDoc(
+  overrides: Partial<DocumentDefinition> & { name: string }
+): DocumentDefinition {
   return {
     type: 'document',
     fields: [],

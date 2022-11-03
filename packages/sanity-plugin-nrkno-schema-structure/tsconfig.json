@@ -1,20 +1,24 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./build",
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "module": "esnext",
+    "jsx": "preserve",
+    "moduleResolution": "node",
     "target": "esnext",
-    "composite": true,
-    "jsx": "react",
-    "paths": {
-      "@sanity/structure/lib/*": [
-        "../../node_modules/@sanity/structure/dist/dts/*"
-      ]
-    }
+    "module": "esnext",
+    "esModuleInterop": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "strict": true,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "downlevelIteration": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "build",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "checkJs": false,
+    "rootDir": "src"
   },
-  "references": [],
-  "include": ["./src"],
-  "exclude": ["build", "plugin-types", "node_modules"]
+  "include": ["src/**/*"]
 }

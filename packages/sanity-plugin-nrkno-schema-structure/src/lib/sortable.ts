@@ -1,4 +1,4 @@
-import { DocumentSchema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { DocumentDefinition } from 'sanity';
 
 export interface Sortable {
   sortKey?: string;
@@ -7,8 +7,8 @@ export interface Sortable {
 }
 
 export function sortDoc(
-  a: DocumentSchema | undefined,
-  b: DocumentSchema | undefined,
+  a: DocumentDefinition | undefined,
+  b: DocumentDefinition | undefined,
   locale: string
 ) {
   return sortSortable(sortableDoc(a), sortableDoc(b), locale);
@@ -20,7 +20,7 @@ export function sortSortable(a: Sortable, b: Sortable, locale: string) {
   return sortA.localeCompare(sortB, locale, { sensitivity: 'variant' });
 }
 
-function sortableDoc(doc?: DocumentSchema) {
+function sortableDoc(doc?: DocumentDefinition) {
   const struc = doc?.customStructure;
   return {
     title: struc?.title ?? doc?.title,

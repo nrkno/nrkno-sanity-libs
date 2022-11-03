@@ -6,7 +6,7 @@ export const DEFAULT_SANITY_CLIENT_VERSION = '2021-06-01';
 /**
  * ## Usage
  * ```ts
- * import { initPreview } from '@nrk/sanity-plugin-nrkno-iframe-preview'
+ * import { initPreview } from '\@nrk/sanity-plugin-nrkno-iframe-preview'
  *
  * // Somewhere after page load
  * const unloadPreview = initPreview<QueryResult | undefined>(

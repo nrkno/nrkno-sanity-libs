@@ -1,6 +1,13 @@
-import { StructureBuilder as DefaultStructureBuilder } from '@sanity/structure';
-import { CustomGroupId, GetUser, initRegistry, GroupRegistryApi } from './group-registry';
-import { ListItemBuilder } from '@sanity/structure/lib/ListItem';
+import type {
+  DefaultDocumentNodeContext,
+  Divider,
+  DocumentBuilder,
+  ListItemBuilder,
+  StructureBuilder,
+  StructureResolverContext,
+  ViewBuilder,
+} from 'sanity/desk';
+import { CustomGroupId, GroupRegistryApi, initRegistry } from './group-registry';
 import {
   CustomGroup,
   CustomItem,
@@ -11,15 +18,9 @@ import {
   Types,
   ViewSpec,
 } from './types';
-import { getCurrentUser } from './user';
-import { CurrentUser } from '@sanity/types';
-import { DocumentSchema, typed } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { CurrentUser, DocumentDefinition, typed } from 'sanity';
 import { isDefined } from './utility-types';
-// @ts-expect-error missing types for part
-import EditIcon from 'part:@sanity/base/edit-icon';
-import { DocumentBuilder } from '@sanity/structure/dist/dts/Document';
-import { ViewBuilder } from '@sanity/structure/lib/views/View';
-import { Divider } from '@sanity/structure/lib/StructureNodes';
+import { EditIcon } from '@sanity/icons';
 
 export interface StructureGroupConfig {
   /**
@@ -32,15 +33,7 @@ export interface StructureGroupConfig {
   groups: CustomGroup<string>[];
 
   /**
-   * Optional: Provide an alternate function to get user. By
-   * default part:@sanity/base/user used internally.
-   *
-   * This is param is mostly available to make testing easier.
-   */
-  getUser?: GetUser;
-
-  /**
-   * Optional callback that will be invoked for every DocumentSchema.
+   * Optional callback that will be invoked for every DocumentDefinition.
    *
    * When true is returned from the callback, the schema will
    * be omitted from all StructureRegistryApi structures.
@@ -50,7 +43,7 @@ export interface StructureGroupConfig {
    *
    * To debug disabled schemas, use {@link StructureRegistryApi}.getGroupRegistry().disabledSchemas.
    */
-  isSchemaDisabled?: (schema: DocumentSchema) => boolean;
+  isSchemaDisabled?: (schema: DocumentDefinition) => boolean;
 
   /**
    * Optional callback that will be invoked for every Subgroup.
@@ -72,19 +65,16 @@ export interface StructureGroupConfig {
    */
   locale?: string;
 
-  /**
-   * For testing: Provide StructureBuilder from the Studio.
-   *
-   * Sometimes required when using npm link,
-   * to work around internal instanceof checks in StructureBuilder failing when
-   * this lib uses a different sanity version than the studio linking the package.
-   */
-  StructureBuilder?: any;
+  /** Pass from StructureResolver S*/
+  S: StructureBuilder;
+
+  /** Pass from StructureResolver context*/
+  context: Omit<StructureResolverContext, 'documentStore'>;
 }
 
 export interface StructureRegistryApi {
   /**
-   * @return ListItemBuilder holding all document-lists, documents, custom-builders and subgroups that are direct children of group with groupId.
+   * Returns ListItemBuilder holding all document-lists, documents, custom-builders and subgroups that are direct children of group with groupId.
    * Return type is an array because Group might have S.divider defined above or below.
    * @see getGroupItems
    * @see getUngrouped
@@ -92,22 +82,22 @@ export interface StructureRegistryApi {
   getGroup: (groupId: CustomGroupId) => StructureItem[];
 
   /**
-   * @return one ListItemBuilder for every document-list, document, custom-builder and subgroup that are direct children of group with groupId
+   * Returns one ListItemBuilder for every document-list, document, custom-builder and subgroup that are direct children of group with groupId
    * @see getGroup
    * @see getUngrouped
    */
   getGroupItems: (groupId: CustomGroupId) => StructureItem[];
 
   /**
-   * @return one ListItemBuilder (document list) for every document schema which has not been added to a group
+   * Returns one ListItemBuilder (document list) for every document schema which has not been added to a group
    * and does not have type: 'manual'.
    */
   getUngrouped: () => ListItemBuilder[];
 
   /**
-   * @return every document schema with customStructure.type: 'manual'
+   * Returns every document schema with customStructure.type: 'manual'
    */
-  getManualSchemas: () => DocumentSchema[];
+  getManualSchemas: () => DocumentDefinition[];
 
   /**
    * Returns a DocumentBuilder based on customStructure.views,
@@ -117,14 +107,20 @@ export interface StructureRegistryApi {
    * In deskStructure.ts:
    *
    * ```ts
-   * export const getDefaultDocumentNode = ({ schemaType }: { schemaType: string }) => {
-   *   return structureRegistry.getSchemaViews({ schemaType }) ?? S.document();
+   * export const getDefaultDocumentNode: DefaultDocumentNodeResolver = (S, context) => {
+   *   return structureRegistry.getSchemaViews({ S, context }) ?? S.document();
    * };
    * ```
    *
-   * @return views wrapped in a DocumentBuilder if any are defined, undefined otherwise. Combine the return value with  ?? S.document() for default fallback.
+   * Returns views wrapped in a DocumentBuilder if any are defined, undefined otherwise. Combine the return value with  ?? S.document() for default fallback.
    */
-  getSchemaViews: ({ schemaType }: { schemaType: string }) => DocumentBuilder | undefined;
+  getSchemaViews: ({
+    S,
+    context,
+  }: {
+    S: StructureBuilder;
+    context: DefaultDocumentNodeContext;
+  }) => DocumentBuilder | undefined;
 
   /**
    * Used by createInitialValueTemplates.
@@ -133,7 +129,7 @@ export interface StructureRegistryApi {
    * The GroupRegistry also contains lists for enabled and disabled schemas, which can be useful
    * for debugging purposes.
    *
-   * @return GroupRegistryApi used by StructureRegistryApi
+   * Returns GroupRegistryApi used by StructureRegistryApi
    */
   getGroupRegistry: () => GroupRegistryApi;
 }
@@ -141,9 +137,15 @@ export interface StructureRegistryApi {
 export type StructureItem = ListItemBuilder | Divider;
 
 export function initStructureRegistry(config: StructureGroupConfig): StructureRegistryApi {
-  const schemaToListItem = new Map<DocumentSchema, ListItemBuilder>();
-  const S: typeof DefaultStructureBuilder = config.StructureBuilder ?? DefaultStructureBuilder;
+  const schemaToListItem = new Map<DocumentDefinition, ListItemBuilder>();
+  const { S, context } = config;
+  const currentUser = context.currentUser ?? undefined;
   let _registry: GroupRegistryApi | undefined;
+
+  const { schema } = context;
+  const schemas = schema
+    .getTypeNames()
+    .map((name) => schema.get(name) as unknown as DocumentDefinition);
 
   function getGroupRegistry() {
     if (_registry) {
@@ -154,9 +156,9 @@ export function initStructureRegistry(config: StructureGroupConfig): StructureRe
       schemaToListItem.set(listItem.spec.schemaType, listItem);
     });
     _registry = initRegistry({
-      schemas: [...schemaToListItem.keys()],
+      schemas,
       ...config,
-      getUser: config.getUser ?? getCurrentUser,
+      getUser: () => currentUser,
     });
     return _registry;
   }
@@ -186,18 +188,27 @@ export function initStructureRegistry(config: StructureGroupConfig): StructureRe
       .filter(isDefined);
   }
 
-  function getManualSchemas(): DocumentSchema[] {
+  function getManualSchemas(): DocumentDefinition[] {
     return getGroupRegistry().manualSchemas;
   }
 
-  function getSchemaViews({ schemaType }: { schemaType: string }): DocumentBuilder | undefined {
-    const matchingTypes = S.documentTypeListItems()
-      .filter((listItem: any) => listItem.spec.schemaType.name === schemaType)
-      .map((listItem: any) => {
-        const schema: DocumentSchema = listItem.spec.schemaType;
-        const omitFormView = schema.customStructure?.omitFormView;
-        const views = schema.customStructure?.views;
-        let viewList = views ? (Array.isArray(views) ? [...views] : [views]) : [];
+  function getSchemaViews({
+    S,
+    context,
+  }: {
+    S: StructureBuilder;
+    context: DefaultDocumentNodeContext;
+  }): DocumentBuilder | undefined {
+    const matchingTypes = schemas
+      .filter((schemaType) => schemaType?.name === context.schemaType)
+      .map((schemaType) => {
+        const omitFormView = schemaType.customStructure?.omitFormView;
+        const viewsFn = schemaType.customStructure?.views;
+        let viewList: ViewBuilder[] = [];
+        if (viewsFn) {
+          const views = viewsFn(S, context);
+          viewList = Array.isArray(views) ? [...views] : [views];
+        }
 
         if (viewList.length) {
           if (!omitFormView) {
@@ -265,7 +276,7 @@ export function initStructureRegistry(config: StructureGroupConfig): StructureRe
   }
 
   async function hasAccess<T>(enabledForRoles: string[] | undefined, item: T) {
-    return userHasAccessToStructure(enabledForRoles, getCurrentUser()) ? item : undefined;
+    return userHasAccessToStructure(enabledForRoles, currentUser) ? item : undefined;
   }
 
   function specToBuilder(structure: Types): StructureItem[] {

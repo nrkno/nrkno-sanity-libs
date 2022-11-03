@@ -1,25 +1,68 @@
-import 'part:@sanity/base/schema';
 import { initStructureRegistry } from './structure-registry';
 import { customGroups } from './group-registry.test';
-import { ListItemBuilder } from '@sanity/structure/lib/ListItem';
+import { createStructureBuilder, ListItemBuilder, StructureBuilder } from 'sanity/desk';
+import { getMockSource } from './test/test-utils';
+import { StructureResolverContext } from 'sanity/lib/exports/desk';
+import { defineType, DocumentStore, SanityClient } from 'sanity';
 
-/*
- * See rootdir/mocks/schema.js for test-data being used
- */
+async function createResolverContext() {
+  const source = await getMockSource({
+    config: {
+      schema: {
+        types: [
+          defineType({
+            type: 'document' as const,
+            name: 'groupedSchema',
+            title: 'Grouped schema',
+            fields: [{ type: 'string', name: 'title' }],
+            customStructure: {
+              type: 'document-list',
+              group: 'testGroup',
+            },
+          }),
+          defineType({
+            type: 'document' as const,
+            name: 'ungroupedSchema',
+            title: 'Ungrouped schema',
+            fields: [{ type: 'string', name: 'title' }],
+          }),
+          defineType({
+            type: 'document' as const,
+            name: 'manualSchema',
+            title: 'Manual schema',
+            fields: [{ type: 'string', name: 'title' }],
+            customStructure: {
+              type: 'manual',
+            },
+          }),
+        ],
+      },
+    },
+  });
+  const S: StructureBuilder = createStructureBuilder({ source });
+  const context: StructureResolverContext = {
+    ...source,
+    documentStore: undefined as unknown as DocumentStore, // unused
+    client: undefined as unknown as SanityClient, // unused
+  };
+
+  return { S, context };
+}
 
 describe('structure-registry', () => {
-  test('should return empty list for group without entries', () => {
+  test('should return empty list for group without entries', async () => {
     const registry = initStructureRegistry({
       groups: [customGroups.otherGroup],
-      getUser: () => undefined,
+      ...(await createResolverContext()),
     });
     expect(registry.getGroup('otherGroup')).toEqual([]);
   });
 
   test('should return item for group with document', async () => {
+    const context = await createResolverContext();
     const registry = initStructureRegistry({
       groups: [customGroups.testGroup],
-      getUser: () => undefined,
+      ...context,
     });
     const group = registry.getGroup('testGroup');
     expect(group).toHaveLength(1);
@@ -34,7 +77,7 @@ describe('structure-registry', () => {
     const registry = initStructureRegistry({
       groups: [customGroups.testGroup],
       isSchemaDisabled: () => true,
-      getUser: () => undefined,
+      ...(await createResolverContext()),
     });
     const group = registry.getGroup('testGroup');
     expect(group).toHaveLength(0);
@@ -43,7 +86,7 @@ describe('structure-registry', () => {
   test('should return documentlist in group', async () => {
     const registry = initStructureRegistry({
       groups: [customGroups.testGroup],
-      getUser: () => undefined,
+      ...(await createResolverContext()),
     });
     const group = registry.getGroupItems('testGroup');
     expect(group).toHaveLength(1);
@@ -55,40 +98,22 @@ describe('structure-registry', () => {
   });
 
   test('should return documentlist for manual schema', async () => {
+    const resolve = await createResolverContext();
     const registry = initStructureRegistry({
       groups: [customGroups.testGroup],
-      getUser: () => undefined,
+      ...resolve,
     });
     const manualSchemas = registry.getManualSchemas();
-    expect(manualSchemas).toEqual([
-      {
-        type: 'document',
-        name: 'manualSchema',
-        title: 'Manual schema',
-        fields: [],
-        customStructure: {
-          type: 'manual',
-        },
-      },
-    ]);
+    expect(manualSchemas).toEqual([resolve.context.schema.get('manualSchema')]);
   });
 
   test('should return document-list for manual schema', async () => {
+    const resolve = await createResolverContext();
     const registry = initStructureRegistry({
       groups: [customGroups.testGroup],
-      getUser: () => undefined,
+      ...resolve,
     });
     const manualSchemas = registry.getManualSchemas();
-    expect(manualSchemas).toEqual([
-      {
-        type: 'document',
-        name: 'manualSchema',
-        title: 'Manual schema',
-        fields: [],
-        customStructure: {
-          type: 'manual',
-        },
-      },
-    ]);
+    expect(manualSchemas).toEqual([resolve.context.schema.get('manualSchema')]);
   });
 });

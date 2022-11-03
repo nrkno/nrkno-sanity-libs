@@ -1,11 +1,23 @@
 {
-  "name": "@nrk/sanity-plugin-nrkno-schema-structure",
-  "version": "1.0.15",
-  "main": "./build/index.js",
-  "types": "./plugin-types/index.d.ts",
+  "name": "@snorreeb/sanity-plugin-nrkno-schema-structure",
+  "version": "2.0.0-v3-studio.0",
+  "description": "",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "source": "./src/index.ts",
+  "main": "./build/index.js",
+  "module": "./build/index.esm.js",
+  "types": "./build/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/src/index.d.ts",
+      "source": "./src/index.ts",
+      "import": "./build/index.esm.js",
+      "require": "./build/index.js",
+      "default": "./build/index.esm.js"
+    }
   },
   "repository": {
     "type": "git",
@@ -13,30 +25,61 @@
     "directory": "packages/sanity-plugin-nrkno-schema-structure"
   },
   "files": [
-    "sanity.json",
+    "src",
     "build",
-    "plugin-types",
-    "src"
+    "v2-incompatible.js",
+    "sanity.json"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json && sanipack build && sanipack verify",
-    "watch": "sanipack build --watch",
     "clean": "cross-env rimraf build *.tsbuildinfo",
-    "__test": "cross-env NODE_ENV=test jest"
+    "prebuild": "npm run clean && plugin-kit verify-package --silent && pkg-utils",
+    "build": "pkg-utils build",
+    "watch": "pkg-utils watch",
+    "lint": "eslint .",
+    "link-watch": "plugin-kit link-watch",
+    "prepublishOnly": "npm run build",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "peerDependencies": {
+    "react": "^18.0.0",
     "sanity": "3.0.0-rc.0"
   },
   "devDependencies": {
-    "sanity": "3.0.0-rc.0",
+    "@sanity/pkg-utils": "^1.16.2",
+    "@sanity/plugin-kit": "^2.0.7",
+    "@sanity/types": "3.0.0-rc.0",
+    "@sanity/color": "^2.1.16",
+    "@sanity/ui": "^1.0.0-beta.32",
     "@types/react": "^18.0.0",
     "cross-env": "^7.0.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "rimraf": "^3.0.2",
-    "@sanity/plugin-kit": "^2.0.7",
+    "sanity": "3.0.0-rc.0",
+    "styled-components": "^5.2.0",
     "typescript": "^4.8.4"
   },
   "volta": {
     "node": "14.17.5",
     "npm": "6.14.14"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@sanity/incompatible-plugin": "^1.0.4"
+  },
+  "bugs": {
+    "url": "https://github.com/snorrees/nrkno-sanity-libs/issues"
+  },
+  "homepage": "https://github.com/snorrees/nrkno-sanity-libs/tree/master/packages/sanity-plugin-nrkno-schema-structure#readme",
+  "sanityPlugin": {
+    "verifyPackage": {
+      "dependencies": false
+    },
+    "linkWatch": {
+      "folder": "build",
+      "extensions": "ts,js,png,svg,gif,jpeg,css"
+    }
   }
 }

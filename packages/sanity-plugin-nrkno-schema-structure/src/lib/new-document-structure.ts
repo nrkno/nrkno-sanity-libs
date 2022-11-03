@@ -1,26 +1,33 @@
-import { StructureBuilder as S } from '@sanity/structure';
-import { getDefaultSchema } from '@sanity/structure/lib/parts/Schema';
-import { getTemplates } from '@sanity/initial-value-templates';
-import { isActionEnabled } from '@sanity/structure/lib/parts/documentActionUtils';
 import { createFromTopMenu } from './structure-helpers';
-import { Template } from '@sanity/initial-value-templates/dist/dts/Template';
-import { GroupRegistryApi } from './group-registry';
-import { DocumentSchema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { initRegistry } from './group-registry';
 import { sortDoc } from './sortable';
+import { ConfigContext, DocumentDefinition, Template } from 'sanity';
+import { CustomGroup } from './types';
 
-export function createInitialValueTemplates(registry: GroupRegistryApi) {
-  const schema = getDefaultSchema();
+export function createTemplates(
+  templates: Template[],
+  context: ConfigContext,
+  groups: CustomGroup<string>[]
+): Template[] {
+  const schemas: DocumentDefinition[] = context.schema
+    .getTypeNames()
+    .map((name) => context.schema.get(name) as unknown as DocumentDefinition);
+
+  const registry = initRegistry({
+    schemas,
+    groups,
+    ...context,
+    getUser: () => context.currentUser ?? undefined,
+  });
 
   const schemasByName = registry.enabledSchemas.reduce((prev, schema) => {
     return {
       ...prev,
       [schema.name]: schema,
     };
-  }, {} as { [index: string]: DocumentSchema | undefined });
+  }, {} as { [index: string]: DocumentDefinition | undefined });
 
   const withoutParameters = (tpl: Template) => !tpl.parameters || tpl.parameters.length === 0;
-  const withActionsEnabled = (tpl: Template) =>
-    isActionEnabled(schema.get(tpl.schemaType), 'create');
 
   const withCreateEnabledGroup = (tpl: Template) => {
     return createFromTopMenu(schemasByName[tpl.schemaType], registry.rootGroups);
@@ -32,15 +39,5 @@ export function createInitialValueTemplates(registry: GroupRegistryApi) {
     return sortDoc(aSchema, bSchema, registry.locale);
   };
 
-  function createInitialValueTemplateItems() {
-    const templates = getTemplates()
-      .filter(withoutParameters)
-      .filter(withActionsEnabled)
-      .filter(withCreateEnabledGroup)
-      .sort(bySchemaOrder);
-
-    return templates.map((tpl) => S.initialValueTemplateItem(tpl.id));
-  }
-
-  return [...createInitialValueTemplateItems()];
+  return templates.filter(withoutParameters).filter(withCreateEnabledGroup).sort(bySchemaOrder);
 }

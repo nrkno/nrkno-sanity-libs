@@ -1,4 +1,3 @@
-import { DocumentSchema } from '@nrk/nrkno-sanity-typesafe-schemas';
 import {
   CustomGroup,
   CustomItem,
@@ -11,12 +10,12 @@ import {
   Subgroup,
   SubgroupSpec,
 } from './types';
-import { CurrentUser } from '@sanity/types';
+import { CurrentUser, DocumentDefinition } from 'sanity';
 import { isDefined } from './utility-types';
 import { sortDoc, sortSortable } from './sortable';
 
-declare module '@nrk/nrkno-sanity-typesafe-schemas' {
-  interface DocumentSchema {
+declare module '@sanity/types' {
+  interface DocumentDefinition {
     customStructure?: CustomStructureSpec;
   }
 }
@@ -42,10 +41,10 @@ export function createCustomGroup<Id extends string, Group extends CustomGroup<I
 export type GetUser = () => CurrentUser | undefined;
 
 export interface RegistryConfig {
-  schemas: DocumentSchema[];
+  schemas: DocumentDefinition[];
   groups: CustomGroup<string>[];
   getUser: GetUser;
-  isSchemaDisabled?: (schema: DocumentSchema) => boolean;
+  isSchemaDisabled?: (schema: DocumentDefinition) => boolean;
   isSubgroupDisabled?: (subgroup: Subgroup) => boolean;
   locale?: string;
 }
@@ -53,10 +52,10 @@ export interface RegistryConfig {
 export interface GroupRegistryApi {
   rootGroups: CustomGroup<string>[];
   groups: DocumentGroups;
-  manualSchemas: DocumentSchema[];
-  ungroupedSchemas: DocumentSchema[];
-  disabledSchemas: DocumentSchema[];
-  enabledSchemas: DocumentSchema[];
+  manualSchemas: DocumentDefinition[];
+  ungroupedSchemas: DocumentDefinition[];
+  disabledSchemas: DocumentDefinition[];
+  enabledSchemas: DocumentDefinition[];
   getSubgroupEntries: (
     subgroup: Subgroup
   ) => (Subgroup | DocumentList | SingletonDocument | CustomItem)[];
@@ -76,11 +75,11 @@ export function initRegistry({
   const { groups, subgroups } = initGroups(rootGroups);
   const user = getUser();
 
-  const ungroupedSchemas: DocumentSchema[] = [];
-  const manualSchemas: DocumentSchema[] = [];
-  const disabledSchemas: DocumentSchema[] = [];
-  const enabledSchemas: DocumentSchema[] = schemas
-    .map((schema: DocumentSchema) => {
+  const ungroupedSchemas: DocumentDefinition[] = [];
+  const manualSchemas: DocumentDefinition[] = [];
+  const disabledSchemas: DocumentDefinition[] = [];
+  const enabledSchemas: DocumentDefinition[] = schemas
+    .map((schema: DocumentDefinition) => {
       const spec = schema?.customStructure;
       if (!spec) {
         ungroupedSchemas.push(schema);
@@ -147,7 +146,7 @@ function initGroups(customGroups: CustomGroup<string>[]) {
   return { groups: rootGroups, subgroups };
 }
 
-export function createSubgroup(spec: SubgroupSpec, schema?: DocumentSchema): Subgroup {
+export function createSubgroup(spec: SubgroupSpec, schema?: DocumentDefinition): Subgroup {
   const customItems: CustomItem[] =
     spec && spec.customItems && schema
       ? spec.customItems?.map((spec) => ({
@@ -173,7 +172,7 @@ export function createSubgroup(spec: SubgroupSpec, schema?: DocumentSchema): Sub
 function ensureSubgroupExists(
   spec: CustomStructureSpec,
   subgroups: Subgroups,
-  schema: DocumentSchema
+  schema: DocumentDefinition
 ) {
   if (isGroupeable(spec)) {
     const group = subgroups[spec.group];
@@ -216,7 +215,11 @@ function isGroupeable(spec: CustomStructureSpec): spec is GroupableSpec & { grou
   return !!('group' in spec && spec.group);
 }
 
-function addSpecToSubgroup(spec: CustomStructureSpec, subgroup: Subgroup, schema: DocumentSchema) {
+function addSpecToSubgroup(
+  spec: CustomStructureSpec,
+  subgroup: Subgroup,
+  schema: DocumentDefinition
+) {
   switch (spec.type) {
     case 'document-list':
       subgroup.schemas = [

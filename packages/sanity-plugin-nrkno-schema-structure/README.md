@@ -5,10 +5,10 @@ _It builds on the [principles of nrkno-sanity](https://github.com/nrkno/nrkno-sa
 [option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)._
 
 **nrkno-schema-structure**
- allows schemas to use a declarative approach to Sanity Studio structure, by configuring a `customStructure` field in `document` schemas.
+allows schemas to use a declarative approach to Sanity Studio structure, by configuring a `customStructure` field in `document` schemas.
 
-This lib uses and extends DocumentSchema from [nrkno-sanity-typesafe-schemas](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-sanity-typesafe-schemas#nrknrkno-sanity-typesafe-schemas). 
-It is recommended to use @nrk/nrkno-sanity-typesafe-schemas when creating schemas,
+This lib uses and extends DocumentDefinition from [nrkno-sanity-typesafe-schemas](https://github.com/nrkno/nrkno-sanity-libs/tree/master/packages/nrkno-sanity-typesafe-schemas#nrknrkno-sanity-typesafe-schemas).
+It is recommended to use sanity when creating schemas,
 so this lib can be used in a typesafe manner.
 
 ## At-a-glance
@@ -35,7 +35,7 @@ At the time of writing, NRK organizes 60+ document schemas using this approach.
 
 ## Overview
 
-The basic idea is to have schemas declare _what_ should be placed _where_ in a directory-like structure, without knowing _how_ it is done. 
+The basic idea is to have schemas declare _what_ should be placed _where_ in a directory-like structure, without knowing _how_ it is done.
 
 **nrkno-schema-structure** finds all schemas with `customStructure` and creates a structure-registry. Groups can be obtained by name, and
 contain everything that where declaratively added to them. Groups can then be composed into any
@@ -55,7 +55,7 @@ The declarative nature of this approach aligns well with the [principles of nrkn
 [option driven design](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils/docs/option-driven-design.md)
 
 **nrkno-schema-structure** also supports views (split panes) in a declarative manner, using
-`customStructure.view`.
+`customStructure.views`.
 
 The final structure is still fully customizable by each Studio, and the
 library can easily be composted with existing structure code. The API provides a list
@@ -63,19 +63,13 @@ of all ungrouped schemas, so that they can be placed wherever it makes sense.
 
 # Installation
 
-## Yarn
+## yarn
 
-In Sanity studio project run:
-
-`npx sanity install @nrk/sanity-plugin-nrkno-schema-structure`
-
-This will run yarn install & add the plugin to sanity.json plugin array.
+`yarn add @snorreeb/sanity-plugin-nrkno-schema-structure`
 
 ## npm
 
-`npm install --save @nrk/sanity-plugin-nrkno-schema-structure`
-
-Add "@nrk/sanity-plugin-nrkno-schema-structure" to "plugins" in `sanity.json` manually.
+`npm install --save @snorreeb/sanity-plugin-nrkno-schema-structure`
 
 # Usage
 
@@ -84,117 +78,109 @@ This lib requires some setup:
 ## Create typesafe root groups
 
 First we define typesafe groups.
-Create structure-registry.ts:
+Create `structure-registry.tsx`:
 
-```ts
+```tsx
 import {
   createCustomGroup,
   initStructureRegistry,
-} from '@nrk/sanity-plugin-nrkno-schema-structure';
+} from '@snorreeb/sanity-plugin-nrkno-schema-structure';
 
 export const customGroups = {
-  format: createCustomGroup({
+  group1: createCustomGroup({
     urlId: 'group1', // same as id in strucure builder
     title: 'Group 1',
-   // schemas in this group (or subgroups) can be created in the top menu
-    addToCreateMenu: true, 
+    // schemas in this group (or subgroups) can be created in the top menu
+    addToCreateMenu: true,
   }),
-  animation: createCustomGroup({
+  group2: createCustomGroup({
     urlId: 'group2',
     title: 'Group 2.',
-    icon: () => 'II',
-   // schemas under this group must be created via the document list
+    icon: () => <>'II'</>,
+    // schemas under this group must be created via the document list
     addToCreateMenu: false,
   }),
 } as const;
 
 type CustomGroups = typeof customGroups;
 
-declare module '@nrk/sanity-plugin-nrkno-schema-structure' {
+declare module '@snorreeb/sanity-plugin-nrkno-schema-structure' {
   // Here we extend the GroupRegistry type with our groups.
   // This makes groupId typesafe whe using the structure registry
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface GroupRegistry extends CustomGroups {}
 }
 
-// part:@sanity/base/new-document-structure does not support promises.
-// Until it does, this verbose setup is required so we can lazyload the registry.
-// Unfortunatly, user cannot be resolved in time to support enabledForRoles
-// in "Create new" menu, so we must expose createStructureRegistry() as well     
-
-let structureRegistry: StructureRegistryApi;
-export const getStructureRegistry = () => {
- if (!structureRegistry) {
-  structureRegistry = createStructureRegistry();
- }
- return structureRegistry;
-};
-
-export function createStructureRegistry() {
- return initStructureRegistry({
-  groups: Object.values(customGroups),
-  locale: 'no-no' // locale used for sorting
- });
+export function createStructureRegistry(S: StructureBuilder, context: StructureResolverContext) {
+  return initStructureRegistry({
+    groups: Object.values(customGroups),
+    locale: 'no-no', // locale used for sorting,
+    S,
+    context,
+  });
 }
-
 ```
 
 ## Configure "Create new" menu
 
 Then configure the [create new document menu](https://www.sanity.io/docs/initial-value-templates#56b4073ca73a) :
+
 ```ts
-import { createInitialValueTemplates } from '@nrk/sanity-plugin-nrkno-schema-structure';
-import { createStructureRegistry } from './structure-registry';
+import { createTemplates } from '@snorreeb/sanity-plugin-nrkno-schema-structure';
+import { customGroups } from './structure-registry';
 
-// part:@sanity/base/new-document-structure does not support promises.
-// Until it does, we have to init structureRegistry twice, once
-// before user is resolved (like here), and lazily with user resolved in structure.ts
-
-// Unfortunatly, user cannot be resolved in time to support enabledForRoles
-// in "Create new" menu, so we must use createStructureRegistry() here.
-
-const templates = createInitialValueTemplates(createStructureRegistry().getGroupRegistry());
-
-export default [...templates];
+export default defineConfig({
+  /*...*/
+  schema: {
+    /*...*/
+    templates: (prev, context) => {
+      return createTemplates(prev, context, Object.values(customGroups));
+    },
+  },
+});
 ```
 
 ## Configure Studio Structure
+
 Then configure the Studio structure:
 
 ```ts
-import { StructureBuilder as S } from '@sanity/structure';
-import { isDefined } from '../types/type-util';
-import { authorStructure } from '../features/author/author';
-import { getStructureRegistry } from './structure-registry';
+import { createStructureRegistry } from './structure-registry';
 
-export const getDefaultDocumentNode = ({ schemaType }: { schemaType: string }) => {
-  // adds support for customStructure.views in schemas
-  return getStructureRegistry().getSchemaViews({ schemaType }) ?? S.document();
-};
+export default defineConfig({
+  /*...*/
+  plugins: [
+    deskTool({
+      structure: async (S, Context) => {
+        const structureRegistry = createStructureRegistry(S, Context);
 
-// Sanity supports async structure
-export default async () => {
-  const { getGroupItems, getGroup, getUngrouped } = getStructureRegistry();
-  
-  // Compose the Sanity Structure.
-  // Can be combind with any amount of manual S.itemList nodes.
-  const items = [
-    // schemas with customStructure.group: 'group1' are contained in this group. 
-    structureRegistry.getGroup('group1'),
-          
-   // schemas without group is part of the ungrouped list, one listItem per schema (hence the spread)      
-   S.divider(),
-   structureRegistry.getUngrouped(),
-   S.divider(),
-          
-   // schemas with customStructure.group: 'group2' are contained in this group
-   // notice the use of getGroupItems (as opposed to getGroup). 
-   // This inlines the direct children of the group.
-   structureRegistry.getGroupItems('group2')
-  ].flatMap(i => i); // flatmap to flatten everyting 
+        // Compose the Sanity Structure.
+        // Can be combind with any amount of manual S.itemList nodes.
+        const items = [
+          // schemas with customStructure.group: 'group1' are contained in this group.
+          ...structureRegistry,
+          getGroup('group1'),
 
-  return S.list().title('Content').items(items);
-};
+          // schemas without group is part of the ungrouped list, one listItem per schema (hence the spread)
+          S.divider(),
+          ...structureRegistry,
+          getUngrouped(),
+          S.divider(),
+
+          // schemas with customStructure.group: 'group2' are contained in this group
+          // notice the use of getGroupItems (as opposed to getGroup).
+          // This inlines the direct children of the group.
+          ...structureRegistry,
+          getGroupItems('group2'),
+        ].flatMap((i) => i); // flatmap to flatten everyting
+
+        return S.list().title('Content').items(items);
+      },
+      defaultDocumentNode: (S, context) =>
+        createStructureRegistry(S, context).getSchemaViews({ S, context }) ?? S.document(),
+    }),
+  ],
+});
 ```
 
 ## Use customStructure in schemas
@@ -204,7 +190,7 @@ Finally, we can start organizing schemas directly from the schema definition.
 In your schema:
 
 ```ts
-import { schema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { schema } from 'sanity';
 
 export const mySchema = schema('document', {
   type: 'my-schema',
@@ -212,12 +198,12 @@ export const mySchema = schema('document', {
   customStructure: {
     type: 'document-list',
     // this group will be typesafe. Ie, autocomplete and 'group3' will give compileerror
-    group: 'group1', 
+    group: 'group1',
   },
   fields: [
-   /* omitted */
-  ]
-})
+    /* omitted */
+  ],
+});
 ```
 
 # Supported structures
@@ -239,7 +225,6 @@ Groups can have subgroups, which in turn can have subgroups.
 These are static, and must be provided when initializing the structure registry.
 See the Usage section above for how to configure them in a typesafe manner.
 
-
 _Groups are accessed using structureRegistry.getGroup('groupId') and appear as S.listItems. Subgroups cannot be accessed directly._
 
 ## Document list
@@ -250,10 +235,11 @@ Puts the schema in a S.documentTypeList, under the provided group.
 const partialSchema = {
   customStructure: {
     type: 'document-list',
-    group: 'group1', 
-  }
-}
+    group: 'group1',
+  },
+};
 ```
+
 _This schema appears in structureRegistry.getGroup('group1') as a S.documentTypeList._
 
 ## Document singleton
@@ -263,15 +249,16 @@ The schema will only list documents with the configured ids. Maps to S.document.
 ```ts
 const partialSchema = {
   customStructure: {
-   type: 'document-singleton',
-   group: 'help',
-   documents: [
-    { documentId: 'user-help', title: 'Sanity-help' },
-    { documentId: 'developer-help', icon: () => 'Dev' , title: 'Developer-help' },
-   ],
+    type: 'document-singleton',
+    group: 'help',
+    documents: [
+      { documentId: 'user-help', title: 'Sanity-help' },
+      { documentId: 'developer-help', icon: () => 'Dev', title: 'Developer-help' },
+    ],
   },
-}
+};
 ```
+
 _This schema appears in structureRegistry.getGroup('group1') as two S.document nodes._
 
 ## Custom builder
@@ -280,17 +267,18 @@ Use this if you want a handwritten structure for the schema.
 
 ```ts
 const partialSchema = {
-   customStructure: {
-      type: 'custom-builder',
-      group: 'group1',
-      listItem: () =>
-        S.listItem()
-          .id('url-path')
-          .title('Some custom thing')
-          .child(S.documentList().id('some-schema')),
-    }
-}
+  customStructure: {
+    type: 'custom-builder',
+    group: 'group1',
+    listItem: () =>
+      S.listItem()
+        .id('url-path')
+        .title('Some custom thing')
+        .child(S.documentList().id('some-schema')),
+  },
+};
 ```
+
 _This schema appears in structureRegistry.getGroup('group1') as the provided structure._
 
 ## Manual
@@ -303,20 +291,22 @@ any way we want.
 ```ts
 const partialSchema = {
   customStructure: {
-    type: 'manual'
-  }
-}
+    type: 'manual',
+  },
+};
 ```
+
 _This schema appears in the structureRegistry.getManualSchemas()_
 
 ## Subgroup
+
 Subgroups are ad-hoc groups that can be provided to any other custom structure.
 Subgroups must be used alongside the group parameter in customStructure.
 
 Create subgroups constants:
 
 ```ts
-import {SubgroupSpec} from '@nrk/sanity-plugin-nrkno-schema-structure'
+import { SubgroupSpec } from '@nrk/sanity-plugin-nrkno-schema-structure';
 
 export const mySubgroup: SubgroupSpec = {
   urlId: 'mySubgroup',
@@ -324,33 +314,35 @@ export const mySubgroup: SubgroupSpec = {
 };
 
 export const nestedSubgroup: SubgroupSpec = {
- urlId: 'nested',
- title: 'Nested Subgroup',
- // its is also possible to prepopulate a subgroup with custom-builders
- // customItems: [] 
+  urlId: 'nested',
+  title: 'Nested Subgroup',
+  // its is also possible to prepopulate a subgroup with custom-builders
+  // customItems: []
 };
 ```
+
 _Subgroups appear as S.listItems._
 
 Then use it in a schema.customStructure:
 
 ```ts
-import { schema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { schema } from 'sanity';
 
 export const mySchema = schema('document', {
   type: 'my-schema',
   title: 'My schema',
   customStructure: {
     type: 'document-list',
-   // this document-list will be placed under Group 1 -> Subgroup -> Nested Subgroup -> My schema
-   group: 'group1', 
-   subgroup: [mySubgroup, nestedSubgroup]
+    // this document-list will be placed under Group 1 -> Subgroup -> Nested Subgroup -> My schema
+    group: 'group1',
+    subgroup: [mySubgroup, nestedSubgroup],
   },
   fields: [
-   /* omitted */
-  ]
-})
+    /* omitted */
+  ],
+});
 ```
+
 _This schema appears nested in subgroups under structureRegistry.getGroup('group1') as S.documentTypeList_
 
 Subgroups _can_ technically be defined inline, but its better to use a constant to avoid
@@ -366,35 +358,37 @@ from getUngrouped().
 ```ts
 const partialSchema = {
   customStructure: {
-   type: 'document-list',
-   title: 'Special thing',
-   icon: () => 'Custom icon',
-   omitFormView: true,
-   views: [S.view.component(SpecialForm).title('HyperEdit')],
-   enabledForRoles: ['developer'],
-   addToCreateMenu: false,
-   sortKey: 'xxxxxxWayLast',
-   divider: 'below'
-  }
-}
+    type: 'document-list',
+    title: 'Special thing',
+    icon: () => 'Custom icon',
+    omitFormView: true,
+    views: (S, context) => [S.view.component(SpecialForm).title('HyperEdit')],
+    enabledForRoles: ['developer'],
+    addToCreateMenu: false,
+    sortKey: 'xxxxxxWayLast',
+    divider: 'below',
+  },
+};
 ```
+
 _This schema appears in structureRegistry.getUngrouped() as S.documentTypeList._
 
 ## Dividers
 
 Its possible to have dividers above or below a schema entry using `customStrucutre.divider: 'over' | 'under' | 'over-under'`
 
-If exact location is required, 
+If exact location is required,
 playing around with sort key might be required.
 
 ```ts
 const partialSchema = {
   customStructure: {
     type: 'document-list',
-   divider: 'below', 
-  }
-}
+    divider: 'below',
+  },
+};
 ```
+
 _This schema appears in structureRegistry.getUngrouped() as S.documentTypeList followed by S.divider._
 
 ## Not supported at this time
@@ -429,5 +423,12 @@ export const structureRegistry = initStructureRegistry({
   groups: Object.values(customGroups),
   StructureBuilder, // add this while testing with npm link
 });
-
 ```
+
+## Develop & test
+
+This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
+with default configuration for build & watch scripts.
+
+See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
+on how to run this plugin with hotreload in the studio.

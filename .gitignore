@@ -10,3 +10,6 @@ coverage
 /out/
 lerna-debug.log
 *.tsbuildinfo
+
+.yalc
+yalc.lock

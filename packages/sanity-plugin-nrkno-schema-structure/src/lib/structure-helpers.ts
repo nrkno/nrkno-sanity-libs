@@ -1,8 +1,8 @@
-import { DocumentSchema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { DocumentDefinition } from 'sanity';
 import { CustomGroup } from './types';
 
 export function createFromTopMenu(
-  schema: DocumentSchema | undefined,
+  schema: DocumentDefinition | undefined,
   groups: CustomGroup<string>[]
 ): boolean {
   if (!schema) {
@@ -20,7 +20,10 @@ export function createFromTopMenu(
   if (!group) {
     return true;
   }
+
   const isSingleton = customStructure.type === 'document-singleton';
-  const canAdd = group.addToCreateMenu || customStructure.addToCreateMenu === true;
+  const canAdd =
+    customStructure.addToCreateMenu === true ||
+    (group.addToCreateMenu && customStructure.addToCreateMenu !== false);
   return canAdd && !isSingleton;
 }

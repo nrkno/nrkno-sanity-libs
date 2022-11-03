@@ -1,13 +1,16 @@
 import { CustomGroupId } from './group-registry';
-import { SortItem } from '@sanity/structure/src/Sort';
-import { ListItemBuilder } from '@sanity/structure/lib/ListItem';
-import { DocumentSchema } from '@nrk/nrkno-sanity-typesafe-schemas';
+import { ListItemBuilder, ViewBuilder } from 'sanity/desk';
+import { DocumentDefinition } from 'sanity';
 import { XOR } from './utility-types';
-import { ViewBuilder } from '@sanity/structure/lib/views/View';
+import { ComponentType, ReactNode } from 'react';
+import { DefaultDocumentNodeContext, StructureBuilder } from 'sanity/lib/exports/desk';
 
-// this is how StructureBuilder is typed
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type IconType = Function;
+export type SortItem = {
+  field: string;
+  direction: 'asc' | 'desc';
+};
+
+export type IconType = ComponentType | ReactNode;
 
 export interface StructureBase {
   /**
@@ -108,7 +111,7 @@ export interface DocumentListSpec extends StructureSpec {
 }
 
 export type DocumentList = {
-  schema: DocumentSchema;
+  schema: DocumentDefinition;
   spec: DocumentListSpec & RequiredTitle & GroupableSpec;
 };
 
@@ -131,11 +134,11 @@ export interface ManualSpec extends StructureBase {
 }
 
 export interface SingletonDocument {
-  schema: DocumentSchema;
+  schema: DocumentDefinition;
   spec: SingletonDocumentSpec & RequiredTitle & { urlId: string };
 }
 
-export type CustomBuilder = (schema: DocumentSchema) => ListItemBuilder;
+export type CustomBuilder = (schema: DocumentDefinition) => ListItemBuilder;
 
 export interface CustomBuilderSpec extends StructureSpec {
   type: 'custom-builder';
@@ -144,7 +147,7 @@ export interface CustomBuilderSpec extends StructureSpec {
 
 export interface CustomItem {
   spec: CustomBuilderSpec & RequiredTitle;
-  schema: DocumentSchema;
+  schema: DocumentDefinition;
 }
 
 export type CustomSubgroup = Omit<SubgroupSpec, 'type'>;
@@ -164,7 +167,7 @@ export type GroupableSpec = Groupable &
 
 export interface ViewSpec {
   omitFormView?: boolean;
-  views?: ViewBuilder | ViewBuilder[];
+  views?: (S: StructureBuilder, context: DefaultDocumentNodeContext) => ViewBuilder | ViewBuilder[];
 }
 
 export type CustomStructureSpec = XOR<GroupableSpec, ManualSpec> & ViewSpec;
