@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/*"],
+  "packages": ["packages/sanity-plugin-nrkno-schema-structure"],
   "version": "independent",
 
   "command": {
