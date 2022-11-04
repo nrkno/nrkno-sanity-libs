@@ -59,7 +59,7 @@ export interface StructureGroupConfig {
   /**
    * Locale used for sorting.
    *
-   * (sortKeyA.localeCompare(sortKeyB, locale, { sensitivity: 'variant' }) is used)
+   * `(sortKeyA.localeCompare(sortKeyB, locale, { sensitivity: 'variant' }) is used)`
    *
    * Default: 'en'
    */

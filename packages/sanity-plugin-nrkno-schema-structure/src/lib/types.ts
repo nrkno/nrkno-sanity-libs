@@ -22,14 +22,6 @@ export interface StructureBase {
    *
    * Visit Sanity management console to find the role-ids.
    *
-   * Note if you use enabledForRoles, the document will not appear in
-   * the "create new" menu, because user cannot be resolved when the menu is populated.
-   *
-   * Documents not in the Create new menu cannot be created in place
-   * for references.
-   *
-   * This might change when part:@sanity/base/new-document-structure supports promises.
-   *
    * @example enabledForRoles: ['developer', 'administrator']
    * */
   enabledForRoles?: string[];
@@ -41,7 +33,6 @@ export interface StructureBase {
    * So: set to true for types that are in a group with addToCreateMenu: false,
    * but needs to be created in place.
    *
-   * Note: if enabledForRoles is set, the type is not creatable no matter this setting.
    * @see createFromTopMenu
    * @see createNewMenuSortLast
    * */

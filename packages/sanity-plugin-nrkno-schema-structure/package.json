@@ -45,8 +45,8 @@
     "sanity": "3.0.0-rc.0"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^1.16.2",
-    "@sanity/plugin-kit": "^2.0.7",
+    "@sanity/pkg-utils": "^1.17.2",
+    "@sanity/plugin-kit": "^2.1.7",
     "@sanity/types": "3.0.0-rc.0",
     "@sanity/color": "^2.1.16",
     "@sanity/ui": "^1.0.0-beta.32",
