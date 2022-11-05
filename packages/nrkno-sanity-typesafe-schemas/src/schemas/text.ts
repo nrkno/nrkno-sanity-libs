@@ -1,6 +1,6 @@
 import { EnumListProps, SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty } from '@sanity/types';
+import { InitialValueProperty } from 'sanity';
 
 /**
  * [Text docs](https://www.sanity.io/docs/text-type)

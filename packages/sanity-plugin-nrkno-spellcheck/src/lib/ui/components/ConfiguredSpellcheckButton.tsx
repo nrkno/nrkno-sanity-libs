@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Flex } from '@sanity/ui';
-import { ObjectSchemaType, SanityDocument } from '@sanity/types';
+import { ObjectSchemaType, SanityDocument } from 'sanity';
 import { SpellcheckDialog } from './dialog/SpellcheckDialog';
 import { ContextProviders } from './SpellcheckContext';
 import { SpellcheckButtonTooltips } from './SpellcheckButtonTooltips';

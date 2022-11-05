@@ -1,4 +1,4 @@
-import { ArraySchemaType, InitialValueProperty } from '@sanity/types';
+import { ArraySchemaType, InitialValueProperty } from 'sanity';
 import { PartialBy, SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
 
@@ -49,7 +49,7 @@ export interface ArrayOptions<T = unknown> extends Omit<SanityArrayOpts<T>, 'edi
    * Controls how the modal (for array content editing) is rendered.
    * [Edit modal docs](https://www.sanity.io/docs/array-type#editModal-c9e86d1fa27d)
    *
-   * Beware: this field is marked as deprecated in @sanity/types
+   * Beware: this field is marked as deprecated in sanity
    * */
   editModal?: keyof EditModal;
 }

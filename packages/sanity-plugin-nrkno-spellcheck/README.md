@@ -79,23 +79,13 @@ _Figure 7: Popover showing that some spellcheck service batches failed._
 
 ## Yarn
 
-In Sanity studio project run:
-
-`npx sanity install @nrk/sanity-plugin-nrkno-spellcheck`
-
-This will run yarn install & add the plugin to sanity.json plugin array.
+`yarn install @snorreeb/sanity-plugin-nrkno-spellcheck`
 
 ## npm
 
-`npm install --save @nrk/sanity-plugin-nrkno-spellcheck`
-
-Add "@nrk/sanity-plugin-nrkno-spellcheck" to "plugins" in `sanity.json` manually.
+`npm install --save @snorreeb/sanity-plugin-nrkno-spellcheck`
 
 # Usage
-
-It is recommended to use this library with 
-[@nrk/sanity-plugin-nrkno-odd-utils](https://github.com/nrkno/nrkno-sanity-libs/blob/master/packages/sanity-plugin-nrkno-odd-utils),
-so the built-in sanity document component can be easily decorated with a spellcheck button.
 
 ## Basic setup
 

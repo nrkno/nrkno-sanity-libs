@@ -1,6 +1,6 @@
 import { Rule, Validation } from './util-types/validation';
 import { SanitySchemaBase } from './util-types/common';
-import { InitialValueProperty } from '@sanity/types';
+import { InitialValueProperty } from 'sanity';
 
 /**
  * [Geopoint docs](https://www.sanity.io/docs/geopoint-type):

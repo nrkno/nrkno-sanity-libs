@@ -1,24 +1,25 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./build",
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "module": "esnext",
+    "jsx": "preserve",
+    "moduleResolution": "node",
     "target": "esnext",
-    "composite": true,
-    "jsx": "react",
-    "lib": ["es5", "es6", "es2019", "dom"],
-    "paths": {
-      "@sanity/field/lib/*": ["../../node_modules/@sanity/field/dist/dts/*"],
-      "@sanity/util/lib/*": ["../../node_modules/@sanity/util/dist/dts/*"]
-    }
+    "module": "esnext",
+    "esModuleInterop": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "strict": true,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "downlevelIteration": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "build",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "checkJs": false,
+    "rootDir": "src",
+    "incremental": true
   },
-  "references": [],
-  "include": ["./src"],
-  "exclude": ["build", "plugin-types", "node_modules"],
-  "volta": {
-    "node": "14.17.5",
-    "npm": "6.14.14"
-  }
+  "include": ["src/**/*"]
 }

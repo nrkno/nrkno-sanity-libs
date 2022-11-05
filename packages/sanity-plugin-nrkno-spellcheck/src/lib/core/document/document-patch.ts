@@ -1,6 +1,5 @@
 import groupBy from 'lodash/groupBy';
-import { pathToString } from '@sanity/field/lib/paths';
-import { PatchOperations, Path } from '@sanity/types';
+import { pathToString, PatchOperations, Path } from 'sanity';
 import { ReplaceOperation } from '../types';
 
 export function createPathPatch(

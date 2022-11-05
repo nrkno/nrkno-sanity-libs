@@ -1,6 +1,6 @@
 import { SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty } from '@sanity/types';
+import { InitialValueProperty } from 'sanity';
 
 /**
  * [Datetime docs]{@link https://www.sanity.io/docs/datetime-type }

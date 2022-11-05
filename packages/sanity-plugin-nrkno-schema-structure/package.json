@@ -78,8 +78,7 @@
       "dependencies": false
     },
     "linkWatch": {
-      "folder": "build",
-      "extensions": "ts,js,png,svg,gif,jpeg,css"
+      "folder": "build"
     }
   }
 }

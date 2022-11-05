@@ -1,4 +1,4 @@
-import { SanityDocument } from '@sanity/types';
+import { SanityDocument } from 'sanity';
 
 export interface BasicPreviewProps {
   documentId: string;

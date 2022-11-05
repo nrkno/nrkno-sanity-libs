@@ -6,8 +6,8 @@ import {
   PathSegment,
   SanityDocument,
   SchemaType,
-} from '@sanity/types';
-import { pathToString } from '@sanity/field/lib/paths';
+  pathToString,
+} from 'sanity';
 import { DisablesSpellcheckOptions, Language, OffsetPathValue, PathValue } from '../types';
 import groupBy from 'lodash/groupBy';
 

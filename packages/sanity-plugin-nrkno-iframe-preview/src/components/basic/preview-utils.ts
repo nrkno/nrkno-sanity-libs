@@ -1,5 +1,5 @@
 import { SanityClient } from '@sanity/client';
-import { SanityDocument } from '@sanity/types';
+import { SanityDocument } from 'sanity';
 import { PreviewAction, PreviewDocument, PreviewQuery } from '../hooks/preview-reducer-hook';
 
 export type UrlResolver =

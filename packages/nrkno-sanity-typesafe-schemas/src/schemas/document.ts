@@ -1,6 +1,6 @@
 import { Preview, SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty } from '@sanity/types';
+import { InitialValueProperty } from 'sanity';
 import { Fieldset } from './util-types/fieldset';
 import { GenericField } from './generic';
 import { FieldGroup } from './field-group';

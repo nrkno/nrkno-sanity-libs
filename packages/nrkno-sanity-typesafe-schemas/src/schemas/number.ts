@@ -1,6 +1,6 @@
 import { SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty, TitledListValue } from '@sanity/types';
+import { InitialValueProperty, TitledListValue } from 'sanity';
 
 /**
  * [Number docs](https://www.sanity.io/docs/number-type).

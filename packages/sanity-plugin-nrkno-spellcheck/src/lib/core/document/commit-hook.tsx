@@ -1,9 +1,7 @@
-import { ObjectSchemaType, SanityDocument } from '@sanity/types';
+import { ObjectSchemaType, SanityDocument, OperationsAPI, useDocumentOperation } from 'sanity';
 import { ReplaceOperation } from '../types';
 import { ToastParams, useToast } from '@sanity/ui';
-import { get } from '@sanity/util/lib/pathUtils';
-import { OperationsAPI } from '@sanity/field/lib/diff';
-import { useDocumentOperation } from '@sanity/react-hooks';
+import { get } from '@sanity/util/paths';
 import React, { useContext, useEffect, useRef } from 'react';
 import { createPathPatches } from './document-patch';
 import { DisplayTexts, DisplayTextsContext } from '../../ui/components/display-texts/DisplayTexts';
@@ -40,7 +38,7 @@ export function useCommitReplaceOperations(
 
     setReplaceOps([]);
     const patches = createPathPatches(safeOps);
-    docOperations.patch.execute(patches);
+    docOperations.patch.execute(patches, doc);
 
     toast.push(spellcheckResultToast({ safeOps, replaceOps, displayTexts: displayTexts.current }));
   }, [doc, type, docOperations, replaceOps, toast]);

@@ -9,4 +9,5 @@ module.exports = {
   coveragePathIgnorePatterns: ['(tests/.*.mock).(jsx?|tsx?)$'],
   modulePathIgnorePatterns: ['<rootDir>/build/'],
   moduleDirectories: ['node_modules', __dirname],
+  transformIgnorePatterns: ['node_modules/(?!(nanoid|uuid|get-random-values-esm))'],
 };

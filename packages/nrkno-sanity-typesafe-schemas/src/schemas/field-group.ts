@@ -1,4 +1,4 @@
-import { FieldGroup as SanityFieldGroup } from '@sanity/types';
+import { FieldGroup as SanityFieldGroup } from 'sanity';
 /**
  * [Field Group docs]{@link https://www.sanity.io/docs/field-groups }.
  */

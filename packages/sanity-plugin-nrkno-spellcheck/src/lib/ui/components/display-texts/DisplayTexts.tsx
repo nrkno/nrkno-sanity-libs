@@ -113,6 +113,7 @@ export function useDisplayText<T extends keyof DisplayTexts>(
 ): ReactNode {
   const displayText = useContext(DisplayTextsContext)[key];
   if (isFunction(displayText)) {
+    // @ts-expect-error hard to type so hardly typed
     // eslint-disable-next-line prefer-spread
     return useMemo(() => displayText.apply(undefined, args), args);
   }

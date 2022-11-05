@@ -1,5 +1,5 @@
 {
-  "name": "@snorreb/nrkno-sanity-react-utils",
+  "name": "@snorreeb/nrkno-sanity-react-utils",
   "version": "2.0.0-v3-studio.0",
   "description": "",
   "license": "MIT",
@@ -37,7 +37,7 @@
   },
   "files": [
     "src",
-    "lib"
+    "build"
   ],
   "dependencies": {
     "@sanity/incompatible-plugin": "^1.0.4"
@@ -69,7 +69,9 @@
     "verifyPackage": {
       "sanityV2Json": false,
       "babelConfig": false
+    },
+    "linkWatch": {
+      "folder": "build"
     }
   }
-
 }

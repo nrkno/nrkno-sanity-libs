@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { PartialBy, SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty } from '@sanity/types';
+import { InitialValueProperty } from 'sanity';
 
 /**
  * [Block type docs]{@link https://www.sanity.io/docs/block-type}.

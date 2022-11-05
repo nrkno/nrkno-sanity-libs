@@ -14,7 +14,7 @@ import { CurrentUser, DocumentDefinition } from 'sanity';
 import { isDefined } from './utility-types';
 import { sortDoc, sortSortable } from './sortable';
 
-declare module '@sanity/types' {
+declare module 'sanity' {
   interface DocumentDefinition {
     customStructure?: CustomStructureSpec;
   }

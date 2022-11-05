@@ -1,6 +1,6 @@
 import { arrayOf, field, schema, typed } from '../typesafe-schemas';
 import { HideContext } from '../schemas/util-types/common';
-import { SanityDocument, ValidationContext } from '@sanity/types';
+import { SanityDocument, ValidationContext } from 'sanity';
 import { SlugOptions } from '../schemas/slug';
 
 export const megaSchema = schema('document', {

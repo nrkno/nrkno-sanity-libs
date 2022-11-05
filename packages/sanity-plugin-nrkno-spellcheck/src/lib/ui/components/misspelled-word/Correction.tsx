@@ -1,12 +1,12 @@
-import { Box, Button } from '@sanity/ui';
+import { Button } from '@sanity/ui';
 import React, { SyntheticEvent, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
-import styles from './Correction.css';
 import { IOccurrenceProps } from './MisspelledWord';
 import { ActiveCorrection, SpellcheckDispatch } from '../SpellcheckContext';
-import { useCurrentPrevious } from '@nrk/nrkno-sanity-react-utils';
+import { useCurrentPrevious } from '@snorreeb/nrkno-sanity-react-utils';
 import { EditCorrection } from './EditCorrection';
 import { SpellcheckAction } from '../../reducer/spellcheck-actions';
 import { CorrectedOccurrence } from '../../reducer/spellcheck-reducer';
+import { CorrectionBox, OpenButton } from './Correction.styled';
 
 export function Correction({ suggestions, occurrence }: IOccurrenceProps) {
   const activeCorrection = useContext(ActiveCorrection);
@@ -32,9 +32,9 @@ export function Correction({ suggestions, occurrence }: IOccurrenceProps) {
   const label = correction || suggestions.join(' / ') || '?';
   return useMemo(() => {
     return (
-      <Box className={styles.correction}>
+      <CorrectionBox>
         {!isActive.current && (
-          <div className={styles.openButton}>
+          <OpenButton>
             <Button
               mode="bleed"
               justify="flex-start"
@@ -44,7 +44,7 @@ export function Correction({ suggestions, occurrence }: IOccurrenceProps) {
               color={'inherit'}
               style={{ height: 35 }}
             />
-          </div>
+          </OpenButton>
         )}
         {isActive.current && (
           <EditCorrection
@@ -53,7 +53,7 @@ export function Correction({ suggestions, occurrence }: IOccurrenceProps) {
             suggestions={suggestions}
           />
         )}
-      </Box>
+      </CorrectionBox>
     );
   }, [isActive, setActive, setCorrection, correction, label, suggestions]);
 }

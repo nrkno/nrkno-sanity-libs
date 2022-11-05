@@ -1,6 +1,6 @@
 import { Dialog } from '@sanity/ui';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { ObjectSchemaType, SanityDocument } from '@sanity/types';
+import { ObjectSchemaType, SanityDocument } from 'sanity';
 import {
   ActiveCorrection,
   ProgressContext,

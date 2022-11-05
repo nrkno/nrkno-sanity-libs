@@ -1,4 +1,4 @@
-import { Block, Path, SchemaType } from '@sanity/types';
+import { Block, Path, SchemaType } from 'sanity';
 
 export interface SpellcheckResponse {
   word: string;

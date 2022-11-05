@@ -1,4 +1,3 @@
-//Public API for the library
 export { ConfiguredSpellcheckButton } from './lib/ui/components/ConfiguredSpellcheckButton';
 
 export { CachedSpellchecker } from './lib/core/words/cached-spellchecker';
@@ -17,8 +16,10 @@ export {
 
 export {
   DisplayTextsContext,
-  DisplayTexts,
   defaultDisplayTexts,
+  type DisplayTexts,
 } from './lib/ui/components/display-texts/DisplayTexts';
 
 export * from './lib/core/types';
+
+export { nrkSpellcheck } from './plugin';

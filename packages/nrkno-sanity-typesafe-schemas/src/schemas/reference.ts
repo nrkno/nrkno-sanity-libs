@@ -3,7 +3,7 @@
  */
 import { PartialBy, SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty, ReferenceFilterResolver } from '@sanity/types';
+import { InitialValueProperty, ReferenceFilterResolver } from 'sanity';
 
 type SchemaOptionalName = PartialBy<SanitySchemaBase, 'name'>;
 

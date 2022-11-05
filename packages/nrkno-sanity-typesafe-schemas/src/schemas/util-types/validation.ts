@@ -1,5 +1,5 @@
-import { Path, SchemaType } from '@sanity/types';
-import { SanityDocument } from '@sanity/types';
+import { Path, SchemaType } from 'sanity';
+import { SanityDocument } from 'sanity';
 
 export interface ValidationContext<ParentField = unknown, Document = SanityDocument> {
   parent?: ParentField;

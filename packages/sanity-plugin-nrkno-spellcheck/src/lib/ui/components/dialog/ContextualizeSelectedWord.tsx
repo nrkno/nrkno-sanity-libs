@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { WordContext } from '../SpellcheckContext';
 import { Card, Stack, Text } from '@sanity/ui';
 import { OffsetPathValue, WordInBlock } from '../../../core/types';
-import { Block } from '@sanity/types';
+import { Block } from 'sanity';
 import { useDisplayText } from '../display-texts/DisplayTexts';
 
 export function ContextualizeSelectedWord() {

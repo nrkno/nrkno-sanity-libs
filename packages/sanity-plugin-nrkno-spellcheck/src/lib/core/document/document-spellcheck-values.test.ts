@@ -1,11 +1,5 @@
 import { blockSpanSeparator, getSpellcheckedValues } from './document-spellcheck-values';
-import {
-  ArraySchemaType,
-  Block,
-  ObjectField,
-  ObjectSchemaType,
-  StringSchemaType,
-} from '@sanity/types';
+import { ArraySchemaType, Block, ObjectField, ObjectSchemaType, StringSchemaType } from 'sanity';
 import { SanityDocument } from '@sanity/client';
 import { typed } from '../helpers';
 import { Language, OffsetPathValue } from '../types';

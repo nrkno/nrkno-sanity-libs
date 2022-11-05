@@ -1,5 +1,5 @@
 import { Options, SanitySchemaBase } from './util-types/common';
-import { BooleanSchemaType, InitialValueProperty } from '@sanity/types';
+import { BooleanSchemaType, InitialValueProperty } from 'sanity';
 import { Rule, Validation } from './util-types/validation';
 
 /**

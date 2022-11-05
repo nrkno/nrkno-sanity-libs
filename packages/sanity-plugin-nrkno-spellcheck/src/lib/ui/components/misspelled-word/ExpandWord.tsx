@@ -1,9 +1,8 @@
 import React, { useCallback, useContext } from 'react';
-import styles from './ExpandWord.css';
 import { Box, Button, Flex, Text } from '@sanity/ui';
 import { ExpandedWordsContext, SpellcheckDispatch } from '../SpellcheckContext';
 import { IOccurrenceProps } from './MisspelledWord';
-import { classNames } from '../../../core/helpers';
+import { ExpandIconDiv, ExpandWordFlex } from './ExpandWord.styled';
 
 interface IExpandedWordProps {
   expanded: boolean;
@@ -49,25 +48,16 @@ const ExpandWordComponent = React.memo(function ExpandWordIconComp({
     Icon = <div />;
   } else if (clickable) {
     Icon = expanded ? (
-      <div aria-hidden={true} className={styles.expandedIcon}>
-        ⌄
-      </div>
+      <ExpandIconDiv aria-hidden={true}>⌄</ExpandIconDiv>
     ) : (
-      <div aria-hidden={true} className={styles.expandIcon}>
-        ›
-      </div>
+      <ExpandIconDiv aria-hidden={true}>›</ExpandIconDiv>
     );
   } else {
     Icon = <div aria-hidden={true}>└</div>;
   }
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      marginLeft={1}
-      className={classNames(styles.expandWord, clickable ? styles.clickable : styles.notClickable)}
-    >
+    <ExpandWordFlex justify="center" align="center" marginLeft={1} clickable={clickable}>
       <Button
         mode="bleed"
         padding={1}
@@ -85,6 +75,6 @@ const ExpandWordComponent = React.memo(function ExpandWordIconComp({
           <Box>{Icon}</Box>
         </Flex>
       </Button>
-    </Flex>
+    </ExpandWordFlex>
   );
 });

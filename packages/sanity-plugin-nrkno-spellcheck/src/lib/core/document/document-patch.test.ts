@@ -1,5 +1,5 @@
 import { createPathPatch, createPathPatches } from './document-patch';
-import { Path, StringSchemaType } from '@sanity/types';
+import { Path, StringSchemaType } from 'sanity';
 import { ReplaceOperation } from '../types';
 
 const stringType: StringSchemaType = { name: 'string', jsonType: 'string' };

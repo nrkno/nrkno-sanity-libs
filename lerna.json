@@ -1,5 +1,9 @@
 {
-  "packages": ["packages/sanity-plugin-nrkno-schema-structure", "packages/nrkno-sanity-react-utils"],
+  "packages": [
+    "packages/nrkno-sanity-react-utils",
+    "packages/sanity-plugin-nrkno-schema-structure",
+    "packages/sanity-plugin-nrkno-spellcheck"
+  ],
   "version": "independent",
 
   "command": {

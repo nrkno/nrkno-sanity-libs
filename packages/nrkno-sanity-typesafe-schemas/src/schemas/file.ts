@@ -1,6 +1,6 @@
 import { SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty, AssetSource } from '@sanity/types';
+import { InitialValueProperty, AssetSource } from 'sanity';
 import { GenericField } from './generic';
 
 /**

@@ -1,10 +1,12 @@
-.suggestContainer {
+import styled from 'styled-components';
+
+export const SuggestContainerDiv = styled.div`
   box-sizing: border-box;
   width: 100%;
   position: relative;
-}
+`;
 
-.suggestInput {
+export const SuggestInput = styled.input`
   display: block;
   width: 100%;
   height: 40px;
@@ -14,12 +16,14 @@
   transition: border 200ms;
   border: 1px solid #e0e0e0;
   box-sizing: border-box;
-}
 
-.suggestInput:hover,
-.suggestInputfocus {
-  border-color: #f26a55;
-}
+  &:hover,
+  &:focus {
+    border-color: #f26a55;
+  }
+`;
+
+/*
 
 .coreSuggest {
   position: absolute;
@@ -81,3 +85,4 @@
   color: inherit;
   font-weight: inherit;
 }
+*/

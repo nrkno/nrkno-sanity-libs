@@ -1,6 +1,6 @@
 import { SanitySchemaBase } from './util-types/common';
 import { Rule, Validation } from './util-types/validation';
-import { InitialValueProperty, Path, SanityDocument, SlugSchemaType } from '@sanity/types';
+import { InitialValueProperty, Path, SanityDocument, SlugSchemaType } from 'sanity';
 
 /** [Slug docs](https://www.sanity.io/docs/slug-type) */
 export interface SlugSchema extends SanitySchemaBase {

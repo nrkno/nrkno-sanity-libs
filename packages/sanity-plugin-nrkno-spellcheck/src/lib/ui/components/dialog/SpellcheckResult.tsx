@@ -1,11 +1,11 @@
 import { Box, Button, Card, Flex, Stack, Text } from '@sanity/ui';
-import styles from './SpellcheckDialog.css';
 import { MisspelledWord } from '../misspelled-word/MisspelledWord';
 import { ContextualizeSelectedWord } from './ContextualizeSelectedWord';
 import { AcceptButton } from './AcceptButton';
 import React from 'react';
 import { SpellcheckDialogProps } from './SpellcheckDialog';
 import { useDisplayText } from '../display-texts/DisplayTexts';
+import { WordHeader } from './SpellcheckDialog.styled';
 
 export function SpellcheckResult(props: SpellcheckDialogProps) {
   const { words, onClose } = props;
@@ -28,7 +28,7 @@ export function SpellcheckResult(props: SpellcheckDialogProps) {
         data-testid="spellcheck-word-table"
       >
         <Stack space={0}>
-          <div className={styles.wordsHeader}>
+          <WordHeader>
             <Flex align="center" padding={1}>
               <Box style={{ marginLeft: '65px' }} flex={1}>
                 <Text size={1}>
@@ -41,7 +41,7 @@ export function SpellcheckResult(props: SpellcheckDialogProps) {
                 </Text>
               </Box>
             </Flex>
-          </div>
+          </WordHeader>
           {Object.entries(words).map(([key, correctedWord], index) => (
             <MisspelledWord key={key} correctedWord={correctedWord} oddRow={index % 2 === 1} />
           ))}
