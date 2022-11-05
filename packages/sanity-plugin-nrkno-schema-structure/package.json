@@ -41,19 +41,19 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
+    "react": "^18",
     "sanity": "3.0.0-rc.0"
   },
   "devDependencies": {
+    "@sanity/color": "^2.1.16",
     "@sanity/pkg-utils": "^1.17.2",
     "@sanity/plugin-kit": "^2.1.7",
     "@sanity/types": "3.0.0-rc.0",
-    "@sanity/color": "^2.1.16",
-    "@sanity/ui": "^1.0.0-beta.32",
-    "@types/react": "^18.0.0",
+    "@sanity/ui": "1.0.0-beta.32",
+    "@types/react": "^18",
     "cross-env": "^7.0.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18",
+    "react-dom": "^18",
     "rimraf": "^3.0.2",
     "sanity": "3.0.0-rc.0",
     "styled-components": "^5.2.0",

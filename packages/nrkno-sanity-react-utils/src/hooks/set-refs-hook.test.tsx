@@ -5,7 +5,7 @@ import { useSetRefs } from './set-refs-hook';
 describe('set-refs-hook', () => {
   it('should set all refs', () => {
     let fnRef: HTMLDivElement | null = null;
-    const innerFnRef: ForwardedRef<HTMLDivElement | undefined> = (ref: HTMLDivElement | null) => {
+    const innerFnRef: ForwardedRef<HTMLDivElement> = (ref: HTMLDivElement | null) => {
       fnRef = ref;
     };
     const innerObjectRef: MutableRefObject<HTMLDivElement | null> = { current: null };

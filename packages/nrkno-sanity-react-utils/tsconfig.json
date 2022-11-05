@@ -1,15 +1,25 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./build",
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "module": "commonjs",
-    "target": "es6",
-    "composite": true,
-    "jsx": "react"
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "strict": true,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "downlevelIteration": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "build",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "checkJs": false,
+    "rootDir": "src",
+    "incremental": true
   },
-  "references": [],
-  "include": ["src"],
-  "exclude": ["build", "node_modules"]
+  "include": ["src/**/*"]
 }

@@ -1,11 +1,34 @@
 {
-  "name": "@nrk/nrkno-sanity-react-utils",
-  "version": "1.1.1",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
+  "name": "@snorreb/nrkno-sanity-react-utils",
+  "version": "2.0.0-v3-studio.0",
+  "description": "",
   "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./build/src/index.d.ts",
+      "source": "./src/index.ts",
+      "import": "./build/index.esm.js",
+      "require": "./build/index.js",
+      "default": "./build/index.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "source": "./src/index.ts",
+  "main": "./build/index.js",
+  "module": "./build/index.esm.js",
+  "types": "./build/src/index.d.ts",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "clean": "cross-env rimraf build *.tsbuildinfo",
+    "prebuild": "npm run clean && plugin-kit verify-package --silent && pkg-utils",
+    "build": "pkg-utils build",
+    "test": "cross-env NODE_ENV=test jest",
+    "lint": "eslint .",
+    "watch": "pkg-utils watch",
+    "link-watch": "plugin-kit link-watch",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -13,25 +36,40 @@
     "directory": "packages/nrkno-sanity-react-utils"
   },
   "files": [
-    "build",
-    "src"
+    "src",
+    "lib"
   ],
+  "dependencies": {
+    "@sanity/incompatible-plugin": "^1.0.4"
+  },
   "devDependencies": {
-    "@testing-library/react": "^12.1.2",
-    "@types/react-dom": "^17.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "@sanity/pkg-utils": "^1.17.2",
+    "@sanity/plugin-kit": "^2.1.7",
+    "@testing-library/react": "^13.4.0",
+    "@types/react-dom": "^18",
+    "prettier": "^2.7.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "rimraf": "^3.0.2",
+    "sanity": "3.0.0-rc.0",
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "react": "^17.0.0"
-  },
-  "scripts": {
-    "build": "tsc --build tsconfig.build.json",
-    "clean": "cross-env rimraf build *.tsbuildinfo",
-    "test": "cross-env NODE_ENV=test jest"
+    "react": "^18",
+    "sanity": "dev-preview || 3.0.0-rc.0"
   },
   "volta": {
     "node": "14.17.5",
     "npm": "6.14.14"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "sanityPlugin": {
+    "verifyPackage": {
+      "sanityV2Json": false,
+      "babelConfig": false
+    }
   }
+
 }
