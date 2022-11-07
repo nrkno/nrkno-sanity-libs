@@ -1,5 +1,5 @@
 import React from 'react';
-import { SanityDocument } from '@sanity/types';
+import { SanityDocument } from 'sanity';
 import { dummyLanguage, spellcheckService } from './dummy-spellcheck-service';
 import { ObjectInputProps } from 'sanity';
 import { CachedSpellchecker } from './lib/core/words/cached-spellchecker';

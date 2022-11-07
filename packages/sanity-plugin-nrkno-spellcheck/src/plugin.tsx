@@ -1,6 +1,6 @@
 import { definePlugin, isObjectInputProps, ObjectInputProps } from 'sanity';
 import { DocumentWithSpellcheck } from './DocumentWithSpellcheck';
-import { SanityDocument } from '@sanity/types';
+import { SanityDocument } from 'sanity';
 
 export const nrkSpellcheck = definePlugin({
   name: 'nrk-spellcheck',
