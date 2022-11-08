@@ -20,7 +20,7 @@ export interface ConfiguredSpellcheckButtonProps {
 
 export function ConfiguredSpellcheckButton(props: ConfiguredSpellcheckButtonProps) {
   const [state, dispatch] = useSpellcheckReducer();
-  const { words, progress } = state;
+  const { progress } = state;
   const { document, type, language, wordChecker, wordParser } = props;
   const [currentLang, setCurrentLang] = useState<Language | undefined>();
 
@@ -45,11 +45,11 @@ export function ConfiguredSpellcheckButton(props: ConfiguredSpellcheckButtonProp
           language: lang,
           wordChecker,
           wordParser,
-          progress: (progress) => dispatch({ type: 'SPELLCHECK_PROGRESS', progress }),
-        }).then((words) => dispatch({ type: 'SPELLCHECKED_WORDS', words }));
+          progress: (_progress) => dispatch({ type: 'SPELLCHECK_PROGRESS', progress: _progress }),
+        }).then((_words) => dispatch({ type: 'SPELLCHECKED_WORDS', words: _words }));
       }, 100);
     },
-    [words, dispatch, progress, document, type, language, wordChecker, wordParser]
+    [dispatch, progress, document, type, wordChecker, wordParser]
   );
 
   return (

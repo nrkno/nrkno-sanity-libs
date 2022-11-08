@@ -1,8 +1,8 @@
-import { ObjectSchemaType, SanityDocument, OperationsAPI, useDocumentOperation } from 'sanity';
+import { ObjectSchemaType, OperationsAPI, SanityDocument, useDocumentOperation } from 'sanity';
 import { ReplaceOperation } from '../types';
 import { ToastParams, useToast } from '@sanity/ui';
 import { get } from '@sanity/util/paths';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { createPathPatches } from './document-patch';
 import { DisplayTexts, DisplayTextsContext } from '../../ui/components/display-texts/DisplayTexts';
 
@@ -12,36 +12,37 @@ interface CreateToastArgs {
   displayTexts: DisplayTexts;
 }
 
-export function useCommitReplaceOperations(
-  doc: SanityDocument,
-  type: ObjectSchemaType,
-  replaceOps: ReplaceOperation[],
-  setReplaceOps: (replaceOps: ReplaceOperation[]) => void
-) {
+export function useCommitReplaceOperations(doc: SanityDocument, type: ObjectSchemaType) {
   const docOperations = useDocumentOperation(
     (doc._id || '').replace('drafts.', ''),
     type.name
   ) as OperationsAPI;
 
   const toast = useToast();
+
   const displayTexts = useRef(useContext(DisplayTextsContext));
-  useEffect(() => {
-    if (!replaceOps || !replaceOps.length) {
-      return;
-    }
 
-    const safeOps = replaceOps.filter((op) => {
-      const currentValue = get(doc, op.pathValue.path);
-      const valueWhenSpellcheckStarted = op.pathValue.value;
-      return currentValue === valueWhenSpellcheckStarted;
-    });
+  return useCallback(
+    (replaceOps: ReplaceOperation[]) => {
+      if (!replaceOps || !replaceOps.length) {
+        return;
+      }
 
-    setReplaceOps([]);
-    const patches = createPathPatches(safeOps);
-    docOperations.patch.execute(patches, doc);
+      const safeOps = replaceOps.filter((op) => {
+        const currentValue = get(doc, op.pathValue.path);
+        const valueWhenSpellcheckStarted = op.pathValue.value;
+        return currentValue === valueWhenSpellcheckStarted;
+      });
 
-    toast.push(spellcheckResultToast({ safeOps, replaceOps, displayTexts: displayTexts.current }));
-  }, [doc, type, docOperations, replaceOps, toast]);
+      const patches = createPathPatches(safeOps);
+      docOperations.patch.execute(patches, doc);
+
+      toast.push(
+        spellcheckResultToast({ safeOps, replaceOps, displayTexts: displayTexts.current })
+      );
+    },
+    [doc, docOperations, toast]
+  );
 }
 
 export function spellcheckResultToast({

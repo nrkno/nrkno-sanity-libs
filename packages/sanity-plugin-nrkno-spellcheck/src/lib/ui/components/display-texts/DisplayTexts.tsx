@@ -107,15 +107,20 @@ export const DisplayTextsContext = createContext<DisplayTexts>(defaultDisplayTex
 
 export function useDisplayText<T extends keyof DisplayTexts>(
   key: T,
-  ...args: DisplayTexts[T] extends (...args: any[]) => ReactNode
+  ...args: DisplayTexts[T] extends (...a: any[]) => ReactNode
     ? Parameters<DisplayTexts[T]>
     : undefined[]
 ): ReactNode {
   const displayText = useContext(DisplayTextsContext)[key];
-  if (isFunction(displayText)) {
-    // @ts-expect-error hard to type so hardly typed
-    // eslint-disable-next-line prefer-spread
-    return useMemo(() => displayText.apply(undefined, args), args);
-  }
-  return displayText;
+
+  return useMemo(() => {
+    if (isFunction(displayText)) {
+      // @ts-expect-error hard to type so hardly typed
+      return displayText(...args);
+    }
+    if (typeof displayText === 'string') {
+      return displayText;
+    }
+    return null;
+  }, [displayText, args]);
 }

@@ -1,5 +1,5 @@
 import { Dialog } from '@sanity/ui';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { ObjectSchemaType, SanityDocument } from 'sanity';
 import {
   ActiveCorrection,
@@ -28,19 +28,16 @@ export interface SpellcheckDialogProps {
   showSuggestions: boolean;
 }
 
-const initialOps: ReplaceOperation[] = [];
-
 export function SpellcheckDialog({ document, type }: IProps) {
-  const [replaceOps, setReplaceOps] = useState(initialOps);
   const dispatch = useContext(SpellcheckDispatch);
   const words = useContext(WordsContext);
   const progress = useContext(ProgressContext);
   const activeCorrection = useContext(ActiveCorrection);
 
-  useCommitReplaceOperations(document, type, replaceOps, setReplaceOps);
+  const commitOps = useCommitReplaceOperations(document, type);
 
   const onClose = useCallback(() => dispatch({ type: 'SPELLCHECK_RESET_STATE' }), [dispatch]);
-  const onAccept = useAcceptCorrections(words, setReplaceOps, onClose);
+  const onAccept = useAcceptCorrections(words, commitOps, onClose);
 
   const { acceptCount, ambiguousCount } = useWordCount(words);
 
@@ -96,7 +93,7 @@ function useAcceptCorrections(
       setReplaceOps(ops);
     }
     onClose();
-  }, [words, onClose]);
+  }, [setReplaceOps, words, onClose]);
 }
 
 const SpellcheckDialogComponent = React.memo(function SpellcheckDialogComponent(

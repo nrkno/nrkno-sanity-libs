@@ -4,7 +4,7 @@ import { Box } from '@sanity/ui';
 export const SuggestListUl = styled.ul`
   max-height: 200px;
   overflow: auto;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid ${({ theme }) => theme.sanity.color.selectable?.default.enabled.border};
 `;
 
 export const CorrectionBox = styled(Box)`

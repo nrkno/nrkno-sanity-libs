@@ -10,7 +10,14 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'compat'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'sanity/typescript',
+    'plugin:prettier/recommended',
+    'plugin:react-hooks/recommended',
+  ],
   rules: {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',

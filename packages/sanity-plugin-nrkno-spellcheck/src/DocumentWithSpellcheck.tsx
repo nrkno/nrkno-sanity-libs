@@ -13,6 +13,7 @@ const spellchecker = new CachedSpellchecker({ spellcheckService });
 // default: words less than 3 letters, in all caps or with numbers are skipped
 const wordParser = createWordParser(/*{ config is optional }*/);
 
+// eslint-disable-next-line func-name-matching
 export const DocumentWithSpellcheck = function Language(props: ObjectInputProps<SanityDocument>) {
   if (!props.value) {
     return null;

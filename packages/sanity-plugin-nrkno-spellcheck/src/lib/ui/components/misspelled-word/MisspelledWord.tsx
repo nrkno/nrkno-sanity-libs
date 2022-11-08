@@ -5,7 +5,7 @@ import { ExpandedWordsContext, SpellcheckDispatch, WordContext } from '../Spellc
 import { ExpandWord } from './ExpandWord';
 import { CorrectedOccurrence, CorrectedWord } from '../../reducer/spellcheck-reducer';
 import { useDisplayText } from '../display-texts/DisplayTexts';
-import { CheckboxDiv, CheckboxTooltipDiv, MisspelledWordDiv } from './MisspelledWord.styled';
+import { CheckboxDiv, CheckboxTooltipDiv, MisspelledWordCard } from './MisspelledWord.styled';
 
 interface IProps {
   correctedWord: CorrectedWord;
@@ -71,7 +71,7 @@ function ExpandableWordOccurrence(props: IOccurrenceProps) {
       closeSuggest: true,
       correction: isAccepted ? newCorrection : correction,
     });
-  }, [occurrence, suggestions, dispatch]);
+  }, [occurrence, suggestions, dispatch, correction]);
 
   if (hidden) {
     return null;
@@ -102,7 +102,7 @@ const WordOccurrenceComponent = React.memo(function WordOccurrenceComponent(
   const { occurrence, setWordContext, selected } = props;
   const { word, startPosition } = occurrence;
   return (
-    <MisspelledWordDiv selected={selected}>
+    <MisspelledWordCard selected={selected}>
       <Flex key={word + startPosition} onClick={setWordContext} align="center">
         <Box padding={1}>
           <SelectCorrection {...props} />
@@ -117,7 +117,7 @@ const WordOccurrenceComponent = React.memo(function WordOccurrenceComponent(
           <Correction {...props} />
         </Box>
       </Flex>
-    </MisspelledWordDiv>
+    </MisspelledWordCard>
   );
 });
 
@@ -137,7 +137,7 @@ function SelectCorrection(props: IOccurrenceInnerProps) {
         <CheckboxTooltipDiv>
           <Box padding={2}>
             {disabled ? disabledSelectCorrectionTooltip : null}
-            {!disabled ? enabledSelectCorrectionTooltip : null}
+            {disabled ? null : enabledSelectCorrectionTooltip}
           </Box>
         </CheckboxTooltipDiv>
       }

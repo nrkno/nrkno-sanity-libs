@@ -27,7 +27,7 @@ export function Correction({ suggestions, occurrence }: IOccurrenceProps) {
     if (wasActive && !activeCorrection) {
       buttonRef.current?.focus();
     }
-  }, [isActive.current, activeCorrection]);
+  }, [isActive, activeCorrection]);
 
   const label = correction || suggestions.join(' / ') || '?';
   return useMemo(() => {

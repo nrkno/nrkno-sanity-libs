@@ -1,22 +1,25 @@
 import styled from 'styled-components';
-import { Flex } from '@sanity/ui';
+import { Flex, Theme } from '@sanity/ui';
 
 export const ExpandIconDiv = styled.div`
   font-size: 20px;
   margin-top: -0.25em;
 `;
 
-//TODO FIXME
 export const ExpandWordFlex = styled(Flex)`
   position: relative;
 
   & > * {
     background: none;
     width: 35px;
+    box-shadow: none;
   }
-
-    ${({ clickable }: { clickable: boolean }) =>
-      clickable ? 'background: var(--selectable-item-color-highlighted)' : {}}}
+  ${({ clickable, theme }: { clickable: boolean; theme: Theme }) => {
+    if (clickable) {
+      return `color: ${theme.sanity.color.selectable?.primary.selected.fg}`;
+    }
+    return '';
+  }}
 `;
 
 /*

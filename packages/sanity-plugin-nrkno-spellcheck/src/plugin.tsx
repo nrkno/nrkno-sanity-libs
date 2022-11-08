@@ -1,3 +1,4 @@
+import React from 'react';
 import { definePlugin, isObjectInputProps, ObjectInputProps } from 'sanity';
 import { DocumentWithSpellcheck } from './DocumentWithSpellcheck';
 import { SanityDocument } from 'sanity';

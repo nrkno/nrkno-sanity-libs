@@ -98,6 +98,7 @@ function useSiblingText(wordContext?: WordInBlock) {
     const childrenAsString = (array: Block['children']) =>
       array?.map((child) => child.text).join('');
 
+    // eslint-disable-next-line consistent-return
     return {
       before: childrenAsString(children.slice(0, startIndex)),
       after: childrenAsString(children.slice(startIndex + 1, children.length)),

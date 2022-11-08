@@ -38,6 +38,7 @@ describe('cached-spellchecker', () => {
     ];
 
     const spellchecker = new CachedSpellchecker({
+      // eslint-disable-next-line require-await
       spellcheckService: async () => {
         return [
           {

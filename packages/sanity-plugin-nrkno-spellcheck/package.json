@@ -36,7 +36,7 @@
     "watch": "pkg-utils watch",
     "clean": "rimraf lib",
     "test": "cross-env NODE_ENV=test jest",
-    "lint": "eslint .",
+    "lint": "eslint src",
     "prebuild": "npm run clean && plugin-kit verify-package --silent && pkg-utils",
     "link-watch": "plugin-kit link-watch",
     "prepublishOnly": "npm run build"

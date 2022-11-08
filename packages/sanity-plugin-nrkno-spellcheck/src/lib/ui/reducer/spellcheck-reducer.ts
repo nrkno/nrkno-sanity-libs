@@ -122,11 +122,10 @@ function setCorrection(
             correction: newCorrection,
             accepted: accepted && !!newCorrection,
           };
-        } else if (!isExpanded) {
-          return { ...b, accepted };
-        } else {
+        } else if (isExpanded) {
           return b;
         }
+        return { ...b, accepted };
       }),
     },
   };

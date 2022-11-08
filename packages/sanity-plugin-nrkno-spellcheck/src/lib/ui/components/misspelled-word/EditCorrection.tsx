@@ -13,7 +13,7 @@ import { useDebouncedEffect } from '@snorreeb/nrkno-sanity-react-utils';
 // @ts-expect-errors missing types
 import CoreSuggest from '@nrk/core-suggest/jsx';
 import { SuggestListUl } from './Correction.styled';
-import { SuggestContainerDiv, SuggestInput } from './EditCorrection.styled';
+import { SuggestContainerBox, SuggestInput } from './EditCorrection.styled';
 
 type SetCorrection = (correction: string, closeSuggest: boolean) => void;
 
@@ -27,6 +27,7 @@ export function EditCorrection({ correction, setCorrection, suggestions }: IEdit
   const [localValue, setLocalValue] = useState(
     correction || (suggestions.length === 1 ? suggestions[0] : '')
   );
+
   const inputRef = useAutoSelectionRef(localValue);
   const emitValue = useEmitValue(setLocalValue, setCorrection);
   const disableEscape = useDisableEscape(localValue, inputRef, setCorrection);
@@ -44,7 +45,7 @@ export function EditCorrection({ correction, setCorrection, suggestions }: IEdit
         requestAnimationFrame(() => inputRef.current?.setSelectionRange(0, word.length));
       }
     },
-    [suggestions, emitValue]
+    [inputRef, emitValue]
   );
 
   const onSuggestFilter = useCallback(
@@ -54,7 +55,7 @@ export function EditCorrection({ correction, setCorrection, suggestions }: IEdit
 
   return (
     <>
-      <SuggestContainerDiv onKeyDown={disableEscape}>
+      <SuggestContainerBox onKeyDown={disableEscape}>
         <CorrectionInput
           ref={inputRef}
           localValue={localValue}
@@ -65,7 +66,7 @@ export function EditCorrection({ correction, setCorrection, suggestions }: IEdit
         />
         {showSuggestions && (
           <CoreSuggest
-            /*     className={classNames(editStyles.coreSuggest, styles.coreSuggest)}*/
+            className={'coreSuggest'}
             onSuggestFilter={onSuggestFilter}
             onSuggestSelect={onSuggestSelect}
           >
@@ -82,7 +83,7 @@ export function EditCorrection({ correction, setCorrection, suggestions }: IEdit
             </SuggestListUl>
           </CoreSuggest>
         )}
-      </SuggestContainerDiv>
+      </SuggestContainerBox>
     </>
   );
 }
@@ -96,7 +97,7 @@ interface SuggestionProps {
 
 function Suggestion({ suggestion, addFocused, removeFocused, localValue }: SuggestionProps) {
   const onFocus = useCallback(() => addFocused(suggestion), [suggestion, addFocused]);
-  const onBlur = useCallback(() => removeFocused(suggestion), [suggestion, addFocused]);
+  const onBlur = useCallback(() => removeFocused(suggestion), [suggestion, removeFocused]);
 
   return (
     <li>
@@ -160,7 +161,7 @@ function useDisableEscape(
         setCorrection(localValue, true);
       }
     },
-    [localValue, setCorrection]
+    [inputRef, localValue, setCorrection]
   );
 }
 
@@ -187,7 +188,9 @@ function useFocusCounting(setCorrection: SetCorrection, localValue: string) {
   useDebouncedEffect(
     () => {
       // closes this component when no input/button has focus anymore
-      !focused.length && setCorrection(localValue, true);
+      if (!focused.length) {
+        setCorrection(localValue, true);
+      }
     },
     [focused, localValue],
     0 // debounce with 0 delay ensures blur & focus are processed in the same tick
@@ -223,6 +226,8 @@ function useAutoSelectionRef(localValue: string) {
       inputRef.current?.setSelectionRange(0, localValue.length);
       inputRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
     });
+    // do not pass localValue.length here
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return inputRef;

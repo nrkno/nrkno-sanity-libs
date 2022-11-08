@@ -7,6 +7,7 @@ export const dummyLanguage = {
 
 const suggestions = ['slim', 'pickings'];
 
+// eslint-disable-next-line func-name-matching,require-await
 export const spellcheckService: SpellcheckService = async function dummy(
   words: string[],
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

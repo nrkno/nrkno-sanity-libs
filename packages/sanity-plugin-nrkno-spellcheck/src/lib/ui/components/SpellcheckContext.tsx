@@ -3,6 +3,7 @@ import { SpellcheckAction } from '../reducer/spellcheck-actions';
 import { SpellcheckProgress, WordInBlock } from '../../core/types';
 import { CorrectedWords, ExpandedWords, SpellcheckState } from '../reducer/spellcheck-reducer';
 
+// eslint-disable-next-line no-empty-function
 export const SpellcheckDispatch = React.createContext<React.Dispatch<SpellcheckAction>>(() => {});
 export const ProgressContext = React.createContext<SpellcheckProgress | undefined>(undefined);
 export const WordsContext = React.createContext<CorrectedWords | undefined>(undefined);

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { blockSpanSeparator, getSpellcheckedValues } from './document-spellcheck-values';
 import { ArraySchemaType, Block, ObjectField, ObjectSchemaType, StringSchemaType } from 'sanity';
 import { SanityDocument } from '@sanity/client';

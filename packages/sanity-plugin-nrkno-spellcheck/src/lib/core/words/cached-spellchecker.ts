@@ -42,6 +42,7 @@ export class CachedSpellchecker {
     this.wordSuggestions = new Map<string, WordSpelling>();
   }
 
+  // eslint-disable-next-line require-await
   spellcheck = async (spellcheckJob: SpellcheckJob): Promise<WordMap> => {
     const langcode = spellcheckJob.language.code;
     if (langcode !== this.cachedLang) {
@@ -67,6 +68,7 @@ async function spellcheckWords(
     wordSuggestions: WordCache;
   }
 ): Promise<WordMap> {
+  // eslint-disable-next-line no-empty-function
   const { language, progress = () => {}, wordSuggestions, config } = args;
   let words = uniq(args.words);
   words = words.filter(Boolean);
