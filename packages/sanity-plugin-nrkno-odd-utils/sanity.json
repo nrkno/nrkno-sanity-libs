@@ -1,7 +1,0 @@
-{
-  "paths": {
-    "source": "./src",
-    "compiled": "./build"
-  },
-  "parts": []
-}
