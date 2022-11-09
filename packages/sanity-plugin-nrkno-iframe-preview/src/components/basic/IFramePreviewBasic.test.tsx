@@ -2,8 +2,10 @@ import { act, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { studioTheme, ThemeProvider } from '@sanity/ui';
 import { defaultDisplayTexts } from '../DisplayTextsContext';
-import { SanityDocument } from '@sanity/types';
-import { IFramePreviewBasic } from './IFramePreviewBasic';
+import { SanityDocument } from 'sanity';
+import { __setUseTestableClient, IFramePreviewBasic } from './IFramePreviewBasic';
+
+__setUseTestableClient(jest.fn());
 
 describe('IFramePreviewBasic', () => {
   beforeEach(() => {
@@ -27,7 +29,7 @@ describe('IFramePreviewBasic', () => {
             documentId={doc._id}
             document={{ displayed: doc }}
             options={{
-              url: (doc) => Promise.resolve(`http://goes-nowhere.example/preview/${doc._id}`),
+              url: (d) => Promise.resolve(`http://goes-nowhere.example/preview/${d._id}`),
             }}
           />
         </ThemeProvider>
@@ -111,7 +113,7 @@ describe('IFramePreviewBasic', () => {
 
 async function renderBasicPreview(): Promise<RenderResult> {
   const doc = createSanityDoc('id');
-  let result: RenderResult | undefined = undefined;
+  let result: RenderResult | undefined;
   await act(() => {
     result = render(
       <ThemeProvider theme={studioTheme}>

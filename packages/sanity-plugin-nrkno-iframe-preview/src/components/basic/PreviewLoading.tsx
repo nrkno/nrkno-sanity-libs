@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { Button, Flex, Spinner, Stack } from '@sanity/ui';
-import styles from './PreviewLoading.css';
+import { Button, Spinner, Stack } from '@sanity/ui';
+import { LoaderFlex, ReloadDiv, SpinnerDiv } from './PreviewLoading.styled';
 import { DisplayTextsContext } from '../DisplayTextsContext';
 
 interface LoadingProps {
@@ -12,21 +12,22 @@ interface LoadingProps {
 export function PreviewLoading({ loading, documentId, reload }: LoadingProps) {
   const { retryLoading, documentNotSaved, makeEditToPreview } = useContext(DisplayTextsContext);
 
+  const doesNotExist = !documentId;
   return loading ? (
-    <Flex align="center" justify="center" className={styles.loader}>
-      {!documentId ? (
+    <LoaderFlex align="center" justify="center">
+      {doesNotExist ? (
         <Stack space={2}>
           <div>{documentNotSaved}</div>
           <div>{makeEditToPreview}</div>
         </Stack>
       ) : (
-        <div className={styles.spinner}>
+        <SpinnerDiv>
           <Spinner size={4} />
-          <div className={styles.reload}>
+          <ReloadDiv>
             <Button text={retryLoading} onClick={reload} size={3} />
-          </div>
-        </div>
+          </ReloadDiv>
+        </SpinnerDiv>
       )}
-    </Flex>
+    </LoaderFlex>
   ) : null;
 }

@@ -39,7 +39,7 @@
     "npm-check-updates": "^16.3.16",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "sanity": "3.0.0-rc.0",
+    "sanity": "3.0.0-rc.2",
     "ts-jest": "^29.0.3",
     "typescript": "^4.8.4"
   },
@@ -60,7 +60,7 @@
     "bootstrap": "lerna bootstrap --hoist --strict",
     "publish:ci": "npm run build && lerna publish --conventional-commits --yes",
     "prepublishOnly": "npm run build",
-    "build": "npm run clean && tsc --build packages/tsconfig.project.json && lerna run build",
+    "build": "npm run clean && lerna run build",
     "clean": "lerna run clean --stream",
     "test": "lerna run test --stream",
     "lint": "npm run eslint:check && npm run prettier:check",

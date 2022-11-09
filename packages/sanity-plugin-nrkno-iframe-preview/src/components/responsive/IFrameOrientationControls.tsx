@@ -1,6 +1,6 @@
 import React, { CSSProperties, RefObject, useContext, useEffect, useState } from 'react';
-import { useResizeObserver } from '@nrk/nrkno-sanity-react-utils';
-import styles from './IFrameOrientationControls.css';
+import { useResizeObserver } from '@snorreeb/nrkno-sanity-react-utils';
+import { ControlsDiv } from './IFrameOrientationControls.styled';
 import { Button, Inline } from '@sanity/ui';
 import { DesktopIcon, MobileDeviceIcon } from '@sanity/icons';
 import { DisplayTextsContext } from '../DisplayTextsContext';
@@ -39,7 +39,7 @@ export function IFrameOrientationControls(props: IFrameOrientationControlProps) 
   const { mobile, desktop } = useContext(DisplayTextsContext);
 
   return props.desktopMinWidth ? (
-    <div className={styles.controls}>
+    <ControlsDiv>
       <Inline space={[2]} style={{ textAlign: 'center' }}>
         {orientations.map((or) => (
           <Button
@@ -50,11 +50,11 @@ export function IFrameOrientationControls(props: IFrameOrientationControlProps) 
             size={2}
             padding={[3]}
             tone={or === orientation ? 'primary' : undefined}
-            mode={or !== orientation ? 'ghost' : undefined}
+            mode={or === orientation ? undefined : 'ghost'}
           />
         ))}
       </Inline>
-    </div>
+    </ControlsDiv>
   ) : null;
 }
 
@@ -94,7 +94,7 @@ function useResponsiveScale(
         ...sizeStyle,
         width: `${scalePercentage}%`,
         height: `${scalePercentage}%`,
-        transform: `scale(${1 / scale}) 
+        transform: `scale(${1 / scale})
       translate(-${translatePercentage}%, -${translatePercentage}%)`,
       };
     }

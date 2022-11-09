@@ -6,21 +6,17 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
-import { SanityDocument } from '@sanity/types';
-// @ts-expect-error failed to get TS to accept this import
-import sanityClient from 'part:@sanity/base/client';
+import { SanityDocument, SourceClientOptions, useClient } from 'sanity';
 import {
   PreviewAction,
   PreviewDocument,
   PreviewState,
   usePreviewReducer,
 } from '../hooks/preview-reducer-hook';
-import { useDebouncedEffect, useSetRefs } from '@nrk/nrkno-sanity-react-utils';
-import styles from './IFramePreviewBasic.css';
+import { useDebouncedEffect, useSetRefs } from '@snorreeb/nrkno-sanity-react-utils';
 import { PreviewLoading } from './PreviewLoading';
 import { BasicPreviewProps } from '../../sanity-types';
 import { DisplayTextsContext } from '../DisplayTextsContext';
@@ -30,6 +26,8 @@ import {
   resolveUrl,
   UrlResolver,
 } from './preview-utils';
+import { IFrame, PreviewDiv } from './IFramePreviewBasic.styled';
+import { SanityClient } from '@sanity/client';
 
 export interface IFramePreviewBasicOpts {
   /**
@@ -86,20 +84,35 @@ export const IFramePreviewBasic = forwardRef(function IFramePreviewBasic(
   const [key, setKey] = useState(id);
   const reload = useCallback(() => setKey(`${Math.random()}`), []);
   useEffect(() => {
-    id !== key && setKey(id);
+    if (id !== key) {
+      setKey(id);
+    }
   }, [id, key]);
 
   return (
+    // eslint-disable-next-line no-use-before-define
     <IFramePreviewInternal {...props} key={key} reload={reload} ref={ref}>
       {props.children}
     </IFramePreviewInternal>
   );
 });
 
+let testableClient: any;
+
+export function __setUseTestableClient(_testableClient: any) {
+  testableClient = _testableClient;
+}
+
+export function useTestableClient(clientOptions?: SourceClientOptions): SanityClient {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return testableClient ? testableClient(clientOptions) : useClient(clientOptions);
+}
+
 const IFramePreviewInternal = forwardRef(function IFramePreview(
   props: IFramePreviewInternalProps,
-  forwardRef: ForwardedRef<HTMLIFrameElement>
+  iframeRef: ForwardedRef<HTMLIFrameElement>
 ) {
+  const sanityClient = useTestableClient({ apiVersion: '2022-01-01' });
   const [state, dispatch] = usePreviewReducer(sanityClient);
   const url = useUrl(props.options.url, props.document.displayed);
 
@@ -111,16 +124,10 @@ const IFramePreviewInternal = forwardRef(function IFramePreview(
 
   const [anyButtonPressed, mouseListener] = useMouseButtonListener();
 
-  const setRefs = useSetRefs(ref, forwardRef);
-
-  const iframeClasses = useMemo(
-    () => styles.iframe + (!state.iframeReady ? ` ${styles.iframeHidden}` : ''),
-    [state.iframeReady]
-  );
+  const setRefs = useSetRefs(ref, iframeRef);
 
   return (
-    <div
-      className={styles.preview}
+    <PreviewDiv
       onMouseEnter={mouseListener}
       onMouseOver={mouseListener}
       onMouseLeave={mouseListener}
@@ -130,16 +137,16 @@ const IFramePreviewInternal = forwardRef(function IFramePreview(
         documentId={props.document?.displayed?._id}
         reload={props.reload}
       />
-      <iframe
+      <IFrame
+        ready={state.iframeReady}
         scrolling={props.options.disableScroll ? 'no' : undefined}
         style={{ pointerEvents: anyButtonPressed ? 'none' : 'auto' }}
         ref={setRefs}
-        className={iframeClasses}
         title={iframeTitle}
         src={url}
       />
       {props.children}
-    </div>
+    </PreviewDiv>
   );
 });
 
@@ -205,6 +212,7 @@ function useUpdatedPreviewDoc(
         maxRevisionRetries,
         updateDelay
       );
+      // eslint-disable-next-line consistent-return
       return cancel;
     },
     [displayedDoc, sanityClient, groq, iframeReady, revision, maxRevisionRetries],
@@ -232,6 +240,7 @@ function useUpdatedPreviewDoc(
           })
       );
 
+      // eslint-disable-next-line consistent-return
       return () => {
         canUpdate = false;
       };
@@ -255,13 +264,13 @@ function useUpdatedIframe(
       };
       ref.current?.contentWindow?.postMessage(message, new URL(url).origin);
     }
-  }, [previewDocument, groq, url]);
+  }, [ref, previewDocument, groq, url]);
 }
 
 function useMouseButtonListener() {
   const [anyButtonPressed, setAnyButtonPressed] = useState<boolean>(false);
   const mouseListener = useCallback(
-    (e) => {
+    (e: any) => {
       const anyPressed = !!e.buttons;
       if (anyPressed !== anyButtonPressed) {
         setAnyButtonPressed(anyPressed);
