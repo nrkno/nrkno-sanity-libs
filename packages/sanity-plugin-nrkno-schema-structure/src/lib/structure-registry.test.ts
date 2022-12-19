@@ -1,9 +1,13 @@
 import { initStructureRegistry } from './structure-registry';
 import { customGroups } from './group-registry.test';
-import { createStructureBuilder, ListItemBuilder, StructureBuilder } from 'sanity/desk';
+import {
+  createStructureBuilder,
+  ListItemBuilder,
+  StructureBuilder,
+  StructureResolverContext,
+} from 'sanity/desk';
 import { getMockSource } from './test/test-utils';
-import { StructureResolverContext } from 'sanity/lib/exports/desk';
-import { defineType, DocumentStore, SanityClient } from 'sanity';
+import { defineType, DocumentStore, SanityClient, SourceClientOptions } from 'sanity';
 
 async function createResolverContext() {
   const source = await getMockSource({
@@ -43,7 +47,7 @@ async function createResolverContext() {
   const context: StructureResolverContext = {
     ...source,
     documentStore: undefined as unknown as DocumentStore, // unused
-    client: undefined as unknown as SanityClient, // unused
+    getClient: undefined as unknown as (options: SourceClientOptions) => SanityClient, // unused
   };
 
   return { S, context };

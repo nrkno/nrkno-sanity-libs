@@ -1,13 +1,12 @@
+import { SanityDocument } from 'sanity';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { IFramePreview } from './IFramePreview';
-import { SanityDocument } from '@sanity/types';
 import { defaultDisplayTexts, DisplayTexts, DisplayTextsContext } from './DisplayTextsContext';
 import { studioTheme, ThemeProvider } from '@sanity/ui';
+import { __setUseTestableClient } from './basic/IFramePreviewBasic';
 
-jest.mock('part:@sanity/base/client', () => ({
-  default: jest.fn(),
-}));
+__setUseTestableClient(jest.fn());
 
 describe('IFramePreview', () => {
   it('should render iframe', async () => {
