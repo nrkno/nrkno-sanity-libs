@@ -25,11 +25,11 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "peerDependencies": {
-    "@sanity/form-builder": "^2.35.0",
+    "@sanity/form-builder": "^2.35.4",
     "react": "^17.0.0"
   },
   "devDependencies": {
-    "@sanity/form-builder": "^2.35.0",
+    "@sanity/form-builder": "^2.35.4",
     "@sanity/types": "^2.35.0",
     "@testing-library/dom": "^8.11.1",
     "@testing-library/react": "^12.1.2",
