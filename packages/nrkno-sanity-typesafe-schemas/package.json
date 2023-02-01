@@ -23,7 +23,7 @@
     "test": "npm run build:examples && cross-env NODE_ENV=test jest"
   },
   "devDependencies": {
-    "@sanity/types": "^2.35.0",
+    "@sanity/types": "^3.2.6",
     "@types/react": "^17.0.0"
   },
   "volta": {
