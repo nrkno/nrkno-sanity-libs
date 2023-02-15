@@ -36,7 +36,7 @@
     "@sanity/base": "^2.35.0",
     "@sanity/initial-value-templates": "^2.35.0",
     "@sanity/structure": "^2.35.0",
-    "@sanity/types": "^2.35.0",
+    "@sanity/types": "^3.4.0",
     "@types/react": "^17.0.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
